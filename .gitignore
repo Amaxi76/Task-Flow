@@ -1,3 +1,6 @@
+# fichiers de configuration
+*.env
+
 */config/development
 */logs/log-*.php
 !*/logs/index.html
