@@ -33,7 +33,7 @@ class Database extends Config
         'DBDriver'     => '', // fichier .env
         'DBPrefix'     => '',
         'pConnect'     => false,
-        'DBDebug'      => true,
+        'DBDebug'      => (ENVIRONMENT !== 'production'),
         'charset'      => 'utf8',
         'DBCollat'     => 'utf8_general_ci',
         'swapPre'      => '',
@@ -44,11 +44,11 @@ class Database extends Config
         'port'         => 3306, // fichier .env
         'numberNative' => false,
         'schema'       => 'taskflow',
-        'dateFormat'   => [
+        /*'dateFormat'   => [
             'date'     => 'Y-m-d',
             'datetime' => 'Y-m-d H:i:s',
             'time'     => 'H:i:s',
-        ],
+        ],*/
     ];
 
     public function __construct()
