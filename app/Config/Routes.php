@@ -7,7 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->get('/','Home::index');
-$routes->get('/test','PersonneControleur::index');
+$routes->get('/inscription','UtilisateurControleur::index');
+$routes->post('UtilisateurControleur/inscription','UtilisateurControleur::inscription');
 
 
 
