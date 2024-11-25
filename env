@@ -22,7 +22,6 @@ app.baseURL = 'CHEMIN_SERVEUR' # Exemple : 'http://localhost/Task-Flow/public/'
 
 # Les parties en majuscule sont à remplacer
 
-database.default.DSN = NOM_DNS
 database.default.hostname = ADRESSE_DB
 database.default.database = NOM_DB
 database.default.username = NOM_UTILISATEUR
