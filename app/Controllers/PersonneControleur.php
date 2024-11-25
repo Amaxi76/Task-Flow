@@ -10,7 +10,10 @@ class PersonneControleur extends BaseController
 
 		$personnes = $personneModel->orderBy('nom', 'asc')->findAll();
 
+		$data = [
+			'personnes' => $personnes
+		];
 		// Charger la vue 
-		return view('personneVue', $personnes); 
+		return view('personneVue', $data); 
 	} 
 } 
