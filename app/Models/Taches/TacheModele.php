@@ -11,7 +11,7 @@ class TacheModele extends Model
 		'detail',
         'ajoute_le',
         'rappel',
-        'echenace',
+        'echeance',
         'id_priorite',
         'id_statut'
 	];
