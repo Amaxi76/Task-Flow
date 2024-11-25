@@ -1,6 +1,6 @@
 <?php 
 namespace App\Controllers; 
-use App\Models\PersonneModele; 
+use App\Models\Utilisateurs\PersonneModele; 
 
 class PersonneControleur extends BaseController 
 { 

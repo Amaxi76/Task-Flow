@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\Utilisateurs;
 use CodeIgniter\Model;
 class PersonneModele extends Model
 {
