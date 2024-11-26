@@ -16,11 +16,11 @@ class ActivationCompteControleur extends Controller
 		if ($jeton)
 		{
 			$this->deplacementVersUtilisateur($jeton['id']);
-			return view("connexionVue"); //TODO:Voir avec les autres 
+			return view("/connexion/connexionVue"); //TODO:Voir avec les autres 
 		}
 		else 
 		{
-			return view("jeton_expireVue");
+			return view("/inscription/jeton_expireVue");
 		}
 	}
 	
@@ -41,9 +41,8 @@ class ActivationCompteControleur extends Controller
 				'id_jeton'    => null
 			];
 			
-
+			//TODO: Ca delete pas dans inscription ? 
 			$utilisateurModele->insert($utilisateur,false);
-
 			$inscriptionModele->where('id_personne', $idPersonne)->delete();
 			$jetonModele      ->where('id', $idJeton)->delete();
 

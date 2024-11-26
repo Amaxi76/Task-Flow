@@ -11,7 +11,7 @@ class InscriptionControleur extends BaseController
 	public function index() 
 	{ 
 		helper(['form']);
-		return view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
+		return view('inscription/inscriptionVue'); //TODO: changer en fonction du nom de la vue
 	}
 
 	/**
@@ -47,7 +47,7 @@ class InscriptionControleur extends BaseController
 		{
 			helper(['form']); 	
 			$erreurs = $this->validator->getErrors();
-			return view('inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+			return view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
 		}
 	}
 
