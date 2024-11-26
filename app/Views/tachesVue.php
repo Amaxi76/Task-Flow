@@ -8,6 +8,8 @@
 	}
 </style>
 
+<a href=/taches/ajouter>Ajouter une tâche</a>
+
 <?php foreach ($taches as $tache) : ?>
 	<div class="tache">
 		<h1><?= esc($tache['titre']) ?></h1>
@@ -18,3 +20,5 @@
 		<input type="text" placeholder="Ajouter un commentaire">
 	</div>
 <?php endforeach; ?>
+
+<?= $pagerTaches->links('taches', 'default_full'); ?>
