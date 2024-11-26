@@ -45,7 +45,7 @@ class UtilisateurControleur extends BaseController
 		}
 		else
 		{
-			helper(['form']);
+			helper(['form']); 	
 			$erreurs = $this->validator->getErrors();
 			return view('inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
 		}

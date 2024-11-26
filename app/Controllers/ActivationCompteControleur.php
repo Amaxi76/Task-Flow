@@ -1,6 +1,5 @@
 <?php
 namespace App\Controllers;
-use App\Models\UserModelB;
 use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\UtilisateurModele;
@@ -28,23 +27,28 @@ class ActivationCompteControleur extends Controller
 	
 	public function deplacementVersUtilisateur($idJeton)
 	{
-		$incriptionModele  = new InscriptionsModele();
+		$inscriptionModele  = new InscriptionsModele();
 		$utilisateurModele = new UtilisateurModele ();
 		$jetonModele       = new JetonsModele      ();
 		
 		//Récupération de l'id_personne associé au jeton
-		$idPersonne = $incriptionModele->recupererIdPersonne($idJeton);
+		$idPersonne = $inscriptionModele->recupererIdPersonne($idJeton);
 
 		if($idPersonne)
 		{
 			$utilisateur = [
 				'id_personne' => $idPersonne,
-				'id_jeton'    => null // Optionnel si la base accepte les valeurs nulles par défaut
+				'id_jeton'    => null
 			];
 			
-			$utilisateurModele->insert($utilisateur);
-			//$incriptionModele ->delete($idPersonne  );
-			//$jetonModele      ->delete($idJeton     );
+
+			$utilisateurModele->insert($utilisateur,false);
+
+			$inscriptionModele->where('id_personne', $idPersonne)->delete();
+			$jetonModele      ->where('id', $idJeton)->delete();
+
+
+			return $idPersonne;
 		}
 	}
 }
