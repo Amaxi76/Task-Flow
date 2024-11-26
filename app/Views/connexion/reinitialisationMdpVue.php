@@ -3,12 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Inscription</title>
+	<title>CHnagement du mot de passe</title>
 </head>
 
 <body>
-	<h2>Inscription </h2>
-	<?php echo form_open('ReinitialisationMotDePasseControleur/changementMotDePasse'); ?>
+	<h2>Changement du mot de passe </h2>
+	<?php echo form_open('/connexion/mdp_oublie/reinit_mdp'); ?>
     <?php echo form_hidden('jeton', $jeton); ?>
 	<?php echo form_label('Mot de passe', 'mdp'); ?>
 	<?php echo form_input('mdp', set_value('mdp'), 'required'); ?>

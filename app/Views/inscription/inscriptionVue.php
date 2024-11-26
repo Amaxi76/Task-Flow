@@ -8,7 +8,7 @@
 
 <body>
 	<h2>Inscription </h2>
-	<?php echo form_open('InscriptionControleur/inscription'); ?>Utilisateur
+	<?php echo form_open('/inscription'); ?>Utilisateur
 	<?php echo form_label('Adresse e-mail', 'email'); ?>
 	<?php echo form_input('email', set_value('email'), 'required'); ?>
 	<?= validation_show_error('email') ?>

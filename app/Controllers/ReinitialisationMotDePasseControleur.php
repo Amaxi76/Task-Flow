@@ -17,29 +17,27 @@ class ReinitialisationMotDePasseControleur extends Controller
 			return view("jeton_expireVue"    );
 	}
 
-	public function verifierJeton($jeton)
-	{
+	/**
+	 * Verifie que le jeton passé en paramètre est présent dans la base de donnée et lié à un utilisateurs
+	 * @param mixed $jeton jetons de verification donné par mail
+	 * @return bool true si le jetons existe et lié
+	 */
+	public function verifierJeton($jeton){
 		$jetonModele = new JetonsModele();
 		$jetonObject = $jetonModele->where("jeton",$jeton)->first();
-
-		dd($jeton,$jetonObject);
-		
+	
 		$utilisateurModele = new UtilisateurModele();
-		$jetonUtilisateur  = $utilisateurModele->where("id_jeton",$jeton['id'])->first();
+		$jetonUtilisateur  = $utilisateurModele->where("id_jeton",$jetonObject['id'])->first();
 
 		return isset($jetonUtilisateur);
 	}
 
-	public function changementMotDePasse()
-	{
-		$regles = 
-		[
-			'mdp'          => 'required|min_length[4]',
-			'confirmerMdp' => 'required|matches[mdp]'
-		];
-		
-		$messagesErreurs = 
-		[
+	/**
+	 * Fait le changement de mot de passe dans la base de données 
+	 */
+	public function changementMotDePasse(){
+		$regles          = ['mdp'=> 'required|min_length[4]','confirmerMdp' => 'required|matches[mdp]'];
+		$messagesErreurs = [
 			'mdp' => [
 					'required'   => 'Le mot de passe est obligatoire.',
 					'min_length' => 'Le mot de passe doit contenir au moins 4 caractères.'
@@ -50,39 +48,33 @@ class ReinitialisationMotDePasseControleur extends Controller
 			]
 		];
 
-		if($this->validate($regles,$messagesErreurs))
-		{
+		if($this->validate($regles,$messagesErreurs)) {
 			$jeton              = $this->request->getVar('jeton'       );
 			$nouveauMdp         = $this->request->getVar('mdp'         );
-			$confirmeNouveauMdp = $this->request->getVar('confimerMdp' );
 
-			$jetonModele = new JetonsModele();
-			$jeton       = $jetonModele->where("jeton",$jeton)->first();
-
+			$jetonModele       = new JetonsModele     ();
 			$utilisateurModele = new UtilisateurModele();
-			$utilisateur       = $utilisateurModele->where("id_jeton",$jeton['id'])->first();
+
+			$jeton             = $jetonModele      ->where("jeton"   ,$jeton      )->first(); //récuperer le jeton dans la bado correspondant au jeton donnée par mail 
+			$utilisateur       = $utilisateurModele->where("id_jeton",$jeton['id'])->first(); //Réécupérer la personne concerné par l'id_jeton
 
 			$idPersonne = $utilisateur['id_personne'];
 
-			if($utilisateur)
-			{
+			if($utilisateur) { //si l'utilisateur a été trouvé
 				$personneModele = new PersonneModele();
 				$majMotDePasse  = ['mdp' => password_hash($nouveauMdp,PASSWORD_DEFAULT)];
 
-				$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse);
+				$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
 
-				if($estMiseAJour)
-				{
-					return view('connexionVue');
-				}
-				else
-				{
-					return view("motDePasseOublie");
-				}
+				$utilisateurModele->update($idPersonne,["id_jeton" => null]); //deliée le jeton et l'utilisateur
+				$jetonModele      ->delete($jeton['id']); //supprimer le jeton
+
+				helper(['form']);
+				return view(($estMiseAJour ? '/connexion/connexionVue' : '/connexion/motDePasseOublie')); 
 			}
-
+			else{
+				return view("/connexion/motDePasseOublie");
+			}
 		}
-
 	}
-
 }
