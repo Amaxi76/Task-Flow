@@ -8,8 +8,14 @@ class UtilisateurModele extends Model
 	protected $useAutoIncrement = false;
 	
 	protected $allowedFields = [
-		'id_personne'
+		'id_personne',
+		'id_jeton'
 	];
 
+
+	public function selectJetonUtilisateur($idJeton)
+	{
+		$this->where("id_jeton",$idJeton);
+	}
 
 }
