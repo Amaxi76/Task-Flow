@@ -78,7 +78,7 @@ class ConnexionControleur extends BaseController {
 		$email      = $this->request->getVar("email");
 
 		$personne   = $this->verifieExistanceUtilisateur($email);
-		$jeton      = $this->creerJetonsReinitialisation($email);
+		$jeton      = $this->creerJetonsReinitialisation();
 
 		$estLiee = $this->lieeUtilisateurJeton($personne['id'],$jeton['id']);
 

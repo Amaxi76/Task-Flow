@@ -10,7 +10,7 @@ class InscriptionControleur extends BaseController {
 	public function index() { 
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
+		echo view('/inscription/inscriptionVue'); //TODO: changer en fonction du nom de la vue
 		//echo view('commun/piedpage');
 	}
 
