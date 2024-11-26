@@ -1,5 +1,7 @@
 <?php 
-namespace App\Controllers;  
+namespace App\Controllers;
+
+use App\Models\Taches\TacheModele;
 
 class TachesControleur extends BaseController 
 { 
@@ -8,7 +10,7 @@ class TachesControleur extends BaseController
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
 
-		$dataCorps = [];
+		/*$dataCorps = [];
 		$dataCorps['taches'] = [
 			[
 				'titre' => 'Faire les maquettes',
@@ -38,7 +40,12 @@ class TachesControleur extends BaseController
 				'priorite' => 'Haute',
 				'statut' => 'En cours'
 			]
-		];
+		];*/
+
+		// Charger le modèle des tâches
+		$tacheModele = new TacheModele();
+		$dataCorps = [];
+		$dataCorps['taches'] = $tacheModele->getTachesUtilisateur(3);
 
 		// Charger la vue 
 		return view('commun/entete', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 

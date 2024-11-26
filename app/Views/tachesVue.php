@@ -11,7 +11,7 @@
 <?php foreach ($taches as $tache) : ?>
 	<div class="tache">
 		<h1><?= esc($tache['titre']) ?></h1>
-		<span class="badge"><?= esc($tache['rappel']) ?></span>
+		<span class="badge"><?= esc($tache['echeance']) ?></span>
 		<span class="badge"><?= esc($tache['priorite']) ?></span>
 		<span class="badge"><?= esc($tache['statut']) ?></span>
 		<p><?= esc($tache['detail']) ?></p>

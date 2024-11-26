@@ -16,13 +16,21 @@ class TacheModele extends Model
 		'id_statut'
 	];
 
-	public function getToutesTachesUtilisateur($id_utilisateur)
+	//TODO: peut être à modifier
+	public function getTachesUtilisateur ($id_utilisateur)
 	{
-		return $this->select ('taches.*, priorites.nom as priorite, statuts.nom as statut')
-					->join   ('priorites', 'priorites.id = taches.id_priorite', 'left') // Jointure avec la table des priorités
-					->join   ('statuts', 'statuts.id = taches.id_statut', 'left')      // Jointure avec la table des statuts
-					->where  ('taches.id_utilisateur', $id_utilisateur)
-					->findAll();
+		return $this->select ('
+				taches.titre AS titre,
+				taches.detail AS detail,
+				taches.echeance AS echeance,
+				statut.libelle AS statut,
+				priorite.libelle AS priorite
+			')
+			->join ('intitule AS statut', 'taches.id_statut = statut.id_intitule', 'inner')
+			->join ('intitule AS priorite', 'taches.id_priorite = priorite.id_intitule', 'inner')
+			->where ('taches.id_utilisateur', $id_utilisateur)
+			->groupBy ('taches.id, statut.libelle, priorite.libelle')
+			->findAll ();
 	}
 
 }
