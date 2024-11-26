@@ -10,4 +10,11 @@ class InscriptionsModele extends Model
 		'id_personne',
 		'id_jeton'
 	];
+	
+	public function recupererIdPersonne($idJeton): ?string 
+	{
+		$inscription = $this->where('id_jeton', $idJeton)->first();
+		return $inscription ? $inscription['id_personne'] : null;
+	}
+	
 }

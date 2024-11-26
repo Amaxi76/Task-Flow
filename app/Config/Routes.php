@@ -9,6 +9,6 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/','Home::index');
 $routes->get('/inscription','UtilisateurControleur::index');
 $routes->post('UtilisateurControleur/inscription','UtilisateurControleur::inscription');
-
+$routes->get('activationCompte/(:any)','ActivationCompteControleur::index/$1');
 
 

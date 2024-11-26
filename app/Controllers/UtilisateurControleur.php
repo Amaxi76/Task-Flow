@@ -15,8 +15,8 @@ class UtilisateurControleur extends BaseController
 	}
 
 	/**
-     * Vérifie que les champs rentrés sont valides et inscrit l'utilisateur dans la table personne et inscription.
-    */
+	 * Vérifie que les champs rentrés sont valides et inscrit l'utilisateur dans la table personne et inscription.
+	*/
 	public function inscription()
 	{
 		$validation = $this->getRegleEtMessageInscription();
@@ -35,27 +35,30 @@ class UtilisateurControleur extends BaseController
 			{
 				$inscriptionModele = new InscriptionsModele();
 				$inscriptionModele->insert(['id_personne' => $idPersonne, 'id_jeton' => $idJeton]); //insertion dans la table inscription
-				
-				//TODO:Faire l'envoie du mail avec le jeton
 
-				return view ('succes'); //redirige vers un ecran d'attente ? 
+				$jetonModele = new JetonsModele();
+			
+				$estEnvoye = $this->envoyerMailActivation($email,$jetonModele->recupererJeton($idJeton));
+
+				return view ($estEnvoye ? 'succes' : ''); //redirige vers un ecran d'attente ? 
 			}
 		}
 		else
 		{
+			helper(['form']);
 			$erreurs = $this->validator->getErrors();
-			return view('incriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+			return view('inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
 		}
 	}
 
 	/**
-     * Insert dans la table Personne 
-     *
-     * @param string $email email de la personne
-     * @param string $nom   nom de la personnes
+	 * Insert dans la table Personne 
+	 *
+	 * @param string $email email de la personne
+	 * @param string $nom   nom de la personnes
 	 * @param string $mdp   mot de passe de la personne
-     * @return int id de la personne qui vient d'être insérer
-     */
+	 * @return int id de la personne qui vient d'être insérer
+	 */
 	public function creationPersonne($email,$nom,$mdp)
 	{
 		$personneModele = new PersonneModele();
@@ -72,8 +75,8 @@ class UtilisateurControleur extends BaseController
 
 
 	/**
-     * Crée et insert un nouveau jeton
-     */
+	 * Crée et insert un nouveau jeton
+	 */
 	public function creationJetonActivation()
 	{
 		$jetonModele = new JetonsModele();
@@ -85,10 +88,25 @@ class UtilisateurControleur extends BaseController
 		return $jetonModele->insert($jeton);
 	}
 
+
+	public function envoyerMailActivation($email,$jetons)
+	{
+		$activationLien = site_url("activationCompte/$jetons");
+		$message        = "Cliquez sur le lien pour activer votre compte : $activationLien";
+
+		$emailService = \Config\Services::email();
+		$emailService->setTo($email);
+		$emailService->setFrom($emailService->SMTPUser);
+		$emailService->setSubject('[noreply] Confirmation d\'inscripition');
+		$emailService->setMessage($message);
+
+		return $emailService->send(false);
+	}
+
 	/**
-     * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
-     * @return array tableau contenant les règles et les messages d'erreurs associés
-     */
+	 * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
+	 * @return array tableau contenant les règles et les messages d'erreurs associés
+	 */
 	private function getRegleEtMessageInscription()
 	{
 		return [
