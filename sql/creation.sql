@@ -43,9 +43,9 @@ CREATE TABLE taskflow.Utilisateurs (
 
 -- Table Intitule
 CREATE TABLE taskflow.Intitule (
-    id_intitule SERIAL       PRIMARY KEY,
-    libelle     VARCHAR(255) NOT NULL,
-    couleur     INT          NOT NULL DEFAULT 16777216 -- blanc par défaut : 256*256*256 - 1
+    id      SERIAL       PRIMARY KEY,
+    libelle VARCHAR(255) NOT NULL,
+    couleur INT          NOT NULL DEFAULT 16777216 -- blanc par défaut : 256*256*256 - 1
 );
 
 -- Table StatutUtilisateur
@@ -54,7 +54,7 @@ CREATE TABLE taskflow.StatutUtilisateur (
     id_utilisateur INT     NOT NULL,
     estModifiable  BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (id_statut, id_utilisateur),
-    FOREIGN KEY (id_statut)                 REFERENCES taskflow.Intitule    (id_intitule),
+    FOREIGN KEY (id_statut)                 REFERENCES taskflow.Intitule    (id),
     FOREIGN KEY (id_utilisateur)            REFERENCES taskflow.Utilisateurs(id_personne)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE taskflow.PrioriteUtilisateur (
     id_utilisateur INT     NOT NULL,
     estModifiable  BOOLEAN NOT NULL,
     PRIMARY KEY (id_priorite, id_utilisateur),
-    FOREIGN KEY (id_priorite)                 REFERENCES taskflow.Intitule    (id_intitule),
+    FOREIGN KEY (id_priorite)                 REFERENCES taskflow.Intitule    (id),
     FOREIGN KEY (id_utilisateur)              REFERENCES taskflow.Utilisateurs(id_personne)
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE taskflow.Taches (
     id_statut      INT       NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_utilisateur)     REFERENCES taskflow.Utilisateurs(id_personne),
-    FOREIGN KEY (id_statut)          REFERENCES taskflow.Intitule    (id_intitule)
+    FOREIGN KEY (id_statut)          REFERENCES taskflow.Intitule    (id)
 );
 
     /*---------------------------------------*/
