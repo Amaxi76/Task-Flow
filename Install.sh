@@ -21,7 +21,11 @@ remplacer_champ () {
     local champ=$1
     local valeur=$2
     local sedcmd="s|$champ|$valeur|g"
-    sed -i '' "$sedcmd" ".env"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "$sedcmd" ".env"
+    else
+        sed -i "$sedcmd" ".env"
+    fi
 }
 
 # Demande des valeurs à l'utilisateur
