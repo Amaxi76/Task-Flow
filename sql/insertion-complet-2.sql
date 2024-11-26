@@ -61,21 +61,35 @@ INSERT INTO taskflow.PrioriteUtilisateur (id_priorite, id_utilisateur, estModifi
 
 -- Insérer entre 5 et 20 tâches pour chaque utilisateur
 INSERT INTO taskflow.Taches (id_utilisateur, titre, detail, rappel, echeance, id_priorite, id_statut) VALUES
-(1, 'Tâche 1', 'Détails de la tâche 1', 2, '2024-12-05 12:00:00', 6, 1),
-(1, 'Tâche 2', 'Détails de la tâche 2', 3, '2024-12-06 12:00:00', 6, 1),
-(1, 'Tâche 3', 'Détails de la tâche 3', 1, '2024-12-07 12:00:00', 6, 2),
-(2, 'Tâche 4', 'Détails de la tâche 4', 0, '2024-12-10 12:00:00', 7, 3),
-(2, 'Tâche 5', 'Détails de la tâche 5', 4, '2024-12-11 12:00:00', 7, 2),
-(2, 'Tâche 6', 'Détails de la tâche 6', 2, '2024-12-12 12:00:00', 7, 1),
-(3, 'Tâche 7', 'Détails de la tâche 7', 5, '2024-12-15 12:00:00', 8, 2),
-(3, 'Tâche 8', 'Détails de la tâche 8', 2, '2024-12-16 12:00:00', 8, 3),
-(3, 'Tâche 9', 'Détails de la tâche 9', 3, '2024-12-17 12:00:00', 8, 1),
-(4, 'Tâche 10', 'Détails de la tâche 10', 1, '2024-12-20 12:00:00', 9, 4),
-(4, 'Tâche 11', 'Détails de la tâche 11', 2, '2024-12-21 12:00:00', 9, 5),
-(4, 'Tâche 12', 'Détails de la tâche 12', 0, '2024-12-22 12:00:00', 9, 2),
-(5, 'Tâche 13', 'Détails de la tâche 13', 4, '2024-12-25 12:00:00', 10, 3),
-(5, 'Tâche 14', 'Détails de la tâche 14', 1, '2024-12-26 12:00:00', 10, 1),
-(5, 'Tâche 15', 'Détails de la tâche 15', 3, '2024-12-27 12:00:00', 10, 4);
+(1, 'Tâche 1_1', 'Détails de la tâche 1', 2, '2024-12-05 12:00:00', 6, 1),
+(1, 'Tâche 2_1', 'Détails de la tâche 2', 3, '2024-12-06 12:00:00', 6, 1),
+(1, 'Tâche 3_1', 'Détails de la tâche 3', 1, '2024-12-07 12:00:00', 6, 2),
+(1, 'Tâche 4_1', 'Détails de la tâche 4', 0, '2024-12-10 12:00:00', 6, 3),
+(1, 'Tâche 5_1', 'Détails de la tâche 5', 4, '2024-12-11 12:00:00', 6, 2),
+(1, 'Tâche 6_1', 'Détails de la tâche 6', 2, '2024-12-12 12:00:00', 6, 1),
+(1, 'Tâche 7_1', 'Détails de la tâche 7', 5, '2024-12-15 12:00:00', 6, 2),
+(1, 'Tâche 8_1', 'Détails de la tâche 8', 2, '2024-12-16 12:00:00', 6, 3),
+(1, 'Tâche 9_1', 'Détails de la tâche 9', 3, '2024-12-17 12:00:00', 6, 1),
+(1, 'Tâche 10_1', 'Détails de la tâche 10', 1, '2024-12-20 12:00:00', 6, 4),
+
+(2, 'Tâche 12_2', 'Détails de la tâche 12', 0, '2024-12-22 12:00:00', 7, 2),
+(2, 'Tâche 10_2', 'Détails de la tâche 10', 1, '2024-12-20 12:00:00', 7, 4),
+(2, 'Tâche 11_2', 'Détails de la tâche 11', 2, '2024-12-21 12:00:00', 7, 5),
+
+(3, 'Tâche 13_3', 'Détails de la tâche 13', 4, '2024-12-25 12:00:00', 8, 3),
+(3, 'Tâche 14_3', 'Détails de la tâche 14', 1, '2024-12-26 12:00:00', 8, 1),
+(3, 'Tâche 15_3', 'Détails de la tâche 15', 3, '2024-12-27 12:00:00', 8, 4),
+(3, 'Tâche 16_3', 'Détails de la tâche 16', 2, '2024-12-30 12:00:00', 8, 5),
+(3, 'Tâche 17_3', 'Détails de la tâche 17', 0, '2024-12-31 12:00:00', 8, 2),
+
+(4, 'Tâche 18_4', 'Détails de la tâche 18', 5, '2025-01-05 12:00:00', 9, 3),
+(4, 'Tâche 19_4', 'Détails de la tâche 19', 2, '2025-01-06 12:00:00', 9, 1),
+(4, 'Tâche 20_4', 'Détails de la tâche 20', 3, '2025-01-07 12:00:00', 9, 4),
+(4, 'Tâche 21_4', 'Détails de la tâche 21', 1, '2025-01-10 12:00:00', 9, 5),
+(4, 'Tâche 22_4', 'Détails de la tâche 22', 0, '2025-01-11 12:00:00', 9, 2),
+
+(5, 'Tâche 23_5', 'Détails de la tâche 23', 4, '2025-01-15 12:00:00', 10, 3),
+(5, 'Tâche 24_5', 'Détails de la tâche 24', 1, '2025-01-16 12:00:00', 10, 1);
 
 -- Insérer des commentaires pour certaines tâches
 INSERT INTO taskflow.Commentaires (id_tache, commentaire) VALUES
