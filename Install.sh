@@ -17,10 +17,15 @@ cp env .env
 echo "Le fichier modèle 'env' a été copié en '.env'."
 
 # Fonction pour remplacer un champ dans le fichier .env
-remplacer_champ() {
-	local champ=$1
-	local valeur=$2
-	sed -i "s|$champ|$valeur|g" .env
+remplacer_champ () {
+    local champ=$1
+    local valeur=$2
+    local sedcmd="s|$champ|$valeur|g"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "$sedcmd" ".env"
+    else
+        sed -i "$sedcmd" ".env"
+    fi
 }
 
 # Demande des valeurs à l'utilisateur
