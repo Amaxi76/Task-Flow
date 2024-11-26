@@ -11,7 +11,9 @@ class UtilisateurControleur extends BaseController
 	public function index() 
 	{ 
 		helper(['form']);
-		return view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
+		echo view('commun/entete');
+		echo view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
+		//echo view('commun/piedpage');
 	}
 
 	/**
