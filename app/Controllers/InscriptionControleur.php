@@ -4,7 +4,7 @@ use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
-class UtilisateurControleur extends BaseController 
+class InscriptionControleur extends BaseController 
 { 
 	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
@@ -72,7 +72,6 @@ class UtilisateurControleur extends BaseController
 
 		return $personneModele->insert($personne);
 	}
-
 
 	/**
 	 * Crée et insert un nouveau jeton
