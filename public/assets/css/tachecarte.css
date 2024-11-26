@@ -10,12 +10,26 @@
 	box-sizing: border-box;
 	border-radius: 16px;
 	overflow: hidden;
-	width: 30rem;
+	width: 25rem;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 	justify-content: space-between;
+	cursor: pointer;
+}
+
+svg, svg * {
+	width: 1rem;
+    height: 1rem;
+	stroke: #838383;
+}
+
+.carte-bg-color > svg, 
+.carte-bg-color svg * {
+    width: 1.5rem;
+    height: 1.5rem;
+	stroke: white;
 }
 
 .carte-entete {
@@ -26,13 +40,21 @@
 .carte-titre {
 	display: flex;
 	flex-direction: row;
-	padding: 1rem 1.5rem 1rem 1rem;
-	background-color: #00B94D;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 1rem 1.5rem 1rem;
 	color: white;
 }
 
 .carte-titre h5 {
 	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.carte-titre img {
+	width: 1.5rem;
+    height: 1.5rem;
+	filter: brightness(0) invert(1);
 }
 
 .carte-options {
@@ -45,7 +67,6 @@
 
 .carte-description {
 	padding: 1rem 1.5rem 1rem 1rem;
-	
 }
 
 .carte-description p {
@@ -59,40 +80,34 @@
 
 .carte-commentaire {
 	padding: 0rem 1rem 1rem 1rem;
-}
-
-.commentaire-bulle img {
-    width: 18px;
-    height: 18px;
-    margin-right: 6px;
+	display: flex;
 }
 
 .commentaire-count {
     font-size: 14px;
     font-weight: bold;
+	color: white;
 }
 
 .commentaire-bulle {
     display: flex;
     align-items: center;
-    background-color: #e0e0e0;
     padding: 6px 12px;
-    border-radius: 16px;
-    cursor: pointer;
+    border-radius: 8px;
+	gap: 0.25rem;
 }
 
 .badge {
     display: flex;
     align-items: center;
-    background-color: #ff7e7e;
+    background-color: #EAEAEA;
     padding: 4px 8px;
     border-radius: 16px;
     font-size: 12px;
+	gap: 4px;
+	color: #838383;
 }
 
-.badge img {
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-	filter: brightness(0) invert(1);
+.carte-bg-color {
+	background-color: #00B94D;
 }
