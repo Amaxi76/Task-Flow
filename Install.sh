@@ -1,5 +1,7 @@
 #!/bin/bash
 
+chmod -R 777 writable/
+
 # --------------------------------------------------------------------
 # Script d'installation pour configurer le fichier .env
 # --------------------------------------------------------------------
@@ -16,14 +18,12 @@ echo "Le fichier modèle 'env' a été copié en '.env'."
 
 # Fonction pour remplacer un champ dans le fichier .env
 remplacer_champ() {
-    local champ=$1
-    local valeur=$2
-    sed -i "s~$champ~$valeur~g" .env
+	local champ=$1
+	local valeur=$2
+	sed -i "s|$champ|$valeur|g" .env
 }
 
 # Demande des valeurs à l'utilisateur
-echo "Veuillez saisir les valeurs pour configurer le fichier .env :"
-
 read -p "Chemin du serveur (par ex. 'http://localhost/Task-Flow/public/'): " chemin_serveur
 read -p "Adresse de la base de données (par ex. '127.0.0.1'): " adresse_db
 read -p "Nom de la base de données : " nom_db
