@@ -4,7 +4,7 @@
             <!-- Section gauche avec le formulaire -->
             <div class="md-6 bg-custom text-white p-4">
                 <h2 class="text-center mb-4">Inscription</h2>
-                <?php echo form_open('UtilisateurControleur/inscription', ['class' => 'needs-validation', 'novalidate' => '']); ?>
+                <?php echo form_open('InscriptionControleur/inscription', ['class' => 'needs-validation', 'novalidate' => '']); ?>
 
                 <div class="form-floating mb-3">
                     <?php echo form_input('email', set_value('email'), 'class="form-control" id="floatingEmail" placeholder="name@example.com" required'); ?>
@@ -19,9 +19,9 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <?php echo form_password('mot_de_passe', '', 'class="form-control" id="floatingPassword" placeholder="Mot de passe" required'); ?>
+                    <?php echo form_password('mdp', '', 'class="form-control" id="floatingPassword" placeholder="Mot de passe" required'); ?>
                     <?php echo form_label('Mot de passe', 'floatingPassword'); ?>
-                    <?= validation_show_error('mot_de_passe') ?>
+                    <?= validation_show_error('mdp') ?>
                 </div>
 
                 <div class="form-floating mb-3">

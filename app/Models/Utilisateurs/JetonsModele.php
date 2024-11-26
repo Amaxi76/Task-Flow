@@ -9,4 +9,10 @@ class JetonsModele extends Model
 		'jeton',
 		'expiration'
 	];
+
+	public function recupererJeton($idJeton)
+	{
+		$jeton = $this->where("id",$idJeton)->first();
+		return $jeton ? $jeton['jeton'] : null;
+	}
 }
