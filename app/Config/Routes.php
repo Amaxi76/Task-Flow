@@ -7,7 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 $routes->get('/','PersonneControleur::index');
-$routes->get('/test','PersonneControleur::index');
+$routes->get('/personnes','PersonneControleur::index');
+$routes->get('/taches','TachesControleur::index');
 
 
 

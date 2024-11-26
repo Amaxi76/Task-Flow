@@ -9,10 +9,20 @@ class TacheModele extends Model
 		'id_utilisateur',
 		'titre',
 		'detail',
-        'ajoute_le',
-        'rappel',
-        'echeance',
-        'id_priorite',
-        'id_statut'
+		'ajoute_le',
+		'rappel',
+		'echeance',
+		'id_priorite',
+		'id_statut'
 	];
+
+	public function getToutesTachesUtilisateur($id_utilisateur)
+	{
+		return $this->select ('taches.*, priorites.nom as priorite, statuts.nom as statut')
+					->join   ('priorites', 'priorites.id = taches.id_priorite', 'left') // Jointure avec la table des priorités
+					->join   ('statuts', 'statuts.id = taches.id_statut', 'left')      // Jointure avec la table des statuts
+					->where  ('taches.id_utilisateur', $id_utilisateur)
+					->findAll();
+	}
+
 }
