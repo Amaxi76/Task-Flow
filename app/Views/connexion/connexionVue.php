@@ -1,7 +1,7 @@
+<body>
+
 <script src="assets/js/motdepasse.js"></script>
 <link href="assets/css/styleutilisateur.css" rel="stylesheet">
-
-<body>
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
 			<!-- Section gauche avec le logo -->

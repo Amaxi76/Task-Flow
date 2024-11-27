@@ -1,11 +1,16 @@
-<link href="assets/css/styleutilisateur.css" rel="stylesheet">
 
 <body>
+
+<link href="/assets/css/styleutilisateur.css" rel="stylesheet">
+<script src="/assets/js/motdepasse.js"></script>
+
+
+
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
 			<!-- Section gauche avec le logo -->
 			<div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
-				<img src="assets/images/Logo.svg" alt="Logo" class="logo mx-auto d-block">
+				<img src="/assets/images/Logo.svg" alt="Logo" class="logo mx-auto d-block">
 			</div>
 			<!-- Section droite avec le formulaire -->
 			<div class="md-6 bg-custom text-white p-4">
