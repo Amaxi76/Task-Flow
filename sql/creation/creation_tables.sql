@@ -29,9 +29,11 @@ CREATE TABLE taskflow.Inscriptions (
 -- Table Utilisateurs
 CREATE TABLE taskflow.Utilisateurs (
     id_personne INT NOT NULL PRIMARY KEY,
-    id_jeton    INT,
-    FOREIGN KEY (id_personne) REFERENCES taskflow.Personnes(id),
-    FOREIGN KEY (id_jeton)    REFERENCES taskflow.Jetons   (id)
+    id_jeton_resetMdp    INT,
+    id_jeton_seSouvenir  INT,
+    FOREIGN KEY (id_personne        ) REFERENCES taskflow.Personnes(id),
+    FOREIGN KEY (id_jeton_resetMdp  ) REFERENCES taskflow.Jetons   (id),
+    FOREIGN KEY (id_jeton_seSouvenir) REFERENCES taskflow.Jetons   (id)
 );
 
 /*---------------------------------------*/

@@ -19,6 +19,8 @@ $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::en
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
 
+$routes->get('/deconnexion'       ,'ConnexionControleur::deconnexion');
+
 $routes->get('/','PersonneControleur::index');
 $routes->get('/personnes','PersonneControleur::index');
 
@@ -27,3 +29,4 @@ $routes->get('/taches/ajouter','TachesControleur::ajouter');
 $routes->post('/taches/inserer','TachesControleur::ajouter');
 
 
+$routes->get('/test','TachesControleur::test');

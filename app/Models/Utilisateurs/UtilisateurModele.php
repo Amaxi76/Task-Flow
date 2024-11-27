@@ -9,13 +9,15 @@ class UtilisateurModele extends Model
 	
 	protected $allowedFields = [
 		'id_personne',
-		'id_jeton'
+		'id_jeton_resetmdp',
+		'id_jeton_sesouvenir'
+		
 	];
 
 
 	public function selectJetonUtilisateur($idJeton)
 	{
-		$this->where("id_jeton",$idJeton);
+		$this->where("id_jeton_resetmdp",$idJeton);
 	}
 
 }

@@ -23,7 +23,8 @@ class TachesControleur extends BaseController
 		return view('commun/entete', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
 	}*/
 
-	public function index() { 
+	public function index() 
+	{ 
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
 
@@ -34,7 +35,12 @@ class TachesControleur extends BaseController
 		$dataCorps['pagerTaches'] = $tacheModele->pager;
 
 		// Charger la vue 
-		return view('commun/entete', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
+		return view('commun/enteteTache', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
+	}
+
+	public function test()
+	{
+		return view('accueilTest');
 	}
 
 	//FIXME: à corriger : ne fonctionne pas

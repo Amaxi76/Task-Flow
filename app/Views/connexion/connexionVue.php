@@ -24,8 +24,8 @@
 
 				<div class="d-flex justify-content-between align-items-center mb-3">
 					<div class="form-check">
-						<?php echo form_checkbox("rememberMe", "1", "", 'class="form-check-input" id="rememberMe"') ?>
-						<?php echo form_label('Se souvenir de moi', 'rememberMe', ['class' => 'form-check-label']); ?>
+						<?php echo form_checkbox("rememberMe", "1", "", 'class="form-check-input" id="seSouvenir"') ?>
+						<?php echo form_label('Se souvenir de moi', 'seSouvenir', ['class' => 'form-check-label']); ?>
 					</div>
 					<a href="/connexion/mdp_oublie" class="text-white">Mot de passe oublié ?</a>
 				</div>
@@ -36,8 +36,8 @@
 				<?php echo form_close(); ?>
 
 				<p class="text-center mt-3">
-                    <span>Pas encore inscrit ?</span> <a href="/inscription" class="text-white">Inscrivez-vous</a>
-                </p>
+					<span>Pas encore inscrit ?</span> <a href="/inscription" class="text-white">Inscrivez-vous</a>
+				</p>
 			</div>
 		</div>
-    </div>
+	</div>

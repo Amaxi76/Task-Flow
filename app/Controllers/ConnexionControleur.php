@@ -17,43 +17,104 @@ class ConnexionControleur extends BaseController
 		echo view('commun/piedpage');
 	}
 
-	public function connexion()
-	{
-		$session         = session();
-		$email           = $this->request->getVar("email");
-		$mdpFormulaire   = $this->request->getVar("mdp");
+	public function connexion(){
+		$email         = $this->request->getVar("email");
+		$mdpFormulaire = $this->request->getVar("mdp"  );
+		$seSouvenir    = $this->request->getVar("seSouvenir"  );
 		
 		$utilisateur = $this->verifieExistance($email);
 
 		if($utilisateur)
 		{
 			$mdpPersonne = $utilisateur['mdp'];
-			$mdpCorrect  = password_verify($mdpFormulaire,$mdpPersonne);
+			$mdpCorrect = password_verify($mdpFormulaire, $mdpPersonne);
 
 			if($mdpCorrect)
 			{
-				$donnee_session = 
-				[
-					'id'          => $utilisateur['id'],
-					'estConnecte' => TRUE
-				];
+				$jetons_seSouvenir = null;
+				if($seSouvenir){
+					$jetons_seSouvenir = $this->seSouvenirDeMoi($utilisateur['id']);
+					set_cookie("seSouvenir",$jetons_seSouvenir);
+				}
 
+				$donnee_session = [
+					'id' => $utilisateur['id'],
+					'estConnecte' => TRUE,
+				];
+				$session = session();
 				$session->set($donnee_session);
-				return view('succes');
+				return redirect()->to('/test');
 			}
 			else
 			{
-				helper(['form']);
 				$erreur = ["Le mot de passe est incorrect"];
-				return view('connexion/connexionVue',$erreur);
+				return redirect()->to('connexion')->withInput()->with('erreurs', $erreur);
 			}
 		}
 		else
 		{
-			helper(['form']);
-			$erreur = ["C'est adresse mail n'existe pas ou n'est pas activé"];
-			return view('connexion/connexionVue',$erreur);
+			$erreur = ["Cette adresse mail n'existe pas ou n'est pas activée"];
+			return redirect()->to('connexion')->withInput()->with('erreurs', $erreur);
 		}
+	}
+
+	public function deconnexion()
+	{
+		// Démarrer la session
+		$session = session();
+
+		// Modèles
+		$utilisateurModele = new UtilisateurModele();
+		$jetonModele       = new JetonsModele();
+
+		// Récupérer l'utilisateur actuel
+		$utilisateur = $utilisateurModele->where("id_personne", $session->get('id'))->first();
+
+		// Vérifier si l'utilisateur a un jeton de souvenir
+		if ($utilisateur && !empty($utilisateur['id_jeton_sesouvenir'])) {
+			// Vérifier si le cookie "seSouvenir" existe
+			$cookie = get_cookie('seSouvenir');
+			if ($cookie) {
+				// Supprimer le jeton associé au cookie
+				$jetonModele->delete($utilisateur['id_jeton_sesouvenir']);
+				// Mettre à jour l'utilisateur pour supprimer l'ID du jeton
+				$utilisateurModele->update($utilisateur['id_personne'], ['id_jeton_sesouvenir' => null]);
+			}
+		}
+
+		// Supprimer toutes les données de session
+		$session->destroy();
+
+		// Supprimer le cookie "seSouvenir" si nécessaire
+		delete_cookie('seSouvenir');
+
+		// Rediriger l'utilisateur vers la page de connexion
+		return redirect()->to('connexion')->with('message', 'Vous êtes déconnecté avec succès.');
+	}
+
+
+
+	public function seSouvenirDeMoi($idPersonne)
+	{
+		//creation jeton
+		$jetonModele = new JetonsModele();
+
+		$genererJetons = bin2hex(random_bytes(8));
+		$jeton_seSouvenir = 
+		[
+			'jeton'      => $genererJetons,
+			'expiration' => date('Y-m-d H:i:s',strtotime('+30 days'))
+		];
+
+		$idJetons_seSouvenir = $jetonModele->insert($jeton_seSouvenir);
+
+		$utilisateurModele    = new UtilisateurModele();
+		$ajoutJetonSeSouvenir = ['id_jeton_sesouvenir' => $idJetons_seSouvenir];
+
+		$utilisateurModele->update($idPersonne,$ajoutJetonSeSouvenir);
+
+		return $genererJetons;
+
 	}
 
 	public function verifieExistance($email)
@@ -93,8 +154,8 @@ class ConnexionControleur extends BaseController
 			$message = "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant ".$lienReinitialisation;
 
 			$emailService = \Config\Services::email();
-			$emailService->setTo($email);
-			$emailService->setFrom($emailService->SMTPUser);
+			$emailService->setTo     ($email);
+			$emailService->setFrom   ($emailService->SMTPUser);
 			$emailService->setSubject('[noreply] Changement de mot de passe');
 			$emailService->setMessage($message);
 
@@ -126,7 +187,7 @@ class ConnexionControleur extends BaseController
 	{
 		$utilisateurModele = new UtilisateurModele();
 		
-		$utilisateurMaj = ["id_jeton" => $idJeton ];
+		$utilisateurMaj = ["id_jeton_resetmdp" => $idJeton ];
 
 		return $utilisateurModele->update($idPersonne,$utilisateurMaj);
 	}
