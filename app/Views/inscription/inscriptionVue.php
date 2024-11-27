@@ -32,7 +32,7 @@
                 <?= validation_show_error('mdp') ?>
 
 				<div class="form-floating mt-3 position-relative">
-					<?php echo form_password('confirmerMdp', set_value('confirmerMdp'), 'class="form-control password-input" id="confirmerMdp" placeholder="Confirmer le mot de passe" required'); ?>
+					<?php echo form_password('confirmerMdp', set_value(field: 'confirmerMdp'), 'class="form-control password-input" id="confirmerMdp" placeholder="Confirmer le mot de passe" required'); ?>
 					<?php echo form_label('Confirmer le mot de passe', 'confirmerMdp'); ?>
                     <span class="password-toggle-icon">
 						<i class="fas fa-eye-slash" id="toggleConfirmPassword"></i>
@@ -57,17 +57,17 @@
 
     <!-- Toast pour l'inscription réussie -->
     <div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="inscriptionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-        <img src="assets/images/LogoSeul.svg" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
-        <strong class="me-auto">TaskFlow</strong>
-        <small>À l'instant</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-        Un mail a été envoyé à votre adresse mail.
-        </div>
-    </div>
+		<div id="inscriptionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img src="assets/images/LogoSeul.svg" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
+				<strong class="me-auto">TaskFlow</strong>
+				<small>À l'instant</small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				Un mail a été envoyé à votre adresse mail.
+			</div>
+		</div>
     </div>
 
     <!-- Script pour afficher le toast -->

@@ -23,3 +23,28 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Toast pour l'envoi du mail -->
+	<div class="toast-container position-fixed top-0 end-0 p-3">
+		<div id="mailEnvoyeToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<img src="assets/images/LogoSeul.svg" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
+				<strong class="me-auto">TaskFlow</strong>
+				<small>À l'instant</small>
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+				Un e-mail de réinitialisation a été envoyé à votre adresse.
+			</div>
+		</div>
+	</div>
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		<?php if(session()->getFlashdata('mailEnvoye')): ?>
+			var toast = new bootstrap.Toast(document.getElementById('mailEnvoyeToast'));
+			toast.show();
+		<?php endif; ?>
+	});
+	</script>
+

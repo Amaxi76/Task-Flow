@@ -163,7 +163,12 @@ class ConnexionControleur extends BaseController
 			$emailService->setSubject('[noreply] Changement de mot de passe');
 			$emailService->setMessage($message);
 
-			echo $emailService->send(false);
+			if($emailService->send(false))
+			{
+				session()->setFlashdata('mailEnvoye', true);
+				return redirect()->to('connexion/mdp_oublie');
+			}
+
 		}
 	}
 
