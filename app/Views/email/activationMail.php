@@ -55,7 +55,7 @@
 	<div class="container">
 		<div class="box">
 			<div class="header">
-				<img src="<?= base_url('/assets/images/Logo.png') ?>" alt="Logo" class="logo">
+				<img src="<?= base_url('/assets/images/Logo.svg') ?>" alt="Logo" class="logo">
 			</div>
 			<div class="content">
 				<h1>Activation de votre compte</h1>

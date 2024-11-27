@@ -19,6 +19,9 @@ class ConnexionControleur extends BaseController
 
 	public function connexion()
 	{
+		$validation = $this->getRegleEtMessageInscription();
+		$estValide  = $this->validate($validation['regles'],$validation['messageErreur']);
+
 		$session         = session();
 		$email           = $this->request->getVar("email");
 		$mdpFormulaire   = $this->request->getVar("mdp");
@@ -134,6 +137,27 @@ class ConnexionControleur extends BaseController
 	public function afficherFormulaireEnvoieMail()
 	{
 		helper(['form']);
-		return view('connexion/formulaireEnvoieMailVue');
+		echo view('commun/entete');
+		echo view('connexion/formulaireEnvoieMailVue');
+		echo view('commun/piedpage');
+	}
+
+	private function getRegleEtMessageInscription(){
+		return [
+			'regles' => [
+				'email'        => 'required|valid_email',
+				'mdp'          => 'required|min_length[4]'
+			],
+			'messageErreur' => [
+				'email' => [
+					'required'    => 'L\'adresse email est obligatoire.',
+					'valid_email' => 'Veuillez entrer une adresse email valide.'
+				],
+				'mdp' => [
+					'required'   => 'Le mot de passe est obligatoire.',
+					'min_length' => 'Le mot de passe doit contenir au moins 4 caractères.'
+				]
+			]
+		];
 	}
 } 

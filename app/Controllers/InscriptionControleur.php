@@ -41,7 +41,11 @@ class InscriptionControleur extends BaseController {
 			
 				$estEnvoye = $this->envoyerMailActivation($email,$jetonModele->recupererJeton($idJeton));
 
-				if($estEnvoye) return view('succes');
+				if($estEnvoye) {
+					session()->setFlashdata('inscriptionReussie', true);
+					return redirect()->to('inscription');
+				}				
+				
 				
 				$erreurs = ["Mail pas envoyé"];
 			}
