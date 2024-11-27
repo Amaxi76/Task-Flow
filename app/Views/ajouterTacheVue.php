@@ -4,12 +4,12 @@
 	<input id="echeance" type="date" placeholder="Echéance">
 	<select id="id_priorite">
 		<?php foreach ($statuts as $statut) : ?>
-			<option value= <?= esc($statut['id_statut']) ?> ><?= esc($statut['libelle']) ?></option>
+			<option value= <?= esc($statut['id']) ?> ><?= esc($statut['libelle']) ?></option>
 		<?php endforeach; ?>
 	</select>
 	<select id="id_statut">
 		<?php foreach ($priorites as $priorite) : ?>
-			<option value= <?= esc($priorite['id_priorite']) ?> ><?= esc($priorite['libelle']) ?></option>
+			<option value= <?= esc($priorite['id']) ?> ><?= esc($priorite['libelle']) ?></option>
 		<?php endforeach; ?>
 	</select>
 	
