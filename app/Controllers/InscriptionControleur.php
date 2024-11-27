@@ -91,17 +91,26 @@ class InscriptionControleur extends BaseController {
 
 	public function envoyerMailActivation($email, $jetons){
 		$activationLien = site_url("/inscription/activationCompte/$jetons");
-		$message        = "Cliquez sur le lien pour activer votre compte : $activationLien";
-
+		
+		// Préparer les données pour la vue
+		$data = [
+			'activationLien' => $activationLien
+		];
+		
+		// Générer le contenu HTML en utilisant view()
+		$message = view('email/activationMail', $data);
+	
 		$emailService = \Config\Services::email();
-		$emailService->setTo($email);
-		$emailService->setFrom($emailService->SMTPUser);
-		$emailService->setSubject('[noreply] Confirmation d\'inscription');
-		$emailService->setMessage($message);
-
+		$emailService->setTo      ($email);
+		$emailService->setFrom    ($emailService->SMTPUser);
+		$emailService->setSubject ('[noreply] Confirmation d\'inscription');
+		$emailService->setMessage ($message);
+		$emailService->setMailType('html');
+	
 		return $emailService->send(false);
 	}
-
+	
+	
 	/**
 	 * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
 	 * @return array tableau contenant les règles et les messages d'erreurs associés
