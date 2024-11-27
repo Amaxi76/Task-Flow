@@ -33,13 +33,13 @@ VALUES
     ('Basse', 65280);      -- Vert
 
 -- Insérer des statuts pour utilisateurs
-INSERT INTO taskflow.StatutUtilisateur (id_statut, id_utilisateur, estModifiable)
+INSERT INTO taskflow.StatutUtilisateur (id_statut, id_utilisateur, est_modifiable)
 VALUES
     (1, 1, TRUE), -- John Doe - En attente
     (2, 2, FALSE); -- Jane Doe - En cours
 
 -- Insérer des priorités pour utilisateurs
-INSERT INTO taskflow.PrioriteUtilisateur (id_priorite, id_utilisateur, estModifiable)
+INSERT INTO taskflow.PrioriteUtilisateur (id_priorite, id_utilisateur, est_modifiable)
 VALUES
     (4, 1, TRUE), -- John Doe - Haute
     (5, 2, TRUE); -- Jane Doe - Moyenne
