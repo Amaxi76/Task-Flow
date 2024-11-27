@@ -61,3 +61,4 @@ Développer un outil d'organisation et de priorisation des tâches quotidiennes.
 - Gestion avancée des rappels (par SMS, notifications push).
 - Exportation des tâches sous format PDF ou Excel.
 - Thèmes personnalisables pour l’interface utilisateur.
+- Au survol du délais, affichier la date si c'est affiché en jour 

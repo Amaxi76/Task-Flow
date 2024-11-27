@@ -1,0 +1,43 @@
+.carte-popup {
+	width: fit-content;
+}
+
+input {
+	margin: 0;
+	outline: none;
+
+}
+
+input[type="submit"] {
+	border: none;
+	box-shadow: none;
+}
+
+.carte-ajout {
+	display: flex;
+	justify-content: center;
+	padding-bottom: 1rem;
+}
+
+input, textarea {
+	margin: 0;
+	width: 100%;
+	resize: none;
+	border: none;
+	border-radius: 0.3rem;
+	outline: none;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea {
+	border: 0.1rem solid #838383;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: #379EE8;
+	box-shadow: 0 0 5px #379EE8;
+	border-radius: 0.3rem;
+
+}

@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Taches;
 use CodeIgniter\Model;
-class TacheModele extends Model
+class ModeleTaches extends Model
 {
 	protected $table         = 'taches';
 	protected $primaryKey    = 'id';
@@ -9,10 +9,10 @@ class TacheModele extends Model
 		'id_utilisateur',
 		'titre',
 		'detail',
-        'ajoute_le',
-        'rappel',
-        'echeance',
-        'id_priorite',
-        'id_statut'
+		'ajoute_le',
+		'rappel',
+		'echeance',
+		'id_priorite',
+		'id_statut'
 	];
 }

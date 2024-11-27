@@ -14,7 +14,14 @@ CI_ENVIRONMENT = production
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = 'CHEMIN_SERVEUR' # Exemple : 'http://localhost/Task-Flow/public/'
+app.baseURL = CHEMIN_SERVEUR # Exemple : http://localhost/Task-Flow/public/
+
+#--------------------------------------------------------------------
+# EMAIL
+#--------------------------------------------------------------------
+
+email.SMTPUser = ADRESSE_MAIL
+email.SMTPPass = 'TOKEN_MAIL'
 
 #--------------------------------------------------------------------
 # DATABASE
