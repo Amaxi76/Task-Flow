@@ -96,9 +96,7 @@ class InscriptionControleur extends BaseController {
 		$activationLien = base_url("inscription/activationCompte/$jetons");
 		
 		// Préparer les données pour la vue
-		$data = [
-			'activationLien' => $activationLien
-		];
+		$data = ['activationLien' => $activationLien];
 		
 		// Générer le contenu HTML en utilisant view()
 		$message = view('email/activationMail', $data);
