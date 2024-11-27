@@ -33,6 +33,7 @@ body {
     border-color: #1C4973 !important; /* Couleur de la bordure du bouton */
     color: #ffffff !important; /* Couleur du texte du bouton en blanc */
     height: 3rem;
+	margin-top: 1rem;
 }
 
 .btn-light:hover {
@@ -67,3 +68,32 @@ h2.text-center {
 .md-6 {
 	flex: 1; /* Chaque section prend 50% de la largeur */
 }
+
+.form-check-input {
+	border: 0.13rem solid !important;
+    border-color: #1C4973 !important;
+}
+
+.form-check-input:checked {
+    background-color: #1C4973 !important;
+    border-color: #1C4973 !important;
+}
+
+.d-flex.justify-content-between.align-items-center {
+    margin-bottom: 2rem !important;
+}
+
+.password-toggle-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #1C4973;
+    z-index: 10;
+}
+
+.form-floating .password-input {
+    padding-right: 40px;
+}
+

@@ -8,14 +8,13 @@ use Config\Pager;
 
 class TachesControleur extends BaseController 
 { 
-	public function index() { 
-		helper(['form']);
 
-		// Données générales de la page
+	public function index() 
+	{ 
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
 
-		// Charger les modèles
+		// Charger le modèle des tâches
 		$tacheModele = new ModeleVueCartesTaches();
 		$intituleModele = new ModeleIntitules();
 
@@ -30,14 +29,11 @@ class TachesControleur extends BaseController
 		$dataCorps['priorites']   = $intituleModele->getPrioritesUtilisateur(1);
 		$dataCorps['pagerTaches'] = $tacheModele->pager;
 
-		// Charger la vue
-		return view('commun/entete', $dataEntete) . view('taches/afficherTachesVue', $dataCorps) . view('commun/piedpage'); 
+		// Charger la vue 
+		return view('commun/enteteTache', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
 	}
 
-	public function creer() {
-		helper(['form']);
-		
-		// Données générales de la page
+	public function ajouter() {
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Ajouter une tâche';
 
