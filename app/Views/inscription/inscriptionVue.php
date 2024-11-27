@@ -34,7 +34,7 @@
                 <?php echo form_close(); ?>
 
                 <p class="text-center mt-3">
-                    <span>Déjà inscrit ?</span> <a href="<?= site_url('/connexion') ?>" class="text-white">Connectez-vous</a>
+                    <span>Déjà inscrit ?</span> <a href="/connexion" class="text-white">Connectez-vous</a>
                 </p>
             </div>
 
@@ -44,6 +44,3 @@
             </div>
         </div>
     </div>
-
-    <script src="<?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-</body>
