@@ -27,7 +27,6 @@ class ActivationCompteControleur extends Controller {
 		}
 		else 
 		{
-
 			//return view("/inscription/jeton_expireVue");
 		}
 	}
