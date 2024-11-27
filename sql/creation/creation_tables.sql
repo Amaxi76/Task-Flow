@@ -1,9 +1,6 @@
--- Création du schéma
-CREATE SCHEMA IF NOT EXISTS taskflow;
-
-    /*---------------------------------------*/
-    /*              Utilisateurs             */
-    /*---------------------------------------*/ 
+/*---------------------------------------*/
+/*              Utilisateurs             */
+/*---------------------------------------*/ 
 
 -- Table Jetons
 CREATE TABLE taskflow.Jetons (
@@ -37,35 +34,19 @@ CREATE TABLE taskflow.Utilisateurs (
     FOREIGN KEY (id_jeton)    REFERENCES taskflow.Jetons   (id)
 );
 
-    /*---------------------------------------*/
-    /*                 Taches                */
-    /*---------------------------------------*/ 
+/*---------------------------------------*/
+/*                 Taches                */
+/*---------------------------------------*/ 
 
--- Table Intitule
-CREATE TABLE taskflow.Intitule (
-    id      SERIAL       PRIMARY KEY,
-    libelle VARCHAR(255) NOT NULL,
-    couleur INT          NOT NULL DEFAULT 16777216 -- blanc par défaut : 256*256*256 - 1
-);
-
--- Table StatutUtilisateur
-CREATE TABLE taskflow.StatutUtilisateur (
-    id_statut      INT     NOT NULL,
-    id_utilisateur INT     NOT NULL,
-    estModifiable  BOOLEAN NOT NULL DEFAULT TRUE,
-    PRIMARY KEY (id_statut, id_utilisateur),
-    FOREIGN KEY (id_statut)                 REFERENCES taskflow.Intitule    (id),
-    FOREIGN KEY (id_utilisateur)            REFERENCES taskflow.Utilisateurs(id_personne)
-);
-
--- Table PrioriteUtilisateur
-CREATE TABLE taskflow.PrioriteUtilisateur (
-    id_priorite    INT     NOT NULL,
-    id_utilisateur INT     NOT NULL,
-    estModifiable  BOOLEAN NOT NULL,
-    PRIMARY KEY (id_priorite, id_utilisateur),
-    FOREIGN KEY (id_priorite)                 REFERENCES taskflow.Intitule    (id),
-    FOREIGN KEY (id_utilisateur)              REFERENCES taskflow.Utilisateurs(id_personne)
+-- Table Intitules
+CREATE TABLE taskflow.Intitules (
+    id              SERIAL       PRIMARY KEY,
+    id_utilisateur  INT          NOT NULL,
+    type_intitule   VARCHAR(20) NOT NULL CHECK (type_intitule IN ('statut', 'priorite')),
+    libelle         VARCHAR(30) NOT NULL,
+    couleur         VARCHAR(7)   NOT NULL DEFAULT '#B9B9B9', -- gris par défaut
+    est_supprimable BOOLEAN      NOT NULL DEFAULT TRUE,
+    FOREIGN KEY (id_utilisateur) REFERENCES taskflow.Utilisateurs(id_personne)
 );
 
 -- Table Taches
@@ -80,13 +61,16 @@ CREATE TABLE taskflow.Taches (
     id_priorite    INT       NOT NULL,
     id_statut      INT       NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_utilisateur)     REFERENCES taskflow.Utilisateurs(id_personne),
-    FOREIGN KEY (id_statut)          REFERENCES taskflow.Intitule    (id)
+    FOREIGN KEY (id_utilisateur) REFERENCES taskflow.Utilisateurs(id_personne),
+    FOREIGN KEY (id_statut)      REFERENCES taskflow.Intitules    (id),
+    FOREIGN KEY (id_priorite)    REFERENCES taskflow.Intitules    (id)
+    /*CHECK (id_priorite IN (SELECT id FROM taskflow.Intitules WHERE type_intitule = 'priorite')),
+    CHECK (id_statut   IN (SELECT id FROM taskflow.Intitules WHERE type_intitule = 'statut'))*/
 );
 
-    /*---------------------------------------*/
-    /*              Commentaires             */
-    /*---------------------------------------*/ 
+/*---------------------------------------*/
+/*              Commentaires             */
+/*---------------------------------------*/ 
 
 -- Table Commentaires
 CREATE TABLE taskflow.Commentaires (
