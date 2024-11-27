@@ -24,7 +24,7 @@ $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePa
 
 //Affichage des tâches
 $routes->get('/taches','TachesControleur::index');
-$routes->get('/taches/ajouter','TachesControleur::ajouter');
-$routes->post('/taches/inserer','TachesControleur::ajouter');
+$routes->get('/taches/creer','TachesControleur::creer');
+$routes->post('/taches/stocker','TachesControleur::stocker');
 
 

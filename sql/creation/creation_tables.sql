@@ -42,8 +42,8 @@ CREATE TABLE taskflow.Utilisateurs (
 CREATE TABLE taskflow.Intitules (
     id              SERIAL       PRIMARY KEY,
     id_utilisateur  INT          NOT NULL,
-    type_intitule   VARCHAR(255) NOT NULL CHECK (type_intitule IN ('statut', 'priorite')),
-    libelle         VARCHAR(255) NOT NULL,
+    type_intitule   VARCHAR(20) NOT NULL CHECK (type_intitule IN ('statut', 'priorite')),
+    libelle         VARCHAR(30) NOT NULL,
     couleur         VARCHAR(7)   NOT NULL DEFAULT '#B9B9B9', -- gris par défaut
     est_supprimable BOOLEAN      NOT NULL DEFAULT TRUE,
     FOREIGN KEY (id_utilisateur) REFERENCES taskflow.Utilisateurs(id_personne)

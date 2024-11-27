@@ -20,7 +20,8 @@
 			<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M37.5 30H30M30 30H22.5M30 30V22.5M30 30V37.5M55 30C55 43.8071 43.8071 55 30 55C16.1929 55 5 43.8071 5 30C5 16.1929 16.1929 5 30 5C43.8071 5 55 16.1929 55 30Z" stroke-width="3" stroke-linecap="round"/>
 			</svg>
-			<button id="ajout-bouton">Ajouter une tâche</button>
+			<a id="ajout-bouton" href="/taches/creer">Ajouter une tâche</a>
+			<!--<button id="ajout-bouton">Ajouter une tâche</button> TODO: à supprimer -->
 		</div>
 
 		<div class="button secondary-button">
