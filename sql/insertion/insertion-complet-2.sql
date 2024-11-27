@@ -23,7 +23,7 @@ INSERT INTO taskflow.Inscriptions (id_personne, id_jeton) VALUES
 (5, 5);
 
 -- Insérer 5 utilisateurs dans la table Utilisateurs
-INSERT INTO taskflow.Utilisateurs (id_personne, id_jeton) VALUES
+INSERT INTO taskflow.Utilisateurs (id_personne, id_jeton_resetMdp) VALUES
 (1, 1),
 (2, 2),
 (3, 3),

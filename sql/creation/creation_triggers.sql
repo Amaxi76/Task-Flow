@@ -27,7 +27,7 @@ CREATE TRIGGER trigger_insererIntitulesNouveauUtilisateur
         EXECUTE FUNCTION taskflow.insererIntitulesNouveauUtilisateur();
 
 
-
+/*
 -- Trigger pour vérifer que les intitules inseres dans les taches correspondent bien à ceux de l'utilisateur et au type attendu
 
 CREATE FUNCTION taskflow.verifierIntitulesTache() RETURNS TRIGGER AS
@@ -49,4 +49,4 @@ LANGUAGE plpgsql;
 CREATE TRIGGER trigger_verifierIntitulesTache
     BEFORE INSERT OR UPDATE ON taskflow.Taches
     FOR EACH ROW
-        EXECUTE FUNCTION taskflow.verifierIntitulesTache();
+        EXECUTE FUNCTION taskflow.verifierIntitulesTache();*/
