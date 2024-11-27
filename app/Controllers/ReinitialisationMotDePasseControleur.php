@@ -67,11 +67,13 @@ class ReinitialisationMotDePasseControleur extends Controller
 
 				$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
 
-				$utilisateurModele->update($idPersonne,["id_jeton" => null]); //deliée le jeton et l'utilisateur
-				$jetonModele      ->delete($jeton['id']); //supprimer le jeton
-
 				helper(['form']);
-				return view(($estMiseAJour ? '/connexion/connexionVue' : '/connexion/motDePasseOublie')); 
+				if($estMiseAJour){
+					$utilisateurModele->update($idPersonne,["id_jeton" => null]); //deliée le jeton et l'utilisateur
+					$jetonModele      ->delete($jeton['id']); //supprimer le jeton
+					return redirect()->to('connexion');
+				}
+				return view(('/connexion/motDePasseOublie')); 
 			}
 			else{
 				return view("/connexion/motDePasseOublie");
