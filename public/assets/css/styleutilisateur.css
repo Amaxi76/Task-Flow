@@ -5,7 +5,7 @@ body {
 }
 
 .box {
-    width: 800px; /* Largeur de la boîte */
+    width: 1000px; /* Largeur de la boîte */
     border-radius: 8px; /* Coins arrondis */
     overflow: hidden; /* Masquer les débordements */
     display: flex; /* Utiliser flexbox pour aligner les sections */
@@ -32,6 +32,7 @@ body {
     background-color: #1C4973 !important; /* Couleur de fond du bouton */
     border-color: #1C4973 !important; /* Couleur de la bordure du bouton */
     color: #ffffff !important; /* Couleur du texte du bouton en blanc */
+    height: 3rem;
 }
 
 .btn-light:hover {
@@ -39,7 +40,7 @@ body {
 }
 
 .logo {
-    max-width: 200px; /* Largeur maximale du logo */
+    width: 15rem; /* Largeur du logo */
 }
 
 h2.text-center {
@@ -49,12 +50,6 @@ h2.text-center {
 
 .form-floating.mb-3:last-of-type {
     margin-bottom: 3rem !important; /* Plus d'espace avant le bouton */
-}
-
-.form-floating {
-    margin-left: auto;
-    margin-right: auto;
-    width: calc(100% - 2rem); /* Assurer un espace uniforme à gauche et à droite */
 }
 
 .text-center.mt-3 {

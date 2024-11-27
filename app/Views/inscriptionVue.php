@@ -39,7 +39,7 @@
             </div>
 
             <!-- Section droite avec le logo -->
-            <div class="md-6 d-flex align-items-center justify-content-center bg-white">
+            <div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
                 <img src="<?= base_url('assets/images/Logo.png') ?>" alt="Logo" class="logo mx-auto d-block">
             </div>
         </div>

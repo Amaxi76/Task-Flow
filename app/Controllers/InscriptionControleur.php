@@ -13,7 +13,7 @@ class InscriptionControleur extends BaseController
 		helper(['form']);
 		echo view('commun/entete');
 		echo view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
-		//echo view('commun/piedpage');
+		echo view('commun/piedpage');
 	}
 
 	/**
