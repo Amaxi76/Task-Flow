@@ -60,7 +60,7 @@
 			<div class="content">
 				<h1>Activation de votre compte</h1>
 				<p>Merci de vous être inscrit. Pour activer votre compte, veuillez cliquer sur le bouton ci-dessous :</p>
-				<a href="<?= $data['activationLien'] ?>" class="btn">Activer mon compte</a>
+				<a href="<?= esc($activationLien) ?>" class="btn">Activer mon compte</a>
 			</div>
 		</div>
 	</div>

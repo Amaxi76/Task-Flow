@@ -5,7 +5,7 @@ use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
 class InscriptionControleur extends BaseController { 
-	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+2 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
 	public function index() { 
 		helper(['form']);
@@ -91,7 +91,7 @@ class InscriptionControleur extends BaseController {
 
 
 	public function envoyerMailActivation($email, $jetons){
-		$activationLien = site_url("/inscription/activationCompte/$jetons");
+		$activationLien = base_url("inscription/activationCompte/$jetons");
 		
 		// Préparer les données pour la vue
 		$data = [
