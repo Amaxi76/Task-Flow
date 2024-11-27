@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
+use Config\Pager;   
 
 class TachesControleur extends BaseController 
 { 
@@ -17,6 +18,10 @@ class TachesControleur extends BaseController
 		// Charger les modèles
 		$tacheModele = new ModeleVueCartesTaches();
 		$intituleModele = new ModeleIntitules();
+
+		// Configurer le pager
+		$configPager = config(Pager::class); 
+		$configPager->perPage = 4;
 
 		// Charger les données paginées
 		$dataCorps = [];

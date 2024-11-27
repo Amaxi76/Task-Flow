@@ -86,6 +86,10 @@
 	<?php endforeach; ?>
 </div>
 
+<div id="pager">
+	<?= $pagerTaches->links('default','default_full') ?> 
+</div> 
+
 <div class="overlay">
 	<div class="carte carte-popup" hexa="#379EE8">
 		<?= form_open('taches/stocker') ?>
