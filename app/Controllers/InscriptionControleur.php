@@ -4,12 +4,10 @@ use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
-class InscriptionControleur extends BaseController 
-{ 
+class InscriptionControleur extends BaseController { 
 	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
-	public function index() 
-	{ 
+	public function index() { 
 		helper(['form']);
 		echo view('commun/entete');
 		echo view('inscriptionVue'); //TODO: changer en fonction du nom de la vue
@@ -19,13 +17,15 @@ class InscriptionControleur extends BaseController
 	/**
 	 * Vérifie que les champs rentrés sont valides et inscrit l'utilisateur dans la table personne et inscription.
 	*/
-	public function inscription()
-	{
+	public function inscription(){
 		$validation = $this->getRegleEtMessageInscription();
 		$estValide  = $this->validate($validation['regles'],$validation['messageErreur']);
 
-		if($estValide)
-		{
+		$email       = $this->request->getVar('email');
+
+		$erreurs = [];
+		
+		if($estValide){
 			$email       = $this->request->getVar('email');
 			$nom         = $this->request->getVar( 'nom' ); 
 			$mdp         = $this->request->getVar( 'mdp' );
@@ -33,8 +33,7 @@ class InscriptionControleur extends BaseController
 			$idPersonne  = $this->creationPersonne($email,$nom,$mdp); //insertion d'une personne dans la table Personne et récupération de l'id
 			$idJeton     = $this->creationJetonActivation(); //insertion d'un jeton dans la table jeton et récupération de l'id 
 
-			if(isset($idPersonne) && isset($idJeton)) 
-			{
+			if(isset($idPersonne) && isset($idJeton)) {
 				$inscriptionModele = new InscriptionsModele();
 				$inscriptionModele->insert(['id_personne' => $idPersonne, 'id_jeton' => $idJeton]); //insertion dans la table inscription
 
@@ -42,15 +41,18 @@ class InscriptionControleur extends BaseController
 			
 				$estEnvoye = $this->envoyerMailActivation($email,$jetonModele->recupererJeton($idJeton));
 
-				return view ($estEnvoye ? 'succes' : ''); //redirige vers un ecran d'attente ? 
+				if($estEnvoye) return view('succes');
+				
+				$erreurs = ["Mail pas envoyé"];
 			}
 		}
-		else
-		{
-			helper(['form']); 	
+		else{
 			$erreurs = $this->validator->getErrors();
-			return view('inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
 		}
+
+		helper(['form']); 	
+		return view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+
 	}
 
 	/**
@@ -61,12 +63,10 @@ class InscriptionControleur extends BaseController
 	 * @param string $mdp   mot de passe de la personne
 	 * @return int id de la personne qui vient d'être insérer
 	 */
-	public function creationPersonne($email,$nom,$mdp)
-	{
+	public function creationPersonne($email,$nom,$mdp){
 		$personneModele = new PersonneModele();
 
-		$personne = 
-		[
+		$personne = [
 			'email' => $email,
 			'nom'   => $nom,
 			'mdp'   => password_hash($mdp,PASSWORD_DEFAULT)
@@ -78,8 +78,7 @@ class InscriptionControleur extends BaseController
 	/**
 	 * Crée et insert un nouveau jeton
 	 */
-	public function creationJetonActivation()
-	{
+	public function creationJetonActivation(){
 		$jetonModele = new JetonsModele();
 		$jeton = [
 			'jeton'      => bin2hex(random_bytes(8)),
@@ -90,15 +89,14 @@ class InscriptionControleur extends BaseController
 	}
 
 
-	public function envoyerMailActivation($email,$jetons)
-	{
-		$activationLien = site_url("activationCompte/$jetons");
+	public function envoyerMailActivation($email, $jetons){
+		$activationLien = site_url("/inscription/activationCompte/$jetons");
 		$message        = "Cliquez sur le lien pour activer votre compte : $activationLien";
 
 		$emailService = \Config\Services::email();
 		$emailService->setTo($email);
 		$emailService->setFrom($emailService->SMTPUser);
-		$emailService->setSubject('[noreply] Confirmation d\'inscripition');
+		$emailService->setSubject('[noreply] Confirmation d\'inscription');
 		$emailService->setMessage($message);
 
 		return $emailService->send(false);
@@ -108,8 +106,7 @@ class InscriptionControleur extends BaseController
 	 * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
 	 * @return array tableau contenant les règles et les messages d'erreurs associés
 	 */
-	private function getRegleEtMessageInscription()
-	{
+	private function getRegleEtMessageInscription(){
 		return [
 			'regles' => [
 				'email'        => 'required|valid_email',
