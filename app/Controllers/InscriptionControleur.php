@@ -10,8 +10,8 @@ class InscriptionControleur extends BaseController {
 	public function index() { 
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('/inscription/inscriptionVue'); //TODO: changer en fonction du nom de la vue
-		//echo view('commun/piedpage');
+		echo view('inscription/inscriptionVue'); //TODO: changer en fonction du nom de la vue
+		echo view('commun/piedpage');
 	}
 
 	/**
@@ -50,9 +50,10 @@ class InscriptionControleur extends BaseController {
 			$erreurs = $this->validator->getErrors();
 		}
 
-		helper(['form']); 	
-		return view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
-
+		helper(['form']);
+		echo view('commun/entete');
+		echo view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+		echo view('commun/piedpage');
 	}
 
 	/**

@@ -12,7 +12,9 @@ class ConnexionControleur extends BaseController
 	public function index()
 	{
 		helper(['form']);
-		return view('connexion/connexionVue');
+		echo view('commun/entete');
+		echo view('connexion/connexionVue');
+		echo view('commun/piedpage');
 	}
 
 	public function connexion()
