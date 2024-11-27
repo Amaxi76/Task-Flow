@@ -28,7 +28,7 @@ class ReinitialisationMotDePasseControleur extends Controller
 		$jetonObject = $jetonModele->where("jeton",$jeton)->first();
 	
 		$utilisateurModele = new UtilisateurModele();
-		$jetonUtilisateur  = $utilisateurModele->where("id_jeton",$jetonObject['id'])->first();
+		$jetonUtilisateur  = $utilisateurModele->where("id_jeton_resetmdp",$jetonObject['id'])->first();
 
 		return isset($jetonUtilisateur);
 	}
@@ -50,14 +50,14 @@ class ReinitialisationMotDePasseControleur extends Controller
 		];
 
 		if($this->validate($regles,$messagesErreurs)) {
-			$jeton              = $this->request->getVar('jeton'       );
-			$nouveauMdp         = $this->request->getVar('mdp'         );
+			$jeton              = $this->request->getVar('jeton');
+			$nouveauMdp         = $this->request->getVar('mdp'  );
 
 			$jetonModele       = new JetonsModele     ();
 			$utilisateurModele = new UtilisateurModele();
 
-			$jeton             = $jetonModele      ->where("jeton"   ,$jeton      )->first(); //récuperer le jeton dans la bado correspondant au jeton donnée par mail 
-			$utilisateur       = $utilisateurModele->where("id_jeton",$jeton['id'])->first(); //Réécupérer la personne concerné par l'id_jeton
+			$jeton             = $jetonModele      ->where("jeton"            ,$jeton      )->first(); //récuperer le jeton dans la bado correspondant au jeton donnée par mail 
+			$utilisateur       = $utilisateurModele->where("id_jeton_resetmdp",$jeton['id'])->first(); //Réécupérer la personne concerné par l'id_jeton
 
 			$idPersonne = $utilisateur['id_personne'];
 
@@ -67,11 +67,13 @@ class ReinitialisationMotDePasseControleur extends Controller
 
 				$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
 
-				$utilisateurModele->update($idPersonne,["id_jeton" => null]); //deliée le jeton et l'utilisateur
-				$jetonModele      ->delete($jeton['id']); //supprimer le jeton
-
 				helper(['form']);
-				return view(($estMiseAJour ? '/connexion/connexionVue' : '/connexion/motDePasseOublie')); 
+				if($estMiseAJour){
+					$utilisateurModele->update($idPersonne,["id_jeton_resetmdp" => null]); //deliée le jeton et l'utilisateur
+					$jetonModele      ->delete($jeton['id']); //supprimer le jeton
+					return redirect()->to('connexion');
+				}
+				return view(('/connexion/motDePasseOublie')); 
 			}
 			else{
 				return view("/connexion/motDePasseOublie");

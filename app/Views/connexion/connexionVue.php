@@ -41,8 +41,8 @@
 				<?php echo form_close(); ?>
 
 				<p class="text-center mt-3">
-                    <span>Pas encore inscrit ?</span> <a href="/inscription" class="text-white">Inscrivez-vous</a>
-                </p>
+					<span>Pas encore inscrit ?</span> <a href="/inscription" class="text-white">Inscrivez-vous</a>
+				</p>
 			</div>
 		</div>
-    </div>
+	</div>

@@ -43,13 +43,14 @@ class ActivationCompteControleur extends Controller {
 
 		if($idPersonne) {
 			$utilisateur = [
-				'id_personne' => $idPersonne,
-				'id_jeton'    => null
+				'id_personne'       => $idPersonne,
+				'id_jeton_resetmdp' => null
+
 			];
 
-			$utilisateurModele->insert($utilisateur,false);
-			$inscriptionModele->where('id_personne', $idPersonne)->delete();
-			$jetonModele      ->where('id'         , $idJeton   )->delete();
+			$utilisateurModele->insert($utilisateur ,false    );
+			$inscriptionModele->where ('id_personne', $idPersonne)->delete();
+			$jetonModele      ->where ('id'         , $idJeton   )->delete();
 
 			return $idPersonne;
 		}
