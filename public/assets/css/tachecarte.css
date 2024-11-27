@@ -24,6 +24,7 @@ svg, svg * {
     width: 1.5rem;
     height: 1.5rem;
 	stroke: white;
+	flex-shrink: 0;
 }
 
 .carte-entete {
@@ -60,7 +61,7 @@ svg, svg * {
 }
 
 .carte-description {
-	padding: 1rem 1.5rem 1rem 1rem;
+	padding: 1rem 1rem 1rem 1rem;
 }
 
 .carte-description p {
