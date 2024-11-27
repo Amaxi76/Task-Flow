@@ -203,7 +203,7 @@ class ConnexionControleur extends BaseController
 	{
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('connexion/formulaireEnvoieMailVue');
+		echo view('connexion/motDePasseOublieVue');
 		echo view('commun/piedpage');
 	}
 

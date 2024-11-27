@@ -1,16 +1,13 @@
 
 <body>
-
-<link href="/assets/css/styleutilisateur.css" rel="stylesheet">
-<script src="/assets/js/motdepasse.js"></script>
-
-
+	<script src="<?= base_url('assets/js/motdepasse.js') ?>"></script>
+	<link href="<?= base_url('assets/css/styleutilisateur.css') ?>" rel="stylesheet">
 
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
 			<!-- Section gauche avec le logo -->
 			<div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
-				<img src="/assets/images/Logo.svg" alt="Logo" class="logo mx-auto d-block">
+				<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo" class="logo mx-auto d-block">
 			</div>
 			<!-- Section droite avec le formulaire -->
 			<div class="md-6 bg-custom text-white p-4">
@@ -33,7 +30,7 @@
 	<div class="toast-container position-fixed top-0 end-0 p-3">
 		<div id="mailEnvoyeToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
 			<div class="toast-header">
-				<img src="/assets/images/LogoSeul.svg" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
+				<img src="<?= base_url('assets/images/Logo.svg') ?>" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
 				<strong class="me-auto">TaskFlow</strong>
 				<small>À l'instant</small>
 				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -52,4 +49,3 @@
 		<?php endif; ?>
 	});
 	</script>
-

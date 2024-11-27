@@ -1,12 +1,12 @@
 <body>
+	<script src="<?= base_url('assets/js/motdepasse.js') ?>"></script>
+	<link href="<?= base_url('assets/css/styleutilisateur.css') ?>" rel="stylesheet">
 
-<script src="assets/js/motdepasse.js"></script>
-<link href="assets/css/styleutilisateur.css" rel="stylesheet">
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
 			<!-- Section gauche avec le logo -->
 			<div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
-				<img src="assets/images/Logo.svg" alt="Logo" class="logo mx-auto d-block">
+				<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo" class="logo mx-auto d-block">
 			</div>
 			<!-- Section droite avec le formulaire -->
 			<div class="md-6 bg-custom text-white p-4">
@@ -32,7 +32,7 @@
 						<?php echo form_checkbox("seSouvenir", "1", "", 'class="form-check-input" id="seSouvenir"') ?>
 						<?php echo form_label('Se souvenir de moi', 'seSouvenir', ['class' => 'form-check-label']); ?>
 					</div>
-					<a href="/connexion/mdp_oublie" class="text-white text-decoration-none">Mot de passe oublié ?</a>
+					<a href="<?= base_url('connexion/mdp_oublie') ?>" class="text-white text-decoration-none">Mot de passe oublié ?</a>
 				</div>
 
 				<?= validation_show_error('password') ?>
@@ -41,7 +41,7 @@
 				<?php echo form_close(); ?>
 
 				<p class="text-center mt-3">
-					<span>Pas encore inscrit ?</span> <a href="/inscription" class="text-white">Inscrivez-vous</a>
+					<span>Pas encore inscrit ?</span> <a href="<?= base_url('inscription') ?>" class="text-white">Inscrivez-vous</a>
 				</p>
 			</div>
 		</div>

@@ -1,8 +1,7 @@
 <body>
 
-<script src="/assets/js/motdepasse.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<link href="/assets/css/styleutilisateur.css" rel="stylesheet">
+	<script src="<?= base_url('assets/js/motdepasse.js') ?>"></script>
+	<link href="<?= base_url('assets/css/styleutilisateur.css') ?>" rel="stylesheet">
 
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
@@ -37,7 +36,7 @@
 			</div>
 			<!-- Section droite avec le logo -->
 			<div class="md-6 d-flex align-items-center justify-content-center bg-white">
-				<img src="assets/images/Logo.svg" alt="Logo" class="logo mx-auto d-block">
+				<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo" class="logo mx-auto d-block">
 			</div>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/tachevue.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
-<script src=<?= base_url('assets/js/carte.js') ?>></script>
+<script src="<?= base_url('assets/js/carte.js') ?>"></script>
 
 <header id="up-link">
 	<div class="conteneur-entete">
