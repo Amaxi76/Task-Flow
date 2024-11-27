@@ -10,27 +10,24 @@ class ActivationCompteControleur extends Controller {
 	/**
 	 * Affiche la page de connexion si le jeton d'activation est valide
 	 * @param mixed $jeton jeton recupere par mail
-	 * @return string
 	 */
 	public function index($jeton){
-		helper(['form']);
+		helper(['form', 'url']); // Ajout du helper 'url' pour s'assurer que les fonctions de redirection sont disponibles
 		$jetonModele = new JetonsModele();
-		$jeton       = $jetonModele->where('jeton'       , $jeton)
-								   ->where('expiration >', date('Y-m-d H:i:s'))
-								   ->first();
+		$jeton = $jetonModele->where('jeton', $jeton)
+							 ->where('expiration >', date('Y-m-d H:i:s'))
+							 ->first();
 		if ($jeton)
 		{
 			$this->deplacementVersUtilisateur($jeton['id']);
-			echo view('commun/entete');
-			echo view("connexion/connexionVue"); //TODO:Voir avec les autres 
-			echo view('commun/piedpage');
+			return redirect()->to('connexion'); // Redirection vers la route '/connexion'
 		}
 		else 
 		{
-
-			//return view("/inscription/jeton_expireVue");
+			dd("je suis la");
 		}
 	}
+	
 	
 	/**
 	 * Deplacement de l'id_personne de la table inscription à la table utilisateur

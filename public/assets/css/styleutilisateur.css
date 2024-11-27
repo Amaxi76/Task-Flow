@@ -1,7 +1,7 @@
 /* styles.css */
 
 body {
-    background-color: #f8f9fa; /* Couleur de fond */
+	background-color: #f8f9fa; /* Couleur de fond */
 }
 
 .box {
@@ -12,20 +12,20 @@ body {
 }
 
 .bg-custom {
-    background-color: #379EE8; /* Couleur de fond personnalisée */
+	background-color: #379EE8; /* Couleur de fond personnalisée */
 }
 
 .form-floating label, .form-control {
-    color: #1C4973; /* Couleur du texte des labels et des champs */
+	color: #1C4973; /* Couleur du texte des labels et des champs */
 }
 
 .form-control {
-    border-color: #1C4973; /* Couleur de la bordure des champs */
+	border-color: #1C4973; /* Couleur de la bordure des champs */
 }
 
 .form-control:focus {
-    border-color: #1C4973; /* Couleur de la bordure lors du focus */
-    box-shadow: 0 0 0 0.25rem rgba(28, 73, 115, 0.25); /* Ombre lors du focus */
+	border-color: #1C4973; /* Couleur de la bordure lors du focus */
+	box-shadow: 0 0 0 0.25rem rgba(28, 73, 115, 0.25); /* Ombre lors du focus */
 }
 
 .btn-light {
@@ -36,7 +36,7 @@ body {
 }
 
 .btn-light:hover {
-    background-color: #163a5c !important; /* Couleur de fond au survol */
+	background-color: #163a5c !important; /* Couleur de fond au survol */
 }
 
 .logo {
@@ -44,26 +44,26 @@ body {
 }
 
 h2.text-center {
-    margin-bottom: 3rem !important; /* Plus d'espace après "Inscription" */
-    font-weight: bold; /* Mettre le texte en gras */
+	margin-bottom: 3rem !important; /* Plus d'espace après "Inscription" */
+	font-weight: bold; /* Mettre le texte en gras */
 }
 
 .form-floating.mb-3:last-of-type {
-    margin-bottom: 3rem !important; /* Plus d'espace avant le bouton */
+	margin-bottom: 3rem !important; /* Plus d'espace avant le bouton */
 }
 
 .text-center.mt-3 {
-    margin-top: 1.5rem !important;
+	margin-top: 1.5rem !important;
 }
 
 .text-center.mt-3 a {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 .text-center.mt-3 span {
-    color: #ffffff;
+	color: #ffffff;
 }
 
 .md-6 {
-    flex: 1; /* Chaque section prend 50% de la largeur */
+	flex: 1; /* Chaque section prend 50% de la largeur */
 }

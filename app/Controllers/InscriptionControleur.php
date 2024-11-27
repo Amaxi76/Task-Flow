@@ -5,7 +5,7 @@ use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
 class InscriptionControleur extends BaseController { 
-	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+2 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
 	public function index() { 
 		helper(['form']);
@@ -91,18 +91,27 @@ class InscriptionControleur extends BaseController {
 
 
 	public function envoyerMailActivation($email, $jetons){
-		$activationLien = site_url("/inscription/activationCompte/$jetons");
-		$message        = "Cliquez sur le lien pour activer votre compte : $activationLien";
-
+		$activationLien = base_url("inscription/activationCompte/$jetons");
+		
+		// Préparer les données pour la vue
+		$data = [
+			'activationLien' => $activationLien
+		];
+		
+		// Générer le contenu HTML en utilisant view()
+		$message = view('email/activationMail', $data);
+	
 		$emailService = \Config\Services::email();
-		$emailService->setTo($email);
-		$emailService->setFrom($emailService->SMTPUser);
-		$emailService->setSubject('[noreply] Confirmation d\'inscription');
-		$emailService->setMessage($message);
-
+		$emailService->setTo      ($email);
+		$emailService->setFrom    ($emailService->SMTPUser);
+		$emailService->setSubject ('[noreply] Confirmation d\'inscription');
+		$emailService->setMessage ($message);
+		$emailService->setMailType('html');
+	
 		return $emailService->send(false);
 	}
-
+	
+	
 	/**
 	 * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
 	 * @return array tableau contenant les règles et les messages d'erreurs associés
