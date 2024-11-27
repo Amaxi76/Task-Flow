@@ -30,7 +30,7 @@ class TachesControleur extends BaseController
 		$dataCorps['pagerTaches'] = $tacheModele->pager;
 
 		// Charger la vue 
-		return view('commun/enteteTache', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
+		return view('commun/entete', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
 	}
 
 	public function ajouter() {
