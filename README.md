@@ -22,3 +22,6 @@
     **(activer psql)**
     - `extension=pdo_pgsql`
     - `extension=pgsql`
+
+    **(activer envoi mail)**
+    - `extension=openssl`
