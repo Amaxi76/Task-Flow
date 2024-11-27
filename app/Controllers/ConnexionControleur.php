@@ -47,7 +47,7 @@ class ConnexionControleur extends BaseController
 				];
 				$session = session();
 				$session->set($donnee_session);
-				return redirect()->to('/test');
+				return redirect()->to('/taches');
 			}
 			else
 			{
