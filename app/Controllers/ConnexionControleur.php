@@ -96,8 +96,6 @@ class ConnexionControleur extends BaseController
 		return redirect()->to('connexion')->with('message', 'Vous êtes déconnecté avec succès.');
 	}
 
-
-
 	public function seSouvenirDeMoi($idPersonne)
 	{
 		//creation jeton
