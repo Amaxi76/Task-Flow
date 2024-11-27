@@ -1,22 +1,16 @@
-.conteneur {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	gap: 2rem;
-	padding: 3rem;
-}
-
 .carte {
 	box-sizing: border-box;
 	border-radius: 16px;
 	overflow: hidden;
 	width: 25rem;
+	height: fit-content;
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 	justify-content: space-between;
 	cursor: pointer;
+	background-color: white;
 }
 
 svg, svg * {
