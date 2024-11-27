@@ -23,6 +23,7 @@ class ReinitialisationMotDePasseControleur extends Controller
 	 * @return bool true si le jetons existe et lié
 	 */
 	public function verifierJeton($jeton){
+
 		$jetonModele = new JetonsModele();
 		$jetonObject = $jetonModele->where("jeton",$jeton)->first();
 	

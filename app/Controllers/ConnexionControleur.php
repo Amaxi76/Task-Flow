@@ -89,7 +89,7 @@ class ConnexionControleur extends BaseController
 
 		if($estLiee)
 		{
-			$lienReinitialisation = site_url("/reinitMdp/".$jeton['jeton']);
+			$lienReinitialisation = base_url("/connexion/mdp_oublie/reinit_mdp/".$jeton['jeton']);
 			$message = "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant ".$lienReinitialisation;
 
 			$emailService = \Config\Services::email();
@@ -104,9 +104,10 @@ class ConnexionControleur extends BaseController
 
 	public function creerJetonsReinitialisation($email)
 	{
+		$genereJeton = bin2hex(random_bytes(8));
 		$jetonsModele = new JetonsModele();
 		$jeton = [
-			'jeton'      => bin2hex(random_bytes(8)),
+			'jeton'      => $genereJeton,
 			'expiration' => date   ('Y-m-d H:i:s',strtotime(self::TEMPS_EXPIRATION)) 
 		];
 
@@ -114,7 +115,7 @@ class ConnexionControleur extends BaseController
 
 		$jetonAvecId = [
 			'id'         => $idJeton,
-			'jeton'      => bin2hex(random_bytes(8)),
+			'jeton'      => $genereJeton,
 			'expiration' => date   ('Y-m-d H:i:s',strtotime(self::TEMPS_EXPIRATION)) 
 		];
 
