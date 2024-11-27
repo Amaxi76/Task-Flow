@@ -44,8 +44,7 @@ class InscriptionControleur extends BaseController {
 				if($estEnvoye) {
 					session()->setFlashdata('inscriptionReussie', true);
 					return redirect()->to('inscription');
-				}				
-				
+				}
 				
 				$erreurs = ["Mail pas envoyé"];
 			}
@@ -93,7 +92,6 @@ class InscriptionControleur extends BaseController {
 		return $jetonModele->insert($jeton);
 	}
 
-
 	public function envoyerMailActivation($email, $jetons){
 		$activationLien = base_url("inscription/activationCompte/$jetons");
 		
@@ -104,14 +102,16 @@ class InscriptionControleur extends BaseController {
 		
 		// Générer le contenu HTML en utilisant view()
 		$message = view('email/activationMail', $data);
-	
+
+		
+
 		$emailService = \Config\Services::email();
 		$emailService->setTo      ($email);
 		$emailService->setFrom    ($emailService->SMTPUser);
 		$emailService->setSubject ('[noreply] Confirmation d\'inscription');
 		$emailService->setMessage ($message);
 		$emailService->setMailType('html');
-	
+
 		return $emailService->send(false);
 	}
 	

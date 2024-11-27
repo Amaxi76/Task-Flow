@@ -18,7 +18,7 @@ class ConnexionControleur extends BaseController
 	}
 
 	public function connexion(){
-
+		helper(['cookie']);
 		$validation = $this->getRegleEtMessageInscription();
 		$estValide  = $this->validate($validation['regles'],$validation['messageErreur']);
 
@@ -145,8 +145,6 @@ class ConnexionControleur extends BaseController
 
 		$personne   = $this->verifieExistance           ($email);
 		$jeton      = $this->creerJetonsReinitialisation($email);
-
-		//dd($personne,$jeton);
 
 		$estLiee = $this->lieeUtilisateurJeton($personne['id'],$jeton['id']);
 
