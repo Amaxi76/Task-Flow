@@ -14,7 +14,7 @@ class ConnexionControleur extends BaseController {
 	public function index(){
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('connexionVue');
+		echo view('connexion/connexionVue');
 		echo view('commun/piedpage');
 	}
 

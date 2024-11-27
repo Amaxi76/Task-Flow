@@ -1,23 +1,35 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<title>Connexion</title>
-	</head>
+<body>
+	<div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="box shadow-lg d-flex flex-row">
+			<!-- Section gauche avec le logo -->
+            <div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
+                <img src="<?= base_url('assets/images/Logo.png') ?>" alt="Logo" class="logo mx-auto d-block">
+            </div>
+            <!-- Section droite avec le formulaire -->
+            <div class="md-6 bg-custom text-white p-4">
+				<h2 class="text-center mb-4">Connexion</h2>
+				<?php echo form_open('/connexion', ['class' => 'needs-validation', 'novalidate' => '']); ?>
+				
+				<div class="form-floating mb-3">
+					<?php echo form_input('email', set_value('email'), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
+					<?php echo form_label('E-mail', 'email'); ?>
+					<?= validation_show_error('email') ?>
+				</div>
 
-	<body>
-		<h2>Connexion </h2>
-			<?php echo form_open('/connexion'); ?>
-			<?php echo form_label('Adresse e-mail', 'email'); ?>
-			<?php echo form_input('email', set_value('email'), 'required'); ?>
-			<?= validation_show_error('email') ?>
-		<br>
-			<?php echo form_label('Mot de passe', 'mdp'); ?>
-			<?php echo form_input('mdp', set_value('mdp'), 'required'); ?>
-			<?= validation_show_error('mdp') ?>
-		<br>
-		<a href="<?= site_url('/connexion/mdp_oublie') ?>">Mot de passe oublié ?</a>
-		<?php echo form_submit('submit', 'Envoyer'); ?>
-		<?php echo form_close(); ?>
-	</body>
-</html>
+				<div class="form-floating mb-3">
+					<?php echo form_input('mdp', set_value('mdp'), 'class="form-control" id="mdp" placeholder="Mot de passe" required'); ?>
+					<?php echo form_label('Mot de passe', 'mdp'); ?>
+					<?= validation_show_error('mdp') ?>
+				</div>
+
+				<?php echo form_submit('submit', 'Se connecter', 'class="btn btn-light w-100"'); ?>
+				<?php echo form_close(); ?>
+
+				<p class="text-center mt-3">
+					<a href="/connexion/mdp_oublie" class="text-white">Mot de passe oublié ?</a>
+				</p>
+			</div>
+		</div>
+    </div>
+
+</body>

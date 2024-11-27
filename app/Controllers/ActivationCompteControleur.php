@@ -15,15 +15,20 @@ class ActivationCompteControleur extends Controller {
 	public function index($jeton){
 		helper(['form']);
 		$jetonModele = new JetonsModele();
-		$jeton       = $jetonModele->where('jeton'      , $jeton)
+		$jeton       = $jetonModele->where('jeton'       , $jeton)
 								   ->where('expiration >', date('Y-m-d H:i:s'))
 								   ->first();
-		if ($jeton){
+		if ($jeton)
+		{
 			$this->deplacementVersUtilisateur($jeton['id']);
-			return view("/connexion/connexionVue"); //TODO:Voir avec les autres 
+			echo view('commun/entete');
+			echo view("connexion/connexionVue"); //TODO:Voir avec les autres 
+			echo view('commun/piedpage');
 		}
-		else {
-			return view("/inscription/jeton_expireVue");
+		else 
+		{
+
+			//return view("/inscription/jeton_expireVue");
 		}
 	}
 	
