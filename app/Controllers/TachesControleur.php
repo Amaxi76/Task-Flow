@@ -8,16 +8,21 @@ use App\Models\Taches\ModeleTaches;
 class TachesControleur extends BaseController 
 { 
 	public function index() { 
+		helper(['form']);
+
 		// Données générales de la page
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
 
-		// Charger le modèle
+		// Charger les modèles
 		$tacheModele = new ModeleVueCartesTaches();
+		$intituleModele = new ModeleIntitules();
 
 		// Charger les données paginées
 		$dataCorps = [];
 		$dataCorps['taches']      = $tacheModele->getCartesUtilisateurPaginees(1, 4);
+		$dataCorps['statuts']     = $intituleModele->getStatutsUtilisateur(1);
+		$dataCorps['priorites']   = $intituleModele->getPrioritesUtilisateur(1);
 		$dataCorps['pagerTaches'] = $tacheModele->pager;
 
 		// Charger la vue
@@ -25,6 +30,8 @@ class TachesControleur extends BaseController
 	}
 
 	public function creer() {
+		helper(['form']);
+		
 		// Données générales de la page
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Ajouter une tâche';
@@ -43,28 +50,21 @@ class TachesControleur extends BaseController
 	}
 
 	public function stocker(){
-		helper(['form']);
-		
 		// Données générales de la page
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Tache ajoutée';
 
 		// Récupérer les données du formulaire
-		$dataTache = [];
-		$dataTache['id_utilisateur'] = $this->request->getPost('id_utilisateur');
-		$dataTache['titre'] = $this->request->getPost('titre');
-		$dataTache['detail'] = $this->request->getPost('detail');
-		$dataTache['echeance'] = $this->request->getPost('echeance');
-		$dataTache['id_priorite'] = $this->request->getPost('id_priorite');
-		$dataTache['id_statut'] = $this->request->getPost('id_statut');
+		$request = \Config\Services::request();
+		$data['tache'] = $request->getPost();
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches();
 
 		// Insérer les données
-		//$tacheModele->insert($data);
+		$tacheModele->insert($data['tache']);
 
 		// Charger la vue
-		return view('commun/entete', $dataEntete) . view('taches/stockerTacheVue', $dataTache) . view('commun/piedpage'); 
+		return view('commun/entete', $dataEntete) . view('taches/stockerTacheVue', $data) . view('commun/piedpage'); 
 	}
 } 
