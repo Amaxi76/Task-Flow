@@ -25,9 +25,10 @@ $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePa
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
-$routes->group('', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/personnes', 'PersonneControleur::index');       // Page des personnes
-    $routes->get('/taches', 'TachesControleur::index');           // Page des tâches
-    $routes->get('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche
-    $routes->post('/taches/inserer', 'TachesControleur::ajouter'); // Insérer une tâche
+$routes->group('', ['filter' => 'auth'], function ($routes) 
+{
+    $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
+    $routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
+    $routes->get ('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche
+    $routes->post('/taches/stocker', 'TachesControleur::stocker'); // Insérer une tâche
 });

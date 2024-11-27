@@ -30,7 +30,8 @@ class TachesControleur extends BaseController
 		$dataCorps['pagerTaches'] = $tacheModele->pager;
 
 		// Charger la vue 
-		return view('commun/entete', $dataEntete) . view('tachesVue', $dataCorps) . view('commun/piedpage'); 
+		helper(['form']);
+		return view('commun/entete', $dataEntete) . view('/taches/afficherTachesVue', $dataCorps) . view('commun/piedpage'); 
 	}
 
 	public function ajouter() {
@@ -47,6 +48,7 @@ class TachesControleur extends BaseController
 		$dataCorps['statuts']   = $statusModele  ->getStatutsUtilisateur(1);
 
 		// Charger la vue
+		helper(['form']);
 		return view('commun/entete', $dataEntete) . view('taches/ajouterTacheVue', $dataCorps) . view('commun/piedpage'); 
 	}
 
