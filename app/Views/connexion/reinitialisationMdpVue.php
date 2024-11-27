@@ -1,8 +1,9 @@
-<script src="assets/js/motdepasse.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<link href="assets/css/styleutilisateur.css" rel="stylesheet">
-
 <body>
+
+<script src="/assets/js/motdepasse.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="/assets/css/styleutilisateur.css" rel="stylesheet">
+
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="box shadow-lg d-flex flex-row">
 			<!-- Section gauche avec le formulaire -->
