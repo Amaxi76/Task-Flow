@@ -1,9 +1,7 @@
 <h1>Tache stockée</h1>
 
-
-
-<p>titre : <?php echo $tache['titre'] ?></p>
-<p>detail : <?php echo $tache['detail'] ?></p>
-<p>echeance : <?php echo $tache['echeance'] ?></p>
-<p>id_priorite : <?php echo $tache['id_priorite'] ?></p>
-<p>id_statut : <?php echo $tache['id_statut'] ?></p>
+<p>titre : <?= $tache['titre'] ?></p>
+<p>detail : <?= $tache['detail'] ?></p>
+<p>echeance : <?= $tache['echeance'] ?></p>
+<p>id_priorite : <?= $tache['id_priorite'] ?></p>
+<p>id_statut : <?= $tache['id_statut'] ?></p>

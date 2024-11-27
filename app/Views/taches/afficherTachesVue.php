@@ -86,8 +86,23 @@
 	<?php endforeach; ?>
 </div>
 
+<!-- TODO: à adapter avec le CSS -->
+<style>
+    #pager a {
+        margin-right: 10px; /* Ajoute un espace entre les liens */
+    }
+
+    #pager .active a {
+        font-weight: bold; /* Exemple de personnalisation supplémentaire */
+    }
+
+    #pager .prev, #pager .next {
+        margin-right: 20px;
+    }
+</style>
+
 <div id="pager">
-	<?= $pagerTaches->links('default','default_full') ?> 
+	<?= $pagerTaches->links('taches', 'default_full') ?> 
 </div> 
 
 <div class="overlay">
