@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="assets/css/tachevue.css">
-<link rel="stylesheet" href="assets/css/tachecarte.css">
-<link rel="stylesheet" href="assets/css/tachecartepopup.css">
-<script src="assets/js/carte.js"></script>
+<link rel="stylesheet" href="<?= base_url('assets/css/tachevue.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
+<script src=<?= base_url('assets/js/carte.js') ?>></script>
 
 <header id="up-link">
 	<div class="conteneur-entete">
-		<img src="/assets/images/taskflow.png" alt="Logo de TaskFlow">
+		<img src="<?= base_url('assets/images/Logo.png') ?>" alt="Logo de TaskFlow">
 
 		<div class="button main-button">
 			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
