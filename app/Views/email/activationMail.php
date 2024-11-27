@@ -39,7 +39,7 @@
 		}
 		.btn {
 			display: inline-block;
-			background-color: #1C4973;
+			background-color: #379EE8;
 			color: #ffffff;
 			text-decoration: none;
 			padding: 10px 20px;
@@ -55,7 +55,7 @@
 	<div class="container">
 		<div class="box">
 			<div class="header">
-				<img src="<?= base_url('/assets/images/Logo.png') ?>" alt="Logo" class="logo">
+				<img src="/assets/images/Logo.png')" alt="Logo" class="logo">
 			</div>
 			<div class="content">
 				<h1>Activation de votre compte</h1>
