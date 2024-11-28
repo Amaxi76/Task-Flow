@@ -11,7 +11,8 @@ class ReinitialisationMotDePasseControleur extends Controller
 	{
 		helper(['form']);
 		
-		if ($this->verifierJeton($jeton)) {
+		if ($this->verifierJeton($jeton)) 
+		{
 			helper(['form']);
 			echo view('commun/entete');
 			echo view("/connexion/reinitialisationMdpVue",['jeton' => $jeton]);
@@ -51,8 +52,12 @@ class ReinitialisationMotDePasseControleur extends Controller
 			]
 		];
 
-		if($this->validate($regles,$messagesErreurs)) {
-			$jeton              = $this->request->getVar('jeton');
+		$jeton              = $this->request->getVar('jeton');
+		$validate = $this->validate($regles,$messagesErreurs);
+
+		if($validate)
+		{
+		
 			$nouveauMdp         = $this->request->getVar('mdp'  );
 
 			$jetonModele       = new JetonsModele     ();
@@ -78,12 +83,26 @@ class ReinitialisationMotDePasseControleur extends Controller
 				return view(('/connexion/motDePasseOublie')); 
 			}
 			else{
-				$erreurs = $this->validator->getErrors();
+				$erreurs = ["Aucun utilisateur se correspond a ce jeton, veuillez renvoyé une demande de changement de mot de passe"];
 				helper(['form']);
 				echo view('commun/entete');
-				echo view('connexion/motDePasseOublie',$erreurs); //renvoie vers inscription avec message d'erreur
+				echo view('connexion/reinitialisationMdpVue',$erreurs); //renvoie vers inscription avec message d'erreur
 				echo view('commun/piedpage');
 			}
 		}
+		else
+		{
+			$erreurs = $this->validator->getErrors();
+
+			$data = 
+			[
+				'erreur' => $erreurs,
+				'jeton'  => $jeton
+			];
+			helper(['form']);
+			echo view('commun/entete');
+			echo view('connexion/reinitialisationMdpVue',$data); //renvoie vers inscription avec message d'erreur
+			echo view('commun/piedpage');
+	}
 	}
 }
