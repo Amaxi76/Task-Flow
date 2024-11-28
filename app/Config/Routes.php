@@ -10,10 +10,11 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'ConnexionControleur::index');
 
 //Inscription et activation du compte
-$routes->get ('/inscription'                         ,'InscriptionControleur::index'        );
-$routes->post('/inscription'                         ,'InscriptionControleur::inscription'  );
-$routes->get ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1');
-$routes->get ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye');
+$routes->get ('/inscription'                         ,'InscriptionControleur::index'                );
+$routes->post('/inscription'                         ,'InscriptionControleur::inscription'          );
+$routes->get ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1'        );
+$routes->get ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye'   );
+$routes->post ('/inscription/renvoieMail'            ,'InscriptionControleur::resetProcedure'    );
 
 
 // Connexion et mot de passe oublié

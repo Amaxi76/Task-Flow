@@ -41,7 +41,10 @@ class InscriptionControleur extends BaseController {
 			
 				$estEnvoye = $this->envoyerMailActivation($email,$jetonModele->recupererJeton($idJeton));
 
-				if($estEnvoye) {
+				if($estEnvoye) 
+				{
+					session()->set('id_personne',$idPersonne);
+					session()->set('id_personne',$idJeton   );
 					return redirect()->to('inscription/mailenvoye');
 				}
 				
@@ -76,7 +79,7 @@ class InscriptionControleur extends BaseController {
 	 */
 	public function creationPersonne($email,$nom,$mdp){
 		$personneModele = new PersonneModele();
-		$personne       = $personneModele->where('email',$email);
+		$personne       = $personneModele->where('email',$email)->first();
 		
 		if($personne) return null;
 
@@ -123,11 +126,18 @@ class InscriptionControleur extends BaseController {
 		return $emailService->send(false);
 	}
 
-	public function afficherMailEnvoye(){
-		return view('/commun/envoieMailVue');
+	public function afficherMailEnvoye()
+	{
+		helper(['form']);
+		echo view('commun/entete');
+		echo view('/commun/envoieMailVue',['email' => session()->get('email_activation')]);
+		echo view('commun/piedpage');
 	}
 	
-	
+	public function resetProcedure($email)
+	{
+		dd("je suis la");
+	}
 	/**
 	 * Retourne les règles et les messages d'erreurs associés pour les champs d'inscriptions.
 	 * @return array tableau contenant les règles et les messages d'erreurs associés
