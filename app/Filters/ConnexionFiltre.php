@@ -10,14 +10,36 @@ use \App\Models\Utilisateurs\UtilisateurModele;
 
 class ConnexionFiltre implements FilterInterface
 {
-    public function before(RequestInterface $request, $arguments = null)
+	public function before(RequestInterface $request, $arguments = null)
 	{
 		$uri = $request->getUri()->getPath();
 		log_message('debug', "Filtre activé pour la route : $uri");
 
 		$session = session();
+		if (!$session->get('estConnecte')) 
+		{
+			helper(['cookie']);
+			// Vérifier le cookie seSouvenir
+			$cookieSeSouvenir = get_cookie('seSouvenir');
+			if ($cookieSeSouvenir) {
+				log_message('debug', "Cookie seSouvenir trouvé. Tentative de connexion automatique.");
+				
+				// Vérifier la validité du jeton et connecter l'utilisateur
+				$utilisateur = $this->verifierJetonSeSouvenir($cookieSeSouvenir);
+				if ($utilisateur) {
+					$donnee_session = [
+						'id' => $utilisateur['id'],
+						'estConnecte' => TRUE,
+					];
+					$session->set($donnee_session);
+					log_message('debug', "Connexion automatique réussie pour l'utilisateur ID: " . $utilisateur['id']);
+					return; // Continuer la requête normalement
+				} else {
+					log_message('debug', "Jeton seSouvenir invalide. Suppression du cookie.");
+					delete_cookie('seSouvenir');
+				}
+			}
 
-		if (!$session->get('estConnecte')) {
 			log_message('debug', "Utilisateur non connecté. Redirection depuis : $uri");
 			return redirect()->to('/connexion')->withCookies();
 		}
@@ -25,10 +47,23 @@ class ConnexionFiltre implements FilterInterface
 		log_message('debug', "Utilisateur connecté, accès autorisé à : $uri");
 	}
 
+	// Méthode à ajouter dans votre contrôleur ou dans un service dédié
+	private function verifierJetonSeSouvenir($jeton)
+	{
+		// Implémentez ici la logique pour vérifier le jeton dans la base de données
+		// et retourner les informations de l'utilisateur si le jeton est valide
+		// Retournez false si le jeton est invalide ou expiré
+
+		// Exemple:
+		$jetonModel = new JetonModel(); // Assurez-vous d'avoir un modèle approprié
+		$utilisateur = $jetonModel->verifierJetonSeSouvenir($jeton);
+		return $utilisateur;
+	}
 
 
-    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
-    {
-        // Pas de traitement particulier après la requête
-    }
+
+	public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+	{
+		// Pas de traitement particulier après la requête
+	}
 }

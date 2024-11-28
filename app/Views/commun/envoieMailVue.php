@@ -9,7 +9,9 @@
 
 				<div class="text-center">
 					<?php echo form_open('/inscription/renvoieMail'); ?>
-						<?php echo form_hidden('email', $email); ?>
+						<?php echo form_hidden('id_personne', $id_personne); ?>
+						<?php echo form_hidden('id_jeton'   , $id_jeton   ); ?>
+						<?php echo form_hidden('email'      , $email      ); ?>
 						<?php echo form_submit('resend', 'Si vous n\'avez pas reçu de mail,cliquez ici', 'class="btn btn-light"'); ?>
 					<?php echo form_close(); ?>
 				</div>

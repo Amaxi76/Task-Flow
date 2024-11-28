@@ -20,4 +20,31 @@ class UtilisateurModele extends Model
 		$this->where("id_jeton_resetmdp",$idJeton);
 	}
 
+	public function verifierJetonSeSouvenir($jeton)
+	{
+		$db = \Config\Database::connect();
+
+		$query = $db->table('taskflow.Utilisateurs u')
+			->select('p.id, p.email, p.nom')
+			->join('taskflow.Personnes p', 'u.id_personne = p.id')
+			->join('taskflow.Jetons j', 'u.id_jeton_seSouvenir = j.id')
+			->where('j.jeton', $jeton)
+			->where('j.expiration >', date('Y-m-d H:i:s'))
+			->get();
+
+		$result = $query->getRowArray();
+
+		if ($result) {
+			// Le jeton est valide, on retourne les informations de l'utilisateur
+			return [
+				'id' => $result['id'],
+				'email' => $result['email'],
+				'nom' => $result['nom']
+			];
+		}
+
+		// Le jeton n'est pas valide ou a expiré
+		return false;
+	}
+
 }
