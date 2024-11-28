@@ -19,6 +19,8 @@ class ConnexionFiltre implements FilterInterface
 		if (!$session->get('estConnecte')) 
 		{
 			helper(['cookie']);
+
+			//dd(get_cookie('seSouvenir'));
 			// Vérifier le cookie seSouvenir
 			$cookieSeSouvenir = get_cookie('seSouvenir');
 			if ($cookieSeSouvenir) {
@@ -26,6 +28,7 @@ class ConnexionFiltre implements FilterInterface
 				
 				// Vérifier la validité du jeton et connecter l'utilisateur
 				$utilisateur = $this->verifierJetonSeSouvenir($cookieSeSouvenir);
+
 				if ($utilisateur) {
 					$donnee_session = [
 						'id' => $utilisateur['id'],
@@ -55,8 +58,8 @@ class ConnexionFiltre implements FilterInterface
 		// Retournez false si le jeton est invalide ou expiré
 
 		// Exemple:
-		$jetonModel = new JetonModel(); // Assurez-vous d'avoir un modèle approprié
-		$utilisateur = $jetonModel->verifierJetonSeSouvenir($jeton);
+		$utilisateurModele = new UtilisateurModele(); // Assurez-vous d'avoir un modèle approprié
+		$utilisateur = $utilisateurModele->verifierJetonSeSouvenir($jeton);
 		return $utilisateur;
 	}
 

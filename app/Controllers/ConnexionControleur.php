@@ -36,7 +36,8 @@ class ConnexionControleur extends BaseController
 				$jetons_seSouvenir = null;
 				if($seSouvenir){
 					$jetons_seSouvenir = $this->seSouvenirDeMoi($utilisateur['id']);
-					set_cookie("seSouvenir",$jetons_seSouvenir);
+					$expiration = time() + (30 * 24 * 60 * 60); // 30 jours
+					setcookie("seSouvenir", $jetons_seSouvenir, $expiration, "/", "", true, true);
 				}
 
 				$donnee_session = [
@@ -78,10 +79,11 @@ class ConnexionControleur extends BaseController
 			// Vérifier si le cookie "seSouvenir" existe
 			$cookie = get_cookie('seSouvenir');
 			if ($cookie) {
-				// Supprimer le jeton associé au cookie
-				$jetonModele->delete($utilisateur['id_jeton_sesouvenir']);
 				// Mettre à jour l'utilisateur pour supprimer l'ID du jeton
 				$utilisateurModele->update($utilisateur['id_personne'], ['id_jeton_sesouvenir' => null]);
+				// Supprimer le jeton associé au cookie
+				$jetonModele->delete($utilisateur['id_jeton_sesouvenir']);
+				
 			}
 		}
 

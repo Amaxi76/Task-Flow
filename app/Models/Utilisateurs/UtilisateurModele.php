@@ -24,10 +24,10 @@ class UtilisateurModele extends Model
 	{
 		$db = \Config\Database::connect();
 
-		$query = $db->table('taskflow.Utilisateurs u')
+		$query = $db->table('taskflow.utilisateurs u')
 			->select('p.id, p.email, p.nom')
-			->join('taskflow.Personnes p', 'u.id_personne = p.id')
-			->join('taskflow.Jetons j', 'u.id_jeton_seSouvenir = j.id')
+			->join('taskflow.personnes p', 'u.id_personne = p.id')
+			->join('taskflow.jetons j', 'u.id_jeton_sesouvenir = j.id')
 			->where('j.jeton', $jeton)
 			->where('j.expiration >', date('Y-m-d H:i:s'))
 			->get();
