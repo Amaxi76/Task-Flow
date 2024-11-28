@@ -40,7 +40,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 
 	$routes->get('/taches/supprimer', 'TachesControleur::supprimer');
 	$routes->post('/taches/appliquerSuppression', 'TachesControleur::appliquerSuppression');
-});
 
-// Temporaire
-$routes->get ('/commentaires','CommentairesControleur::index'            );
+	$routes->post ('/taches/detail','CommentairesControleur::index');
+
+});
