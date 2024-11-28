@@ -16,7 +16,11 @@
 				<div class="form-floating mb-3">
 					<?php echo form_input('email', set_value('email'), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
 					<?php echo form_label('E-mail', 'email'); ?>
-					<?= validation_show_error('email') ?>
+					<?php if(isset(session('erreurs')['email'])): ?>
+						<div class="invalid-feedback d-block text-white fs-6"><?= session('erreurs')['email'] ?></div>
+					<?php else: ?>
+						<?= validation_show_error('email') ?>
+					<?php endif; ?>
 				</div>
 
 				<div class="form-floating mb-3 position-relative">
@@ -26,6 +30,12 @@
 						<i class="fas fa-eye-slash" id="togglePassword"></i>
 					</span>
 				</div>
+
+				<?php if(isset(session('erreurs')['mdp'])): ?>
+						<div class="invalid-feedback d-block text-white fs-6"><?= session('erreurs')['mdp'] ?></div>
+					<?php else: ?>
+						<?= validation_show_error('mdp') ?>
+					<?php endif; ?>
 
 				<div class="d-flex justify-content-between align-items-center mb-4">
 					<div class="form-check">

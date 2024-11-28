@@ -19,8 +19,6 @@ class ConnexionControleur extends BaseController
 
 	public function connexion(){
 		helper(['cookie']);
-		$validation = $this->getRegleEtMessageInscription();
-		$estValide  = $this->validate($validation['regles'],$validation['messageErreur']);
 
 		$email         = $this->request->getVar("email");
 		$mdpFormulaire = $this->request->getVar("mdp"  );
@@ -51,14 +49,14 @@ class ConnexionControleur extends BaseController
 			}
 			else
 			{
-				$erreur = ["Le mot de passe est incorrect"];
-				return redirect()->to('connexion')->withInput()->with('erreurs', $erreur);
+				$erreurs['mdp'] = "Le mot de passe est incorrect";
+				return redirect()->to('connexion')->withInput()->with('erreurs', $erreurs);
 			}
 		}
 		else
 		{
-			$erreur = ["Cette adresse mail n'existe pas ou n'est pas activée"];
-			return redirect()->to('connexion')->withInput()->with('erreurs', $erreur);
+			$erreurs['email'] = "Cette adresse mail n'existe pas ou n'est pas activée";
+			return redirect()->to('connexion')->withInput()->with('erreurs', $erreurs);
 		}
 	}
 
@@ -146,6 +144,12 @@ class ConnexionControleur extends BaseController
 		$personne   = $this->verifieExistance           ($email);
 		$jeton      = $this->creerJetonsReinitialisation($email);
 
+		if(!$personne)
+		{
+			$erreurs['email'] = "Cette adresse mail n'existe pas ou n'est pas activée";
+			return redirect()->to('/connexion/mdp_oublie')->withInput()->with('erreurs', $erreurs);
+		}
+
 		$estLiee = $this->lieeUtilisateurJeton($personne['id'],$jeton['id']);
 
 		if($estLiee)
@@ -163,7 +167,6 @@ class ConnexionControleur extends BaseController
 			{
 				return redirect()->to('inscription/mailenvoye');
 			}
-
 		}
 	}
 

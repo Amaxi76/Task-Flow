@@ -17,7 +17,11 @@
 				<div class="form-floating mb-3">
 					<?php echo form_input('email', set_value('email'), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
 					<?php echo form_label('E-mail', 'email'); ?>
-					<?= validation_show_error('email') ?>
+					<?php if(isset(session('erreurs')['email'])): ?>
+						<div class="invalid-feedback d-block text-white fs-6"><?= session('erreurs')['email'] ?></div>
+					<?php else: ?>
+						<?= validation_show_error('email') ?>
+					<?php endif; ?>
 				</div>
 
 				<?php echo form_submit('submit', 'Envoyer', 'class="btn btn-light w-100"'); ?>
