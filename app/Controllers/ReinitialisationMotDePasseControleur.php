@@ -76,7 +76,11 @@ class ReinitialisationMotDePasseControleur extends Controller
 				return view(('/connexion/motDePasseOublie')); 
 			}
 			else{
-				return view("/connexion/motDePasseOublie");
+				$erreurs = $this->validator->getErrors();
+				helper(['form']);
+				echo view('commun/entete');
+				echo view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+				echo view('commun/piedpage');
 			}
 		}
 	}
