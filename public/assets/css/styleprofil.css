@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-card {
+    background-color: #e6e6e6; /* Fond gris clair */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.info-card h2 {
+    color: #333;
+}
+
+
+.info-card hr {
+    border: none;
+    border-top: 1px solid #555; /* Gris foncé pour les hr */
+    margin: 10px 0;
+}
+
+.name-section {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 20px;
+}
+
+.name-section .info-card {
+    flex-grow: 1;
+    margin-bottom: 0;
+    margin-right: 20px; /* Espace entre la div nom et le bouton */
+}
+
+.btn-modifier {
+    background-color: #1C4973;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    min-width: 150px; /* Largeur minimale pour le bouton */
+}
+
+.btn-modifier:hover {
+    background-color: #153a5c;
+}
+
+.status-priorities {
+    margin-bottom: 15px;
+}
+
+.color-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.btn-enregistrer {
+    background-color: #28a745; /* Couleur du bouton enregistrer */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right; /* Alignement à droite */
+}
+
+.btn-enregistrer:hover {
+    background-color: #218838; /* Couleur au survol */
+}
+
+.btn-supprimer {
+    background-color: #dc3545; /* Couleur du bouton supprimer */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Prend toute la largeur */
+}
+
+.btn-supprimer:hover {
+    background-color: #c82333; /* Couleur au survol */
+}
