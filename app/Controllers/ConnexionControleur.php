@@ -50,13 +50,17 @@ class ConnexionControleur extends BaseController
 			else
 			{
 				$erreurs['mdp'] = "Le mot de passe est incorrect";
-				return redirect()->to('connexion')->withInput()->with('erreurs', $erreurs);
+				return redirect()->to('connexion')
+								->withInput() // Ne renvoie que l'email
+								->with('erreurs', $erreurs);
 			}
 		}
 		else
 		{
 			$erreurs['email'] = "Cette adresse mail n'existe pas ou n'est pas activée";
-			return redirect()->to('connexion')->withInput()->with('erreurs', $erreurs);
+			return redirect()->to('connexion')
+							->withInput() // Ne renvoie que l'email
+							->with('erreurs', $erreurs);
 		}
 	}
 
