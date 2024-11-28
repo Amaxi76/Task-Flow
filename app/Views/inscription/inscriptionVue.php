@@ -27,7 +27,7 @@
 				</div>
 
 				<div class="form-floating mt-3 position-relative">
-					<?php echo form_password('mdp', set_value('mdp'), 'class="form-control password-input" id="mdp" placeholder="Mot de passe" required'); ?>
+					<?php echo form_password('mdp', '', 'class="form-control password-input" id="mdp" placeholder="Mot de passe" required'); ?>					
 					<?php echo form_label('Mot de passe', 'mdp'); ?>
 					<span class="password-toggle-icon">
 						<i class="fas fa-eye-slash" id="togglePassword"></i>
@@ -36,7 +36,7 @@
 				<?= validation_show_error('mdp') ?>
 
 				<div class="form-floating mt-3 position-relative">
-					<?php echo form_password('confirmerMdp', set_value(field: 'confirmerMdp'), 'class="form-control password-input" id="confirmerMdp" placeholder="Confirmer le mot de passe" required'); ?>
+					<?php echo form_password('confirmerMdp', '', 'class="form-control password-input" id="confirmerMdp" placeholder="Confirmer le mot de passe" required'); ?>
 					<?php echo form_label('Confirmer le mot de passe', 'confirmerMdp'); ?>
 					<span class="password-toggle-icon">
 						<i class="fas fa-eye-slash" id="toggleConfirmPassword"></i>

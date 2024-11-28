@@ -12,8 +12,8 @@
 				<?php echo form_open('/connexion', ['class' => 'needs-validation', 'novalidate' => '']); ?>
 				
 				<div class="form-floating">
-					<?php echo form_input('email', set_value('email'), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
-					<?php echo form_label('E-mail', 'email'); ?>
+				<?php echo form_input('email', old('email', ''), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
+				<?php echo form_label('E-mail', 'email'); ?>
 					<?php if(isset(session('erreurs')['email'])): ?>
 						<div class="invalid-feedback d-block text-white fs-6"><?= session('erreurs')['email'] ?></div>
 					<?php else: ?>
@@ -22,8 +22,8 @@
 				</div>
 
 				<div class="form-floating mt-3 position-relative">
-					<?php echo form_password('mdp', set_value('mdp'), 'class="form-control password-input" id="mdp" placeholder="Mot de passe" required'); ?>
-					<?php echo form_label('Mot de passe', 'mdp'); ?>
+				<?php echo form_password('mdp', '', 'class="form-control password-input" id="mdp" placeholder="Mot de passe" required'); ?>					
+				<?php echo form_label('Mot de passe', 'mdp'); ?>
 					<span class="password-toggle-icon">
 						<i class="fas fa-eye-slash" id="togglePassword"></i>
 					</span>
