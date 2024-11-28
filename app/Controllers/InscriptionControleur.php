@@ -44,7 +44,7 @@ class InscriptionControleur extends BaseController {
 				if($estEnvoye) 
 				{
 					session()->set('id_personne',$idPersonne);
-					session()->set('id_personne',$idJeton   );
+					session()->set('id_jeton'   ,$idJeton   );
 					return redirect()->to('inscription/mailenvoye');
 				}
 				
@@ -130,7 +130,7 @@ class InscriptionControleur extends BaseController {
 	{
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('/commun/envoieMailVue',['email' => session()->get('email_activation')]);
+		echo view('/commun/envoieMailVue',['id_personne' => session()->get('id_personne'), 'id_jetons' => session()->get('id_jetons')]);
 		echo view('commun/piedpage');
 	}
 	
