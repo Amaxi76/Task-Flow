@@ -12,8 +12,6 @@
 				</p>
 			</div>
 			<!-- Section gauche avec le logo -->
-			<div class="md-6 d-flex align-items-center justify-content-center bg-white p-4">
-				<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo" class="logo mx-auto d-block">
-			</div>
+			<?php echo view('commun/logoSection'); ?>
 		</div>
 	</div>
