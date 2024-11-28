@@ -88,7 +88,7 @@
 				</div>
 			</div>
 			<div class="carte-description large">
-				<p>a	<?= esc($tache['detail']) ?></p>
+				<p><?= esc($tache['detail']) ?></p>
 			</div>
 			<div class="carte-commentaire">
 				<span class="commentaire-bulle carte-bg-color">
