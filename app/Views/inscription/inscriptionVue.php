@@ -53,28 +53,3 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Toast pour l'inscription réussie -->
-	<div class="toast-container position-fixed top-0 end-0 p-3">
-		<div id="inscriptionToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<img src="<?= base_url('assets/images/LogoSeul.svg') ?>" class="rounded me-2" alt="Logo TaskFlow" width="20" height="20">
-				<strong class="me-auto">TaskFlow</strong>
-				<small>À l'instant</small>
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
-				Un mail a été envoyé à votre adresse mail.
-			</div>
-		</div>
-	</div>
-
-	<!-- Script pour afficher le toast -->
-	<script>
-	document.addEventListener('DOMContentLoaded', function() {
-		<?php if(session()->getFlashdata('inscriptionReussie')): ?>
-			var toast = new bootstrap.Toast(document.getElementById('inscriptionToast'));
-			toast.show();
-		<?php endif; ?>
-	});
-	</script>

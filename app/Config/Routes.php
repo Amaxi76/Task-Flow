@@ -13,6 +13,8 @@ $routes->get('/', 'ConnexionControleur::index');
 $routes->get ('/inscription'                         ,'InscriptionControleur::index'        );
 $routes->post('/inscription'                         ,'InscriptionControleur::inscription'  );
 $routes->get ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1');
+$routes->get ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye');
+
 
 // Connexion et mot de passe oublié
 $routes->get ('/connexion'                             ,'ConnexionControleur::index'                                );

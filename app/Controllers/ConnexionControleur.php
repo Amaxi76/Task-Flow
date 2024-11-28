@@ -161,8 +161,7 @@ class ConnexionControleur extends BaseController
 
 			if($emailService->send(false))
 			{
-				session()->setFlashdata('mailEnvoye', true);
-				return redirect()->to('connexion/mdp_oublie');
+				return redirect()->to('inscription/mailenvoye');
 			}
 
 		}
