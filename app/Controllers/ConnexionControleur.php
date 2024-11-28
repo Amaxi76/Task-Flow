@@ -160,13 +160,15 @@ class ConnexionControleur extends BaseController
 		if($estLiee)
 		{
 			$lienReinitialisation = base_url("/connexion/mdp_oublie/reinit_mdp/".$jeton['jeton']);
-			$message = "Pour réinitialiser votre mot de passe, cliquez sur le lien suivant ".$lienReinitialisation;
+			$data = ['lienReinitialisation' => $lienReinitialisation];
+			$message = view('email/changementMdp', $data);
 
 			$emailService = \Config\Services::email();
 			$emailService->setTo     ($email);
 			$emailService->setFrom   ($emailService->SMTPUser);
 			$emailService->setSubject('[noreply] Changement de mot de passe');
 			$emailService->setMessage($message);
+			$emailService->setMailType('html');
 
 			if($emailService->send(false))
 			{
