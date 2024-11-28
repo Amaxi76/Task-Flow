@@ -48,6 +48,10 @@ class InscriptionControleur extends BaseController {
 				
 				$erreurs = ["Mail pas envoyé"];
 			}
+			else
+			{
+				$erreurs = ["L'adresse email est déjà enregistré"];
+			}
 		}
 		else{
 			$erreurs = $this->validator->getErrors();
@@ -69,6 +73,9 @@ class InscriptionControleur extends BaseController {
 	 */
 	public function creationPersonne($email,$nom,$mdp){
 		$personneModele = new PersonneModele();
+		$personne       = $personneModele->where('email',$email);
+		
+		if($personne) return null;
 
 		$personne = [
 			'email' => $email,
@@ -122,7 +129,7 @@ class InscriptionControleur extends BaseController {
 		return [
 			'regles' => [
 				'email'        => 'required|valid_email',
-				'nom'          => 'required|alpha_space|min_length[3]|max_length[50]',
+				'nom'          => 'required|min_length[3]|max_length[50]',
 				'mdp'          => 'required|min_length[4]',
 				'confirmerMdp' => 'required|matches[mdp]'
 			],
@@ -133,7 +140,6 @@ class InscriptionControleur extends BaseController {
 				],
 				'nom' => [
 					'required'    => 'Le nom est obligatoire.',
-					'alpha_space' => 'Le nom ne peut contenir que des lettres et des espaces.',
 					'min_length'  => 'Le nom doit contenir au moins 3 caractères.',
 					'max_length'  => 'Le nom ne peut pas dépasser 50 caractères.'
 				],
