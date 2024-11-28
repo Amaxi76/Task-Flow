@@ -107,9 +107,9 @@
 
 <div class="overlay">
 	<div class="carte carte-popup" hexa="#379EE8">
-		<?= form_open('taches/stocker') ?>
+		<?= form_open('taches/appliquerAjout') ?>
 			<div class="carte-entete">
-				<input type="hidden" name="id_utilisateur" value="1"> <!-- TODO: à remplacer par l'utilisateur actuel -->
+				<?= form_hidden('id_utilisateur', set_value('id_utilisateur', $idUtilisateur)); ?>
 
 				<div class="carte-titre carte-bg-color">
 					<?= form_input('titre', '', ['placeholder' => 'Titre de la tâche']) ?>
