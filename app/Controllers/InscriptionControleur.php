@@ -50,16 +50,20 @@ class InscriptionControleur extends BaseController {
 			}
 			else
 			{
-				$erreurs = ["L'adresse email est déjà enregistré"];
+				$erreurs['email'] = "L'adresse email est déjà enregistrée";
 			}
 		}
 		else{
 			$erreurs = $this->validator->getErrors();
 		}
 
+		$data = 
+		[
+			'erreur' => $erreurs
+		];
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+		echo view('inscription/inscriptionVue',$data); //renvoie vers inscription avec message d'erreur
 		echo view('commun/piedpage');
 	}
 
