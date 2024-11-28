@@ -81,7 +81,7 @@ class ReinitialisationMotDePasseControleur extends Controller
 				$erreurs = $this->validator->getErrors();
 				helper(['form']);
 				echo view('commun/entete');
-				echo view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+				echo view('connexion/motDePasseOublie',$erreurs); //renvoie vers inscription avec message d'erreur
 				echo view('commun/piedpage');
 			}
 		}
