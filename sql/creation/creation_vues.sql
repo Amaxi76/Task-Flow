@@ -10,14 +10,18 @@ SELECT
     taskflow.Taches.detail                                         AS detail,
     EXTRACT(DAY FROM taskflow.Taches.echeance - CURRENT_TIMESTAMP) AS nb_jours_avant_echeance,
     taskflow.Taches.echeance                                       AS date_echeance,
-    taskflow.Intitules.libelle                                     AS libelle_statut,
-    taskflow.Intitules.couleur                                     AS couleur_statut,
-    taskflow.Intitules.libelle                                     AS libelle_priorite,
-    taskflow.Intitules.couleur                                     AS couleur_priorite,
-    COUNT(taskflow.Commentaires.id_commentaire)                    AS nb_commentaires
+    statut.libelle                                                 AS libelle_statut,
+    statut.couleur                                                 AS couleur_statut,
+    priorite.libelle                                               AS libelle_priorite,
+    priorite.couleur                                               AS couleur_priorite,
+    COUNT(taskflow.Commentaires.id_commentaire)                   AS nb_commentaires
 FROM
     taskflow.Taches
-    JOIN taskflow.Intitules         ON taskflow.Taches.id_statut = taskflow.Intitules.id
+    -- Jointure pour récupérer les informations sur le statut
+    JOIN taskflow.Intitules statut ON taskflow.Taches.id_statut = statut.id
+    -- Jointure pour récupérer les informations sur la priorité
+    JOIN taskflow.Intitules priorite ON taskflow.Taches.id_priorite = priorite.id
+    -- Jointure pour récupérer les commentaires associés
     LEFT JOIN taskflow.Commentaires ON taskflow.Taches.id = taskflow.Commentaires.id_tache
 GROUP BY
     taskflow.Taches.id,
@@ -25,7 +29,7 @@ GROUP BY
     taskflow.Taches.titre,
     taskflow.Taches.detail,
     taskflow.Taches.echeance,
-    taskflow.Intitules.libelle,
-    taskflow.Intitules.couleur,
-    taskflow.Intitules.libelle,
-    taskflow.Intitules.couleur;
+    statut.libelle,
+    statut.couleur,
+    priorite.libelle,
+    priorite.couleur;
