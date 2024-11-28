@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/tachevue.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
+<link href="<?= base_url('assets/css/styleutilisateur.css') ?>" rel="stylesheet">
+
 
 <header id="up-link">
 	<div class="conteneur-entete">
@@ -13,58 +15,52 @@
 			<button>Déconnexion</button>
 		</div>
 	</div>
-		
-	<div class="conteneur-menu-titre">
-		<h2><?php echo $titre ?></h2>
-	</div>
 </header>
 
-<div class="conteneur-carte">
-	<div class="carte carte-popup" hexa="#379EE8">
-		<?= form_open('taches/stocker') ?>
-			<div class="carte-entete">
-				<input type="hidden" name="id_utilisateur" value="1"> <!-- TODO: à remplacer par l'utilisateur actuel -->
-
-				<div class="carte-titre carte-bg-color">
-					<?= form_input('titre', '', ['placeholder' => 'Titre de la tâche']) ?>
+	<div class="d-flex justify-content-center align-items-center vh-100">
+		<div class="box shadow-lg d-flex flex-row">
+			<div class="md-6 bg-custom text-white p-4">
+				<h2 class="text-center mb-4"><?php echo $titre ?></h2>
+				<?php echo form_open('/taches/appliquerAjout', ['class' => 'needs-validation', 'novalidate' => '']); ?>
+				<?= form_hidden('id_utilisateur', set_value('id_utilisateur', $idUtilisateur)); ?>
+				
+				<div class="form-floating mb-3">
+					<?php echo form_input('titre', set_value('titre'), 'class="form-control" id="nom_tache" placeholder="Nom de la tâche" required'); ?>
+					<?php echo form_label('Nom de la tâche', 'titre'); ?>
+					<?= validation_show_error('titre') ?>
 				</div>
 
-				<div class="carte-options">
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-							<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-						<?= form_input(['type' => 'datetime-local', 'name' => 'echeance', 'value' => '' ]) ?>
-					</span>
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.45001 14.97C3.52001 18.41 6.40002 21.06 9.98002 21.79" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M2.04999 10.98C2.55999 5.93 6.81998 2 12 2C17.18 2 21.44 5.94 21.95 10.98" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M14.01 21.8C17.58 21.07 20.45 18.45 21.54 15.02" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-
-						<?= form_dropdown('id_statut', ['' => 'Choisissez un statut'] + array_column($statuts, 'libelle', 'id'), '', 'style="width: auto;"') ?>
-					</span>
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-
-						<?= form_dropdown('id_priorite', ['' => 'Choisissez une priorité'] + array_column($priorites, 'libelle', 'id'), '', 'style="width: auto;"') ?>
-					</span>
+				<div class="form-floating mb-3">
+					<?php echo form_textarea('detail', set_value('detail'), 'class="form-control" id="description" placeholder="Description" required style="height: 150px;"'); ?>
+					<?php echo form_label('Description', 'detail'); ?>
+					<?= validation_show_error('detail') ?>
 				</div>
-			</div>
 
-			<div class="carte-description">
-				<?= form_textarea('detail', '', ['rows' => '10']) ?>
-			</div>
+				<div class="form-floating mb-3">
+					<?php echo form_input(['name' => 'echeance', 'type' => 'datetime-local', 'value' => set_value('echeance'), 'class' => 'form-control', 'id' => 'echeance', 'placeholder' => 'Date et Heure', 'required' => 'required']); ?>
+					<?php echo form_label('Date et Heure', 'datetime'); ?>
+					<?= validation_show_error('echeance') ?>
+				</div>
 
-			<div class="carte-ajout">
-				<?= form_submit('submit', 'Ajouter la tâche', ['class' => 'button main-button']) ?>
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating">
+							<?php echo form_dropdown('id_priorite', array_column($priorites, 'libelle', 'id'), set_value('id_priorite'), 'class="form-select" id="priorite" required');  ?>
+							<?php echo form_label('Priorité', 'id_priorite'); ?>
+							<?= validation_show_error('id_priorite') ?>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<?php echo form_dropdown('id_statut',  array_column($statuts, 'libelle', 'id'), set_value('id_statut'), 'class="form-select" id="statut" required');  ?>
+							<?php echo form_label('Statut', 'id_statut'); ?>
+							<?= validation_show_error('id_statut') ?>
+						</div>
+					</div>
+				</div>
+
+				<?php echo form_submit('submit', 'Ajouter la tâche', 'class="btn btn-light w-100"'); ?>
+				<?php echo form_close(); ?>
 			</div>
-		<?= form_close() ?>
+		</div>
 	</div>
-</div>

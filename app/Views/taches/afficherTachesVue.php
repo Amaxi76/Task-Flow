@@ -6,7 +6,7 @@
 <header id="up-link">
 	<div class="conteneur-entete">
 		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
-
+		
 		<div class="button main-button">
 			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M27.5294 24.0714V30.9524C27.5294 33.1878 25.7298 35 23.5098 35H5.0196C2.79964 35 1 33.1878 1 30.9524V5.04762C1 2.81218 2.79964 1 5.01961 1H23.5098C25.7298 1 27.5294 2.81218 27.5294 5.04762V11.9286M11.8529 18H42M42 18L35.9704 11.9286M42 18L35.9704 24.0715" />
@@ -19,12 +19,14 @@
 		<h2><?php echo $titre ?></h2>
 
 		<div class="conteneur-menu-boutons">
-			<div class="button main-button" id="ajout-bouton">
-				<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M37.5 30H30M30 30H22.5M30 30V22.5M30 30V37.5M55 30C55 43.8071 43.8071 55 30 55C16.1929 55 5 43.8071 5 30C5 16.1929 16.1929 5 30 5C43.8071 5 55 16.1929 55 30Z" stroke-width="3" stroke-linecap="round"/>
-				</svg>
-				<button>Ajouter une tâche</button>
-			</div>
+			<a href="<?= base_url('taches/ajouter') ?>">
+				<div class="button main-button" id="ajout-bouton">
+					<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M37.5 30H30M30 30H22.5M30 30V22.5M30 30V37.5M55 30C55 43.8071 43.8071 55 30 55C16.1929 55 5 43.8071 5 30C5 16.1929 16.1929 5 30 5C43.8071 5 55 16.1929 55 30Z" stroke-width="3" stroke-linecap="round"/>
+					</svg>
+					<button>Ajouter une tâche</button>
+				</div>
+			</a>
 
 			<div class="button secondary-button">
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,13 +34,17 @@
 				</svg>
 				<button>Filtre</button>
 			</div>
+			
 		</div>
 	</div>
 </header>
 
 <div class="conteneur-cartes">
 	<?php foreach ($taches as $tache) : ?>
-	<div class="carte" hexa="<?=  esc($tache['couleur_statut']) ?>">
+	<?php echo form_open('/taches/detail'); ?>
+	<?= form_hidden('id_tache', esc($tache['id_tache'])) ?>
+
+	<div class="carte" hexa="<?=  esc($tache['couleur_statut']) ?>" onclick="this.closest('form').submit();">
 	<div class="carte-entete">
 				<div class="carte-titre carte-bg-color">
 					<h5><?= esc($tache['titre'])?></h5>
@@ -74,6 +80,9 @@
 			</span>
 		</div>
 	</div>
+
+	<?= form_close() ?>
+
 	<?php endforeach; ?>
 </div>
 

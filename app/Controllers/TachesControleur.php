@@ -70,16 +70,31 @@ class TachesControleur extends BaseController {
 	public function appliquerAjout () {
 		// Récupérer les données du formulaire
 		$request = \Config\Services::request ();
-		$data['tache'] = $request->getPost ();
+		$data = $request->getPost ();
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
 
+		// Validation des données
+		$validation = \Config\Services::validation();
+		$validation->setRules([
+			'titre' => 'required',
+			'detail' => 'required',
+			'echeance' => 'required|valid_date[Y-m-d\TH:i]',
+			'id_priorite' => 'required|integer',
+			'id_statut' => 'required|integer'
+		]);
+
+		if (!$validation->withRequest($this->request)->run()) {
+			// Si la validation échoue, recharger le formulaire avec les erreurs
+			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+		}
+
 		// Insérer les données
-		$tacheModele->insert ($data['tache']);
+		$tacheModele->insert($data);
 
 		// Charger la vue
-		return redirect ()->to ('/taches');
+		return redirect()->to('/taches');
 	}
 
 	public function supprimer (): string {
