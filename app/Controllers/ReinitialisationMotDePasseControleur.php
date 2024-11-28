@@ -57,7 +57,6 @@ class ReinitialisationMotDePasseControleur extends Controller
 
 		if($validate)
 		{
-		
 			$nouveauMdp         = $this->request->getVar('mdp'  );
 
 			$jetonModele       = new JetonsModele     ();
@@ -83,7 +82,14 @@ class ReinitialisationMotDePasseControleur extends Controller
 				return view(('/connexion/motDePasseOublie')); 
 			}
 			else{
-				$erreurs = ["Aucun utilisateur se correspond a ce jeton, veuillez renvoyé une demande de changement de mot de passe"];
+				$erreurs = ['jeton' => "Aucun utilisateur se correspond a ce jeton, veuillez renvoyé une demande de changement de mot de passe"];
+
+
+				$data = 
+				[
+					'erreur' => $erreurs,
+					'jeton'  => $jeton
+				];
 				helper(['form']);
 				echo view('commun/entete');
 				echo view('connexion/reinitialisationMdpVue',$erreurs); //renvoie vers inscription avec message d'erreur

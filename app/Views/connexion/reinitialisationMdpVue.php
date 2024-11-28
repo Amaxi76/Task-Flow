@@ -12,7 +12,8 @@
 
 
 				<?php echo form_hidden('jeton', esc($jeton)); ?>
-
+				<?= validation_show_error('jeton') ?>
+				
 				<div class="form-floating mt-3 position-relative">
 					<?php echo form_password('mdp', set_value('mdp'), 'class="form-control password-input" id="mdp" placeholder="Mot de passe" required'); ?>
 					<?php echo form_label('Mot de passe', 'mdp'); ?>
