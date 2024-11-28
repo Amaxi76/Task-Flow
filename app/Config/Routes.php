@@ -28,9 +28,18 @@ $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
     $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
-    $routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
-    $routes->get ('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche
-    $routes->post('/taches/stocker', 'TachesControleur::stocker'); // Insérer une tâche
+
+	// Tâches
+	$routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
+
+	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
+	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
+
+	$routes->get('/taches/modifier/(:num)', 'TachesControleur::modifier/$1');
+	$routes->post('/taches/appliquerModification', 'TachesControleur::appliquerModification');
+
+	$routes->get('/taches/supprimer', 'TachesControleur::supprimer');
+	$routes->post('/taches/appliquerSuppression', 'TachesControleur::appliquerSuppression');
 });
 
 // Temporaire
