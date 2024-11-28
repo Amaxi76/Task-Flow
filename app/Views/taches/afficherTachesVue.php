@@ -32,45 +32,36 @@
 				</svg>
 				<button>Filtre</button>
 			</div>
-		
-
-		
+		</div>
 	</div>
 </header>
 
 <div class="conteneur-cartes">
 	<?php foreach ($taches as $tache) : ?>
 	<div class="carte" hexa="<?=  esc($tache['couleur_statut']) ?>">
-		<div class="carte-entete">
-			<div class="carte-titre carte-bg-color">
-				<h5><?= esc($tache['titre'])?></h5>
+	<div class="carte-entete">
+				<div class="carte-titre carte-bg-color">
+					<h5><?= esc($tache['titre'])?></h5>
+					<p><?= esc($tache['libelle_statut'])?></p>
+				</div>
+				<div class="carte-options">
+					<span class="badge">
+						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+							<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<?= esc($tache['date_echeance']) ?>
+					</span>
+					<span class="badge">
+						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<?= esc($tache['libelle_priorite']) ?>
+					</span>
+				</div>
 			</div>
-			<div class="carte-options">
-				<span class="badge">
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-						<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-					<?= esc($tache['date_echeance']) ?>
-				</span>
-				<span class="badge">
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M2.45001 14.97C3.52001 18.41 6.40002 21.06 9.98002 21.79" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M2.04999 10.98C2.55999 5.93 6.81998 2 12 2C17.18 2 21.44 5.94 21.95 10.98" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M14.01 21.8C17.58 21.07 20.45 18.45 21.54 15.02" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-					<?= esc($tache['libelle_statut']) ?>
-				</span>
-				<span class="badge">
-					<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-					<?= esc($tache['libelle_priorite']) ?>
-				</span>
-			</div>
-		</div>
 		<div class="carte-description">
 			<p><?= esc($tache['detail']) ?></p>
 		</div>
@@ -103,54 +94,4 @@
 
 <div id="pager">
 	<?= $pagerTaches->links('taches', 'default_full') ?> 
-</div> 
-
-<div class="overlay">
-	<div class="carte carte-popup" hexa="#379EE8">
-		<?= form_open('taches/stocker') ?>
-			<div class="carte-entete">
-				<input type="hidden" name="id_utilisateur" value="1"> <!-- TODO: à remplacer par l'utilisateur actuel -->
-
-				<div class="carte-titre carte-bg-color">
-					<?= form_input('titre', '', ['placeholder' => 'Titre de la tâche']) ?>
-				</div>
-
-				<div class="carte-options">
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-							<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-						<?= form_input(['type' => 'datetime-local', 'name' => 'echeance', 'value' => '' ]) ?>
-					</span>
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M2.45001 14.97C3.52001 18.41 6.40002 21.06 9.98002 21.79" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M2.04999 10.98C2.55999 5.93 6.81998 2 12 2C17.18 2 21.44 5.94 21.95 10.98" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M14.01 21.8C17.58 21.07 20.45 18.45 21.54 15.02" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-
-						<?= form_dropdown('id_statut', ['' => 'Choisissez un statut'] + array_column($statuts, 'libelle', 'id'), '', 'style="width: auto;"') ?>
-					</span>
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-
-						<?= form_dropdown('id_priorite', ['' => 'Choisissez une priorité'] + array_column($priorites, 'libelle', 'id'), '', 'style="width: auto;"') ?>
-					</span>
-				</div>
-			</div>
-
-			<div class="carte-description">
-				<?= form_textarea('detail', '', ['rows' => '5']) ?>
-			</div>
-
-			<div class="carte-ajout">
-				<?= form_submit('submit', 'Ajouter la tâche', ['class' => 'button main-button']) ?>
-			</div>
-		<?= form_close() ?>
-	</div>
 </div>

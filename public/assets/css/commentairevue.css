@@ -1,0 +1,75 @@
+.conteneur-principal {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 1rem 3rem 3rem 3rem;
+	flex-grow: 1;
+	overflow-y: auto;
+	margin-top: 1rem;
+	flex-wrap: wrap;
+}
+
+.conteneur-carte-gauche {
+	display: flex;
+	justify-content: center;
+}
+
+.conteneur-commentaire {
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	border-radius: 16px;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	min-width: 25rem;
+	width: 70rem;
+}
+
+.tableau-commentaires {
+    width: 100%;
+    border-spacing: 0;
+    overflow: hidden;
+	overflow-y: auto;
+}
+
+.tableau-commentaires thead {
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure the header stays on top */
+}
+
+.tableau-commentaires th, .tableau-commentaires td {
+    padding: 1rem;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.tableau-commentaires th {
+    font-weight: bold;
+    background-color: #379EE8; /* Match your card background color */
+    color: white;
+}
+
+.tableau-commentaires tbody tr:nth-child(even) {
+    background-color: #F7F7F7; /* Alternate row background */
+}
+
+.large {
+	max-height: 100%;
+	overflow: auto;
+	height: fit-content;
+	cursor: unset;
+}
+
+.large p {
+	display: unset;
+}
+
+.conteneur-boutons-taches {
+	display: flex;
+	gap: 1rem;
+}
+
+.commentaire {
+	justify-content: space-between;
+
+}

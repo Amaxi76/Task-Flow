@@ -9,27 +9,4 @@ document.addEventListener('DOMContentLoaded', function() {
 			bgColor.style.backgroundColor = statut;
 		});
 	});
-
-	const ajoutBouton = document.getElementById('ajout-bouton');
-	const overlay = document.querySelector('.overlay');
-	
-	if (overlay) {
-		overlay.style.display = 'none';
-	}
-
-	if (ajoutBouton) {
-		ajoutBouton.addEventListener('click', function() {
-			if (overlay) {
-				overlay.style.display = 'flex';
-			}
-		});
-	}
-
-	if (overlay) {
-		overlay.addEventListener('click', function(event) {
-			if (event.target === overlay) {
-				overlay.style.display = 'none';
-			}
-		});
-	}
 });

@@ -32,3 +32,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
     $routes->get ('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche
     $routes->post('/taches/stocker', 'TachesControleur::stocker'); // Insérer une tâche
 });
+
+// Temporaire
+$routes->get ('/commentaires','CommentairesControleur::index'            );

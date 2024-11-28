@@ -1,3 +1,14 @@
+.conteneur-cartes {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 2rem;
+	padding:1rem 3rem 0rem 3rem;
+	flex-grow: 1;
+	overflow-y: auto;
+	margin-top: 1rem;
+}
+
 .carte {
 	box-sizing: border-box;
 	border-radius: 16px;
@@ -5,7 +16,6 @@
 	width: 25rem;
 	height: fit-content;
 	display: flex;
-	flex-wrap: wrap;
 	flex-direction: column;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 	justify-content: space-between;
@@ -46,6 +56,10 @@ svg, svg * {
 	margin-bottom: 0;
 }
 
+.carte-titre p {
+	margin: 0;
+}
+
 .carte-titre img {
 	width: 1.5rem;
     height: 1.5rem;
@@ -71,6 +85,7 @@ svg, svg * {
 	-webkit-line-clamp: 2;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	word-wrap: break-word;
 }
 
 .carte-commentaire {
@@ -93,16 +108,18 @@ svg, svg * {
 }
 
 .badge {
-    display: flex;
-    align-items: center;
-    background-color: #EAEAEA;
-    padding: 4px 8px;
-    border-radius: 16px;
-    font-size: 12px;
+	display: flex;
+	align-items: center;
+	background-color: #EAEAEA;
+	padding: 4px 8px;
+	border-radius: 16px;
+	font-size: 12px;
 	gap: 4px;
 	color: #838383;
+	white-space: normal;
+	word-break: break-word;
 }
 
 .carte-bg-color {
-	background-color: #00B94D;
+	background-color: #379EE8;
 }
