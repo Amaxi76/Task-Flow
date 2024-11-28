@@ -12,7 +12,12 @@
 				<div class="form-floating">
 					<?php echo form_input('email', set_value('email'), 'class="form-control" id="email" placeholder="name@example.com" required'); ?>
 					<?php echo form_label('E-mail', 'email'); ?>
-					<?= validation_show_error('email') ?>
+					<?php if(isset($erreur['email'])): ?>
+					    <div class="invalid-feedback d-block text-white fs-6"><?= $erreur['email'] ?></div>
+					<?php else: ?>
+					    <div class="text-white"><?= validation_show_error('email') ?></div>
+					<?php endif; ?>
+
 				</div>
 
 				<div class="form-floating mt-3">

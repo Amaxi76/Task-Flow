@@ -47,14 +47,22 @@ class InscriptionControleur extends BaseController {
 				
 				$erreurs = ["Mail pas envoyé"];
 			}
+			else
+			{
+				$erreurs['email'] = "L'adresse email est déjà enregistrée";
+			}
 		}
 		else{
 			$erreurs = $this->validator->getErrors();
 		}
 
+		$data = 
+		[
+			'erreur' => $erreurs
+		];
 		helper(['form']);
 		echo view('commun/entete');
-		echo view('inscription/inscriptionVue',$erreurs); //renvoie vers inscription avec message d'erreur
+		echo view('inscription/inscriptionVue',$data); //renvoie vers inscription avec message d'erreur
 		echo view('commun/piedpage');
 	}
 
@@ -68,6 +76,9 @@ class InscriptionControleur extends BaseController {
 	 */
 	public function creationPersonne($email,$nom,$mdp){
 		$personneModele = new PersonneModele();
+		$personne       = $personneModele->where('email',$email);
+		
+		if($personne) return null;
 
 		$personne = [
 			'email' => $email,
@@ -125,7 +136,7 @@ class InscriptionControleur extends BaseController {
 		return [
 			'regles' => [
 				'email'        => 'required|valid_email',
-				'nom'          => 'required|alpha_space|min_length[3]|max_length[50]',
+				'nom'          => 'required|min_length[3]|max_length[50]',
 				'mdp'          => 'required|min_length[4]',
 				'confirmerMdp' => 'required|matches[mdp]'
 			],
@@ -136,7 +147,6 @@ class InscriptionControleur extends BaseController {
 				],
 				'nom' => [
 					'required'    => 'Le nom est obligatoire.',
-					'alpha_space' => 'Le nom ne peut contenir que des lettres et des espaces.',
 					'min_length'  => 'Le nom doit contenir au moins 3 caractères.',
 					'max_length'  => 'Le nom ne peut pas dépasser 50 caractères.'
 				],
