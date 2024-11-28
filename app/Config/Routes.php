@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 //Route par défaut
-$routes->get('/', 'ConnexionControleur::index');
+
 
 //Inscription et activation du compte
 $routes->get ('/inscription'                         ,'InscriptionControleur::index'                );
@@ -30,6 +30,7 @@ $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
+    $routes->get('/', 'TachesControleur::index');
     $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
     $routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
     $routes->get ('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche

@@ -8,11 +8,16 @@
 		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
 
 		<div class="button main-button">
-			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M27.5294 24.0714V30.9524C27.5294 33.1878 25.7298 35 23.5098 35H5.0196C2.79964 35 1 33.1878 1 30.9524V5.04762C1 2.81218 2.79964 1 5.01961 1H23.5098C25.7298 1 27.5294 2.81218 27.5294 5.04762V11.9286M11.8529 18H42M42 18L35.9704 11.9286M42 18L35.9704 24.0715" />
-			</svg>
-			<button>Déconnexion</button>
+			<a href="/deconnexion" style="text-decoration: none; color: white;">
+				<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M27.5294 24.0714V30.9524C27.5294 33.1878 25.7298 35 23.5098 35H5.0196C2.79964 35 1 33.1878 1 30.9524V5.04762C1 2.81218 2.79964 1 5.01961 1H23.5098C25.7298 1 27.5294 2.81218 27.5294 5.04762V11.9286M11.8529 18H42M42 18L35.9704 11.9286M42 18L35.9704 24.0715" />
+				</svg>
+				<button style="text-decoration: none; color: white; background: transparent; border: none;">Déconnexion</button>
+			</a>
 		</div>
+
+
+
 	</div>
 		
 	<div class="conteneur-menu-titre">
@@ -88,17 +93,17 @@
 
 <!-- TODO: à adapter avec le CSS -->
 <style>
-    #pager a {
-        margin-right: 10px; /* Ajoute un espace entre les liens */
-    }
+	#pager a {
+		margin-right: 10px; /* Ajoute un espace entre les liens */
+	}
 
-    #pager .active a {
-        font-weight: bold; /* Exemple de personnalisation supplémentaire */
-    }
+	#pager .active a {
+		font-weight: bold; /* Exemple de personnalisation supplémentaire */
+	}
 
-    #pager .prev, #pager .next {
-        margin-right: 20px;
-    }
+	#pager .prev, #pager .next {
+		margin-right: 20px;
+	}
 </style>
 
 <div id="pager">

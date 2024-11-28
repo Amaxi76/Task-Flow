@@ -76,6 +76,7 @@ class ConnexionControleur extends BaseController
 		// Récupérer l'utilisateur actuel
 		$utilisateur = $utilisateurModele->where("id_personne", $session->get('id'))->first();
 
+		helper(['cookie']);
 		// Vérifier si l'utilisateur a un jeton de souvenir
 		if ($utilisateur && !empty($utilisateur['id_jeton_sesouvenir'])) {
 			// Vérifier si le cookie "seSouvenir" existe
