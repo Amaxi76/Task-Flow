@@ -11,10 +11,12 @@ class ReinitialisationMotDePasseControleur extends Controller
 	{
 		helper(['form']);
 		
-		if ($this->verifierJeton($jeton))
-			return view("/connexion/reinitialisationMdpVue",['jeton' => $jeton]);
-		else 
-			return view("jeton_expireVue"    );
+		if ($this->verifierJeton($jeton)) {
+			helper(['form']);
+			echo view('commun/entete');
+			echo view("/connexion/reinitialisationMdpVue",['jeton' => $jeton]);
+			echo view('commun/piedpage');
+		}
 	}
 
 	/**
