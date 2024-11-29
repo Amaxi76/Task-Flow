@@ -1,29 +1,31 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Utilisateurs\PersonneModele;
 use App\Models\Utilisateurs\UtilisateurModele;
 use App\Models\Taches\ModeleIntitules;
+use App\Models\Taches\ModeleTaches;
 use CodeIgniter\Controller;
 
 class ProfilControleur extends Controller {
 
-    protected $utilisateurModele;
+    protected $personneModele;
     protected $intitulesModele;
 
     public function __construct() {
-        $this->utilisateurModele = new UtilisateurModele();
+        $this->personneModele = new PersonneModele();
         $this->intitulesModele = new ModeleIntitules();
     }
 
     public function index() {
 
-        $idUtilisateur = session()->get('id_utilisateur');
+        $idUtilisateur = session()->get('id');
 
         // Récupérer les données de l'utilisateur
-        $data['utilisateur'] = $this->utilisateurModele->find($idUtilisateur);
+        $data['utilisateur'] = $this->personneModele->find($idUtilisateur);
 
         // Récupérer les statuts et priorités de l'utilisateur
-        $data['statuts'] = $this->intitulesModele->getStatutsUtilisateur($idUtilisateur);
+        $data['statuts']   = $this->intitulesModele->getStatutsUtilisateur($idUtilisateur);
         $data['priorites'] = $this->intitulesModele->getPrioritesUtilisateur($idUtilisateur);
 
         // Charger la vue
@@ -53,15 +55,41 @@ class ProfilControleur extends Controller {
 
     public function supprimerCompte() {
         if ($this->request->isAJAX()) {
-            $idUtilisateur = session()->get('id_utilisateur');
-
-            // Supprimer le compte
-            $this->utilisateurModele->delete($idUtilisateur);
-
+            $idUtilisateur = session()->get('id');
+    
+            // Charger les modèles nécessaires
+            $intitulesModele = new ModeleIntitules();
+            $tachesModele = new ModeleTaches();
+            $utilisateurModele = new UtilisateurModele();
+    
+            // Commencer une transaction
+            $this->db->transStart();
+    
+            // Supprimer les intitulés liés à l'utilisateur
+            $intitulesModele->where('id_utilisateur', $idUtilisateur)->delete();
+    
+            // Supprimer les tâches liées à l'utilisateur
+            $tachesModele->where('id_utilisateur', $idUtilisateur)->delete();
+    
+            // Supprimer l'utilisateur
+            $utilisateurModele->delete($idUtilisateur);
+    
+            // Supprimer la personne
+            $this->personneModele->delete($idUtilisateur);
+    
+            // Terminer la transaction
+            $this->db->transComplete();
+    
+            if ($this->db->transStatus() === false) {
+                // La transaction a échoué
+                return $this->response->setJSON(['success' => false]);
+            }
+    
             // Détruire la session
             session()->destroy();
-
+    
             return $this->response->setJSON(['success' => true]);
         }
     }
+    
 }

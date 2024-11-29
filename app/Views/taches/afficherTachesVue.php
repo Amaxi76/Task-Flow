@@ -7,14 +7,26 @@
 	<div class="conteneur-entete">
 		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
 
-		<div class="button main-button">
-			<a href="/deconnexion" style="text-decoration: none; color: white;">
-				<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M27.5294 24.0714V30.9524C27.5294 33.1878 25.7298 35 23.5098 35H5.0196C2.79964 35 1 33.1878 1 30.9524V5.04762C1 2.81218 2.79964 1 5.01961 1H23.5098C25.7298 1 27.5294 2.81218 27.5294 5.04762V11.9286M11.8529 18H42M42 18L35.9704 11.9286M42 18L35.9704 24.0715" />
-				</svg>
-				<button style="text-decoration: none; color: white; background: transparent; border: none;">Déconnexion</button>
-			</a>
+		<div class="button param" style="text-align: right;">
+			<div class="button main-button">
+				<a href="/deconnexion" style="text-decoration: none; color: white;">
+					<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M27.5294 24.0714V30.9524C27.5294 33.1878 25.7298 35 23.5098 35H5.0196C2.79964 35 1 33.1878 1 30.9524V5.04762C1 2.81218 2.79964 1 5.01961 1H23.5098C25.7298 1 27.5294 2.81218 27.5294 5.04762V11.9286M11.8529 18H42M42 18L35.9704 11.9286M42 18L35.9704 24.0715" />
+					</svg>
+					<button style="text-decoration: none; color: white; background: transparent; border: none;">Déconnexion</button>
+				</a>
+			</div>
+
+			<div class="button main-button">
+				<a href="/profil" style="text-decoration: none; color: white;">
+					<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M40 42V38C40 35.8783 39.1571 33.8434 37.6569 32.3431C36.1566 30.8429 34.1217 30 32 30H16C13.8783 30 11.8434 30.8429 10.3431 32.3431C8.84285 33.8434 8 35.8783 8 38V42M32 14C32 18.4183 28.4183 22 24 22C19.5817 22 16 18.4183 16 14C16 9.58172 19.5817 6 24 6C28.4183 6 32 9.58172 32 14Z" stroke="#1E1E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					<button style="text-decoration: none; color: white; background: transparent; border: none;">Profil</button>
+				</a>
+			</div>
 		</div>
+
 
 
 

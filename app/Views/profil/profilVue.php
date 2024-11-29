@@ -14,33 +14,34 @@
     <div class="container">
         <div class="profile-card">
             <div class="info-card">
-                <h2>Votre email</h2>
+                <h5>Votre email</h5>
                 <hr>
-                <p>email</p>
+                <p><?= esc($utilisateur['email']) ?></p>
             </div>
             
             <div class="name-section">
                 <div class="info-card">
-                    <h2>Votre nom</h2>
+                    <h5>Votre nom</h5>
                     <hr>
-                    <p>nom</p>
+                    <p><?= esc($utilisateur['nom']) ?></p>
                 </div>
-                <a href="<?= base_url('connexion/mdp_oublie') ?>" class="btn-modifier">Modifier le mot de passe</a>
             </div>
             
             <div class="info-card">
-                <h2>Statuts et Priorités</h2>
+                <h5>Statuts</h5>
                 <hr>
                 <div class="status-priorities">
-                    <h3>Statuts</h3>
                     <?php foreach ($statuts as $statut): ?>
                         <div class="color-picker">
                             <span><?= esc($statut['libelle']) ?></span>
                             <input type="color" id="statut_<?= $statut['id'] ?>" value="<?= esc($statut['couleur']) ?>">
                         </div>
                     <?php endforeach; ?>
+                </div>
 
-                    <h3>Priorités</h3>
+                <div hidden class="status-priorities">
+                    <h5>Priorités</h5>
+                    <hr>
                     <?php foreach ($priorites as $priorite): ?>
                         <div class="color-picker">
                             <span><?= esc($priorite['libelle']) ?></span>
@@ -49,12 +50,17 @@
                     <?php endforeach; ?>
                 </div>
 
-                <!-- Bouton Enregistrer déplacé ici -->
-                <button id="enregistrer" class="btn-enregistrer">Enregistrer les modifications</button>
+                <!-- Bouton Enregistrer -->
+                <div style="text-align: right;"> 
+                    <a class="btn-enregistrer">Enregistrer les modifications</a>
+                </div>
             </div>
 
-            <!-- Bouton Supprimer compte -->
-            <button id="supprimer" class="btn-supprimer">Supprimer le compte</button>
+            <!-- Bouton modifier mdp et Supprimer compte -->
+            <div class="button-group">
+                <a href="<?= base_url('connexion/mdp_oublie') ?>" class="btn-modifier">Modifier le mot de passe</a>
+                <button id="supprimer" class="btn-supprimer">Supprimer le compte</button>
+            </div>        
         </div>
     </div>
 

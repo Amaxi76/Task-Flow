@@ -25,9 +25,9 @@ $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::en
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
 
-$routes->get ('/profil'              ,'ProfilControleur::index'   );
+$routes->get ('/profil'                    ,'ProfilControleur::index'   );
 $routes->post('profil/enregistrer-couleurs', 'ProfilControleur::enregistrerCouleurs');
-$routes->post('profil/supprimer-compte', 'ProfilControleur::supprimerCompte');
+$routes->post('profil/supprimer-compte'    , 'ProfilControleur::supprimerCompte');
 
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
