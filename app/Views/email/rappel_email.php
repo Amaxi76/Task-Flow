@@ -20,7 +20,7 @@
 			border-radius: 8px;
 			overflow: hidden;
 			padding: 40px;
-			text-align: center;
+			text-align: left;
 		}
 		.header {
 			background-color: #379EE8;
@@ -38,6 +38,9 @@
 			color: #1C4973;
 			margin-bottom: 20px;
 		}
+		li {
+			margin-bottom: 1rem;
+		}
 		.btn {
 			display: inline-block;
 			background-color: #379EE8;
@@ -53,19 +56,27 @@
 	</style>
 </head>
 <body>
-	<h2>Rappel de vos tâches à venir</h2>
-	<p>Voici la liste des tâches qui arrivent bientôt :</p>
-	<ul>
-		<?php foreach ($taches as $tache): ?>
-			<li>
-				<strong><?= esc($tache['titre']) ?></strong><br>
-				<em><?= esc($tache['detail']) ?></em><br>
-				Échéance : <?= date('d/m/Y H:i', strtotime($tache['echeance'])) ?><br>
-				Rappel : <?= esc($tache['rappel']) ?> minutes avant échéance
-			</li>
-		<?php endforeach; ?>
-	</ul>
+	<div class="container">
+		<div class="box">
+			<div class="header">
+				<h1>Rappel de vos tâches à venir</h1>
+			</div>
+			<div class="content">
+				<h2>Voici la liste des tâches qui arrivent bientôt</h2>
+				<ul>
+					<?php foreach ($taches as $tache): ?>
+						<li>
+							<strong><?= esc($tache['titre']) ?></strong><br>
+							<em><?= esc($tache['detail']) ?></em><br>
+							Échéance : <?= date('d/m/Y H:i', strtotime($tache['echeance'])) ?><br>
+							Rappel : <?= esc($tache['rappel']) ?> minutes avant échéance
+						</li>
+					<?php endforeach; ?>
+				</ul>
+				<p>Merci de votre attention.</p>
+			</div>
+		</div>
+	</div>
 
-	<p>Merci de votre attention.</p>
 </body>
 </html>
