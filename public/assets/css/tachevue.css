@@ -29,6 +29,7 @@ header img {
 	padding: 0.5rem;
 	border-radius: 0.5rem;
 	height: fit-content;
+	border: none;
 }
 
 .main-button {

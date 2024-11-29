@@ -15,7 +15,7 @@ form {
 
 .carte {
 	box-sizing: border-box;
-	border-radius: 16px;
+	border-radius: 0.5rem;
 	overflow: hidden;
 	width: 25rem;
 	height: fit-content;
@@ -116,14 +116,10 @@ svg, svg * {
 	align-items: center;
 	background-color: #EAEAEA;
 	padding: 4px 8px;
-	border-radius: 16px;
+	border-radius: 0.5rem;
 	font-size: 12px;
 	gap: 4px;
 	color: #838383;
 	white-space: normal;
 	word-break: break-word;
-}
-
-.carte-bg-color {
-	background-color: #379EE8;
 }

@@ -18,7 +18,7 @@
 </header>
 
 	<div class="d-flex justify-content-center align-items-center vh-100">
-		<div class="box shadow-lg d-flex flex-row">
+		<div class="box shadow-lg d-flex flex-row" style="width:fit-content;">
 			<div class="md-6 bg-custom text-white p-4">
 				<h2 class="text-center mb-4"><?php echo $titre ?></h2>
 				<?php echo form_open($routeFormulaire, ['class' => 'needs-validation', 'novalidate' => '']); ?>

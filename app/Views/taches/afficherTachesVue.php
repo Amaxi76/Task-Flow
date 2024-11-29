@@ -1,9 +1,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/tachevue.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
-<link rel="stylesheet" href="<?= base_url('assets/css/tachefiltre.css') ?>">
-
-<script src="<?= base_url('assets/js/carte.js') ?>"></script>
+<link rel="stylesheet" href="<?= base_url('assets/css/popupfiltre.css') ?>">
 
 <header id="up-link">
 	<div class="conteneur-entete">
@@ -30,11 +28,11 @@
 				</div>
 			</a>
 
-			<div class="button secondary-button">
+			<div class="button secondary-button filtre-button">
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M19 3H5C3.58579 3 2.87868 3 2.43934 3.4122C2 3.8244 2 4.48782 2 5.81466V6.50448C2 7.54232 2 8.06124 2.2596 8.49142C2.5192 8.9216 2.99347 9.18858 3.94202 9.72255L6.85504 11.3624C7.49146 11.7206 7.80967 11.8998 8.03751 12.0976C8.51199 12.5095 8.80408 12.9935 8.93644 13.5872C9 13.8722 9 14.2058 9 14.8729L9 17.5424C9 18.452 9 18.9067 9.25192 19.2613C9.50385 19.6158 9.95128 19.7907 10.8462 20.1406C12.7248 20.875 13.6641 21.2422 14.3321 20.8244C15 20.4066 15 19.4519 15 17.5424V14.8729C15 14.2058 15 13.8722 15.0636 13.5872C15.1959 12.9935 15.488 12.5095 15.9625 12.0976C16.1903 11.8998 16.5085 11.7206 17.145 11.3624L20.058 9.72255C21.0065 9.18858 21.4808 8.9216 21.7404 8.49142C22 8.06124 22 7.54232 22 6.50448V5.81466C22 4.48782 22 3.8244 21.5607 3.4122C21.1213 3 20.4142 3 19 3Z" />
 				</svg>
-				<a href="/taches/filtres/editer"><button>Filtre</button></a>
+				<button>Filtre</button>
 			</div>
 			
 		</div>
@@ -46,9 +44,9 @@
 	<?php echo form_open('/taches/detail'); ?>
 	<?= form_hidden('id', esc($tache['id_tache'])) ?>
 
-	<div class="carte" hexa="<?=  esc($tache['couleur_statut']) ?>" onclick="this.closest('form').submit();">
+	<div class="carte" onclick="this.closest('form').submit();">
 	<div class="carte-entete">
-				<div class="carte-titre carte-bg-color">
+				<div class="carte-titre" style= "background-color:<?=  esc($tache['couleur_statut']) ?>">
 					<h5><?= esc($tache['titre'])?></h5>
 					<p><?= esc($tache['libelle_statut'])?></p>
 				</div>
@@ -74,7 +72,7 @@
 			<p><?= esc($tache['detail']) ?></p>
 		</div>
 		<div class="carte-commentaire">
-			<span class="commentaire-bulle carte-bg-color">
+			<span class="commentaire-bulle carte-bg-color" style="background-color:<?=  esc($tache['couleur_statut']) ?>">
 				<svg width="" height="" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
@@ -88,53 +86,9 @@
 	<?php endforeach; ?>
 </div>
 
-<div id="filter-popup" class="popup">
-	<div class="popup-content">
-		<span class="close-btn">&times;</span>
-		<h3>Filtrer</h3>
-		<form id="filter-sort-form"></form>
-			<div class="form-group">
-				<label for="status">Statut</label>
-				<select id="status" name="status">
-					<option value="">Tous</option>
-					<option value="1">En cours</option>
-					<option value="2">Terminé</option>
-					<!-- Ajoutez d'autres options de statut ici -->
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="priority">Priorité</label>
-				<select id="priority" name="priority">
-					<option value="">Toutes</option>
-					<option value="1">Haute</option>
-					<option value="2">Moyenne</option>
-					<option value="3">Basse</option>
-					<!-- Ajoutez d'autres options de priorité ici -->
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="sort">Trier par</label>
-				<select id="sort" name="sort">
-					<option value="date">Date</option>
-					<option value="priority">Priorité</option>
-					<option value="status">Statut</option>
-					<!-- Ajoutez d'autres options de tri ici -->
-				</select>
-			</div>
-			<button type="submit" class="button main-button">Appliquer</button>
-		</form>
-	</div>
+<div id="pager">
+	<?= $pagerTaches->links('taches', 'default_full') ?> 
 </div>
-
-<script>
-	document.querySelector('.secondary-button').addEventListener('click', function() {
-		document.getElementById('filter-popup').style.right = '0';
-	});
-
-	document.querySelector('.close-btn').addEventListener('click', function() {
-		document.getElementById('filter-popup').style.right = '-100%';
-	});
-</script>
 
 <style>
 	#pager {
@@ -168,7 +122,3 @@
 		margin: 0 1rem;
 	}
 </style>
-
-<div id="pager">
-	<?= $pagerTaches->links('taches', 'default_full') ?> 
-</div>

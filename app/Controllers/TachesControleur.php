@@ -83,9 +83,13 @@ class TachesControleur extends BaseController
 		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
 		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
 
+		$dataFiltre = [];
+		$dataFiltre['trieur'] = $this->trieur;
+		$dataFiltre['filtreur'] = $this->filtreur;
+
 		// Charger la vue 
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view ('commun/piedpage'); 
+		return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
 	}
 
 	public function ajouter (): string{
@@ -106,16 +110,16 @@ class TachesControleur extends BaseController
 		$dataCorps['tache'] = [
 			'id' => '',
 			'id_utilisateur' => $this->idUtilisateur,
-			'titre' => '',
-			'detail' => '',
-			'date_echeance' => '',
-			'id_priorite' => '',
-			'id_statut' => ''
+			'titre' => old('titre', ''),
+			'detail' => old('detail', ''),
+			'date_echeance' => old('date_echeance', ''),
+			'id_priorite' => old('id_priorite', ''),
+			'id_statut' => old('id_statut', '')
 		];
 
 		// Charger la vue
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/ajouterTacheVue', $dataCorps) . view ('commun/piedpage'); 
+		return view ('commun/entete', $dataEntete) . view ('taches/actionsTacheVue', $dataCorps) . view ('commun/piedpage'); 
 	}
 
 	public function appliquerAjout () {
@@ -186,7 +190,7 @@ class TachesControleur extends BaseController
 
 		// Charger la vue
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/ajouterTacheVue', $dataCorps) . view ('commun/piedpage');
+		return view ('commun/entete', $dataEntete) . view ('taches/actionsTacheVue', $dataCorps) . view ('commun/piedpage');
 	}
 
 	public function appliquerModification () {
