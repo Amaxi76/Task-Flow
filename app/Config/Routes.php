@@ -25,6 +25,10 @@ $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePa
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
+// Filtrage
+$routes->get ('/taches/filtres/editer', 'TriageFiltrageControleur::index' );
+$routes->post('/taches/filtres/appliquer' , 'TriageFiltrageControleur::appliquer'  );
+
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
     $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
@@ -35,10 +39,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
 
-	$routes->get('/taches/modifier/(:num)', 'TachesControleur::modifier/$1');
+	$routes->post('/taches/modifier', 'TachesControleur::modifier');
 	$routes->post('/taches/appliquerModification', 'TachesControleur::appliquerModification');
 
-	$routes->get('/taches/supprimer', 'TachesControleur::supprimer');
+	$routes->post('/taches/supprimer', 'TachesControleur::appliquerSuppression');
 	$routes->post('/taches/appliquerSuppression', 'TachesControleur::appliquerSuppression');
 
 	$routes->post ('/taches/detail','CommentairesControleur::index');
