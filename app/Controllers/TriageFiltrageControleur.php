@@ -6,6 +6,7 @@ use App\Models\Taches\ModeleIntitules;
 
 class TriageFiltrageControleur extends BaseController 
 {
+	private int $idUtilisateur;
 	private ServiceTriageTaches $trieur;
 	private ServiceFiltrageTaches $filtreur;
 
@@ -14,6 +15,9 @@ class TriageFiltrageControleur extends BaseController
 	/*---------------------------------------*/
 
 	public function __construct() {
+		$session = session();
+		$this->idUtilisateur = $session->get('id');
+
 		$this->initialiserServicesSession();
 	}
 
@@ -42,8 +46,6 @@ class TriageFiltrageControleur extends BaseController
 	/*---------------------------------------*/
 
 	public function index(){
-		$ID_UTILISATEUR = 1; //FIXME: à remplacer par l'ID de la session lorsque le merge de la branche sera fait
-
 		// Charger les outils
 		helper(['form']);
 
@@ -52,10 +54,10 @@ class TriageFiltrageControleur extends BaseController
 
 		// Charger les données
 		$data = [];
-		$data['trieur']   = $this->trieur;
-		$data['filtreur'] = $this->filtreur;
-		$data['priorites'] = $intituleModele->getPrioritesUtilisateur( $ID_UTILISATEUR );
-		$data['statuts']   = $intituleModele->getStatutsUtilisateur( $ID_UTILISATEUR );
+		$data['trieur']    = $this->trieur;
+		$data['filtreur']  = $this->filtreur;
+		$data['priorites'] = $intituleModele->getPrioritesUtilisateur( $this->idUtilisateur );
+		$data['statuts']   = $intituleModele->getStatutsUtilisateur( $this->idUtilisateur );
 
 		// Charger la vue
 		return view('taches/filtrageTriageTachesVue', $data);
@@ -78,6 +80,7 @@ class TriageFiltrageControleur extends BaseController
 	/*                METHODES               */
 	/*---------------------------------------*/
 
+	//TODO: à voir pour améliorer cette partie pour pas mettre en dur
 	private function appliquerModificationsTris( $data ) {
 		// réintialiser les valeurs de tri
 		$this->trieur->reinitialiser();

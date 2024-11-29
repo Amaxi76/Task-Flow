@@ -9,12 +9,10 @@ class ConnexionControleur extends BaseController
 { 
 	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
-	public function index()
+	public function index(): string
 	{
 		helper(['form']);
-		echo view('commun/entete');
-		echo view('connexion/connexionVue');
-		echo view('commun/piedpage');
+		return view('commun/entete') . view('connexion/connexionVue') . view('commun/piedpage');
 	}
 
 	public function connexion(){
