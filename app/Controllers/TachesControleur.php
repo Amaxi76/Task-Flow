@@ -98,9 +98,20 @@ class TachesControleur extends BaseController
 
 		// Charger les données
 		$dataCorps = [];
-		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
-		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur( $this->idUtilisateur);
-		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+		$dataCorps['routeFormulaire'] = '/taches/appliquerAjout';
+		$dataCorps['idUtilisateur']   = $this->idUtilisateur;
+		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur( $this->idUtilisateur);
+		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+
+		$dataCorps['tache'] = [
+			'id' => '',
+			'id_utilisateur' => $this->idUtilisateur,
+			'titre' => '',
+			'detail' => '',
+			'date_echeance' => '',
+			'id_priorite' => '',
+			'id_statut' => ''
+		];
 
 		// Charger la vue
 		helper (['form']);
@@ -119,12 +130,12 @@ class TachesControleur extends BaseController
 		$validation = \Config\Services::validation();
 		$validation->setRules([
 			'titre' => 'required',
-			'detail' => 'required',
-			'echeance' => 'required|valid_date[Y-m-d\TH:i]',
+			'date_echeance' => 'required|valid_date[Y-m-d\TH:i]',
 			'id_priorite' => 'required|integer',
 			'id_statut' => 'required|integer'
 		]);
 
+		
 		if (!$validation->withRequest($this->request)->run()) {
 			// Si la validation échoue, recharger le formulaire avec les erreurs
 			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
@@ -137,16 +148,6 @@ class TachesControleur extends BaseController
 		return redirect()->to('/taches');
 	}
 
-	public function supprimer (): string {
-		// Données de l'entête
-		$dataEntete = [];
-		$dataEntete['titre'] = 'Supprimer une tâche';
-
-		// Charger la vue
-		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/supprimerTacheVue') . view ('commun/piedpage');
-	}
-
 	public function appliquerSuppression () {
 		// Récupérer les données du formulaire
 		$request = \Config\Services::request ();
@@ -156,13 +157,17 @@ class TachesControleur extends BaseController
 		$tacheModele = new ModeleTaches ();
 
 		// Supprimer les données
-		$tacheModele->delete ($idTache);
+		$tacheModele->where('id', $idTache)->delete ();
 
 		// Charger la vue
 		return redirect ()->to ('/taches');
 	}
 
-	public function modifier ( $idTache ): string {
+	public function modifier (): string {
+		// Récupérer les données du formulaire
+		$request = \Config\Services::request ();
+		$idTache = $request->getPost ('id');
+
 		// Données de l'entête
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Modifier une tâche';
@@ -173,28 +178,31 @@ class TachesControleur extends BaseController
 
 		// Charger les données
 		$dataCorps = [];
-		$dataCorps['tache']     = $tacheModele->find ($idTache);
-		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
-		$dataCorps['priorites'] = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
-		$dataCorps['statuts']   = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+		$dataCorps['routeFormulaire'] = '/taches/appliquerModification';
+		$dataCorps['tache']           = $tacheModele->find ($idTache);
+		$dataCorps['idUtilisateur']   = $this->idUtilisateur;
+		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
+		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
 
 		// Charger la vue
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/modifierTacheVue', $dataCorps) . view ('commun/piedpage');
+		return view ('commun/entete', $dataEntete) . view ('taches/ajouterTacheVue', $dataCorps) . view ('commun/piedpage');
 	}
 
 	public function appliquerModification () {
 		// Récupérer les données du formulaire
 		$request = \Config\Services::request ();
-		$data['tache'] = $request->getPost ();
+		$data = $request->getPost ();
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
 
 		// Mettre à jour les données
-		$tacheModele->update ($data['tache']['id'], $data['tache']);
+		$tacheModele->update ($data['id'], $data);
 
 		// Charger la vue
+		//TODO: rediriger vers la page de détail de la tâche avec post
 		return redirect ()->to ('/taches');
+		//return redirect()->to('/taches/detail/' . $data['id'])->with('post', $data);
 	}
-} 
+}

@@ -42,7 +42,7 @@
 <div class="conteneur-cartes">
 	<?php foreach ($taches as $tache) : ?>
 	<?php echo form_open('/taches/detail'); ?>
-	<?= form_hidden('id_tache', esc($tache['id_tache'])) ?>
+	<?= form_hidden('id', esc($tache['id_tache'])) ?>
 
 	<div class="carte" hexa="<?=  esc($tache['couleur_statut']) ?>" onclick="this.closest('form').submit();">
 	<div class="carte-entete">

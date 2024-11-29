@@ -39,10 +39,10 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
 
-	$routes->get('/taches/modifier/(:num)', 'TachesControleur::modifier/$1');
+	$routes->post('/taches/modifier', 'TachesControleur::modifier');
 	$routes->post('/taches/appliquerModification', 'TachesControleur::appliquerModification');
 
-	$routes->get('/taches/supprimer', 'TachesControleur::supprimer');
+	$routes->post('/taches/supprimer', 'TachesControleur::appliquerSuppression');
 	$routes->post('/taches/appliquerSuppression', 'TachesControleur::appliquerSuppression');
 
 	$routes->post ('/taches/detail','CommentairesControleur::index');
