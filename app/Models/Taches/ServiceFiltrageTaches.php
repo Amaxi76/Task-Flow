@@ -50,12 +50,6 @@ class ServiceFiltrageTaches
 
 	public function filtrer(ModeleVueCartesTaches $modele): ModeleVueCartesTaches
 	{
-		/*foreach ($this->filtres as $cle => $valeur) {
-			if (!empty($valeur)) {
-				$modele->where($cle, $valeur);
-			}
-		}*/
-
 		if( !empty($this->filtres['deb_date_echeance']) ) {
 			$modele->where('date_echeance >=', $this->filtres['deb_date_echeance']);
 		}

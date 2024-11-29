@@ -1,6 +1,5 @@
 <?php
 namespace App\Controllers;
-use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele;
 use App\Models\Utilisateurs\UtilisateurModele;
@@ -14,7 +13,7 @@ class ReinitialisationMotDePasseControleur extends Controller
 		if ($this->verifierJeton($jeton))
 			return view("/connexion/reinitialisationMdpVue",['jeton' => $jeton]);
 		else 
-			return view("jeton_expireVue"    );
+			return view("jeton_expireVue");
 	}
 
 	/**
