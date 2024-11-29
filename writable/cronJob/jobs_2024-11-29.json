@@ -1,14 +1,14 @@
 [
     {
-        "name": "closure_52409242316f3766dc59497213ff8477",
+        "name": "closure_a2557643e98bc94ce6e428ee52b0d5d0",
         "type": "closure",
         "action": "{}",
         "environment": "[]",
         "output": false,
         "error": null,
-        "start_at": "2024-11-29 08:35:25",
-        "end_at": "2024-11-29 08:35:25",
-        "duration": "00:00",
+        "start_at": "2024-11-29 15:12:42",
+        "end_at": "2024-11-29 15:12:43",
+        "duration": "00:01",
         "test_time": null
     }
 ]

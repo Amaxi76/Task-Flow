@@ -8,32 +8,75 @@ use CodeIgniter\Controller;
 class Cron extends Controller
 {
 
-	function envoyerRappelsTaches() 
+	/**
+	 * Envoie des rappels pour les tâches arrivant à échéance.
+	 */
+	public function envoyerRappelsTaches() 
 	{
+
+		log_message('info', 'Genre je suis la ?');
+		// Chargement du modèle
 		$tacheModele = new ModeleTaches();
+
+		// Récupérer les tâches proches de leur échéance
 		$tachesARappeler = $tacheModele->getTachesARappeler();
-		
-		dd($tachesARappeler);
-		foreach($tachesARappeler as $tache)
+
+		$idUserTachesRappeller = array_column($tachesARappeler,'id_utilisateur');
+
+		$ensEmailaEnvoyer = $tacheModele->getEmailTaches($idUserTachesRappeller);
+
+		$tableauRappel =$this->regrouperParEmail($tachesARappeler,$ensEmailaEnvoyer);
+
+		foreach ($tableauRappel as $email => $taches) 
 		{
-			dd("je suis la");
-			$this->envoyerEmails($tache['email'],$tache['titre'],$tache['echeance']);
+			// Passer l'email et les tâches à la vue
+			$contenu = view('email/rappel_email', ['taches' => $taches]);
+
+			// Envoyer l'email
+			$this->envoyerEmails($email, $contenu);
+
+			$tacheModele->updateTaches($taches);
 		}
 	}
 
+	public function regrouperParEmail(array $taches, array $emails) {
+		$tableauRappel = [];
 	
-	public function envoyerEmails($email,$titre,$echeance)
+		// Créer un tableau associatif des emails avec leur ID
+		$emailAssoc = [];
+		foreach ($emails as $emailData) {
+			// Associé l'ID de l'utilisateur à son email
+			$emailAssoc[$emailData['id']] = $emailData['email'];
+		}
+	
+		// Associer les tâches à leur email respectif
+		foreach ($taches as $tache) {
+			// Trouver l'email de l'utilisateur à partir de son ID
+			$userId = $tache['id_utilisateur'];
+			if (isset($emailAssoc[$userId])) {
+				$email = $emailAssoc[$userId];
+				// Ajouter la tâche à l'email correspondant
+				$tableauRappel[$email][] = $tache;
+			}
+		}
+	
+		return $tableauRappel;
+	}
+	
+	public function envoyerEmails($email,$contenu)
 	{
-		$email = \Config\Services::email();
-		$email->setTo      ("thomasboudeele1@gmail.com");
-		$email->setFrom    ($email->SMTPUser);
-		$email->setSubject ('TEST');
-		$email->setMessage ("/!\ ATTENTION /!\ La taches ".$titre." arrive a écheance le ".$echeance);
+		$emailService = \Config\Services::email();
+		$emailService->setTo      ($email);
+		$emailService->setFrom    ($emailService->SMTPUser);
+		$emailService->setSubject ('Taches arrivant à écheance');
+		$emailService->setMessage ($contenu);
+		$emailService->setMailType('html');
 
-		if ($email->send()) {
-			log_message('info', 'Email envoyé avec succès');
+		if ($emailService->send()) {
+			log_message('info', 'Email envoyé avec succès à l\'adresse '.$email);
 		} else {
 			log_message('error', 'Échec de l\'envoi de l\'email : ' . $email->printDebugger(['headers']));
 		}
 	}
+
 }

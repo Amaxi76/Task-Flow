@@ -18,18 +18,55 @@ class ModeleTaches extends Model
 
 	public function getTachesARappeler()
 	{
+		// Connexion à la base de données
 		$db = \Config\Database::connect();
-		$builder = $db->table('taskflow.taches');
-	;
-		$query = $builder->select('Taches.id, Taches.titre, Taches.echeance, Taches.rappel, Utilisateurs.id_personne')
-			->from('Taches')
-			->join('Utilisateurs', 'Taches.id_utilisateur = Utilisateurs.id_personne')
-			->where('Taches.echeance <=', 'NOW() + INTERVAL Taches.rappel DAY', false)
-			->where('Taches.echeance >', 'NOW()', false)
-			->get();
+	
+		// Construction de la requête
+		$query = $db->table("taches")
+					->select()
+					->where('taches.echeance - NOW() <= (taches.rappel || \' minutes\')::INTERVAL')
+					->where('taches.echeance > NOW()')
+					->where('nbrappel < 1')
+					->get();
+		// Retourne les résultats sous forme de tableau associatif
+		return $query->getResultArray();
+	}
+
+	/**
+	 * Récupère les emails des utilisateurs associés à une liste de tâches.
+	 *
+	 * @param array $taskIds Liste des IDs de tâches.
+	 * @return array Liste des emails des utilisateurs associés.
+	 */
+	public function getEmailTaches(array $idUtilisateur) {
+		if (empty($idUtilisateur)) {
+			return [];
+		}
+
+		$db = \Config\Database::connect();
+
+		$query = $db->table("personnes")
+					->select('id,email')
+					->whereIn('personnes.id',$idUtilisateur)
+					->get();
 
 		return $query->getResultArray();
 	}
-	
+
+	public function updateTaches(array $taches)
+	{
+		// Connexion à la base de données
+		$db = \Config\Database::connect();
+
+		// Boucle sur chaque tâche
+		foreach ($taches as $tache) {
+			// Mise à jour de la colonne nbRappel de chaque tâche
+			$db->table('taches')
+				->set('nbrappel', 'nbrappel + 1', false)  // Incrémentation de nbRappel
+				->where('id', $tache['id'])  // Filtrage par l'ID de la tâche
+				->update();
+		}
+	}
+
 
 }

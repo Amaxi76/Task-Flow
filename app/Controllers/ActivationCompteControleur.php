@@ -24,7 +24,7 @@ class ActivationCompteControleur extends Controller {
 		}
 		else 
 		{
-			dd("je suis la");
+			dd("Problème token"); //TODO:A changer
 		}
 	}
 	
