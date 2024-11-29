@@ -57,9 +57,11 @@ CREATE TABLE taskflow.Taches (
     id_utilisateur INT       NOT NULL,
     titre          TEXT      NOT NULL,
     detail         TEXT      NOT NULL DEFAULT '',
-    date_ajout     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_ajout     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        CHECK (date_ajout = to_timestamp(to_char(date_ajout, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')),
     rappel         INT,
-    date_echeance  TIMESTAMP NOT NULL,
+    date_echeance  TIMESTAMP NOT NULL
+        --CHECK (date_echeance = to_timestamp(to_char(date_echeance, 'YYYY-MM-DD HH24:MI:SS'), 'YYYY-MM-DD HH24:MI:SS')),
     id_priorite    INT       NOT NULL,
     id_statut      INT       NOT NULL,
     PRIMARY KEY (id),
