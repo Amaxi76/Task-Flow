@@ -73,3 +73,6 @@ INSERT INTO taskflow.Commentaires (id_tache, commentaire) VALUES
 (5, 'Commentaire pour la tâche 5'),
 (10, 'Commentaire pour la tâche 10'),
 (14, 'Commentaire pour la tâche 14');
+
+INSERT INTO taskflow.Intitules VALUES
+(100, 6, 'statut', 'Statut perso', '#374374');

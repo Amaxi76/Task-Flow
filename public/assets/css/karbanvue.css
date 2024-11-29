@@ -1,0 +1,15 @@
+.conteneur-statut {
+	display: flex;
+	flex-direction: column;
+}
+
+.conteneur-statut h3 {
+	position: sticky;
+	top: 0;
+	background-color: white;
+	z-index: 1;
+}
+
+.cartes-par-statut {
+	overflow-y: scroll;
+}

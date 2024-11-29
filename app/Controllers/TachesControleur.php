@@ -57,7 +57,7 @@ class TachesControleur extends BaseController
 
 	private function chargerPagePrincipale (): string {
 		// Constantes
-		$NOMBRE_TACHES_PAR_PAGE = 4;
+		$NOMBRE_TACHES_PAR_PAGE = 20;
 
 		// Données de l'entête
 		$dataEntete = [];
@@ -89,7 +89,7 @@ class TachesControleur extends BaseController
 
 		// Charger la vue 
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+		return view ('commun/entete', $dataEntete) . view ('/taches/karbanTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
 	}
 
 	public function ajouter (): string{
