@@ -28,6 +28,7 @@ class ProfilControleur extends Controller {
 		$data['statuts']   = $this->intitulesModele->getStatutsUtilisateur($idUtilisateur);
 		$data['priorites'] = $this->intitulesModele->getPrioritesUtilisateur($idUtilisateur);
 
+		helper(['form']);
 		// Charger la vue
 		return view('commun/entete', ['titre' => 'Profil Utilisateur'])
 			 . view('profil/profilVue', $data)
@@ -35,22 +36,21 @@ class ProfilControleur extends Controller {
 	}
 
 	public function enregistrerCouleurs() {
-		if ($this->request->isAJAX()) {
-			$couleurs = $this->request->getPost('couleurs');
-			$idUtilisateur = session()->get('id_utilisateur');
+		$couleurs = $this->request->getPost('couleurs');
+		$idUtilisateur = session()->get('id_utilisateur');
 
-			// Enregistrer les couleurs des statuts
-			foreach ($couleurs['statuts'] as $id => $couleur) {
-				$this->intitulesModele->update($id, ['couleur' => $couleur]);
-			}
-
-			// Enregistrer les couleurs des priorités
-			foreach ($couleurs['priorites'] as $id => $couleur) {
-				$this->intitulesModele->update($id, ['couleur' => $couleur]);
-			}
-
-			return $this->response->setJSON(['success' => true]);
+		// Enregistrer les couleurs des statuts
+		foreach ($couleurs['statuts'] as $id => $couleur) {
+			$this->intitulesModele->update($id, ['couleur' => $couleur]);
 		}
+
+		// Enregistrer les couleurs des priorités
+		foreach ($couleurs['priorites'] as $id => $couleur) {
+			$this->intitulesModele->update($id, ['couleur' => $couleur]);
+		}
+
+		return $this->response->setJSON(['success' => true]);
+	
 	}
 
 	public function supprimerCompte() 
