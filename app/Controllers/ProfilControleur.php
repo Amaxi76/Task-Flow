@@ -35,22 +35,30 @@ class ProfilControleur extends Controller {
 			 . view('commun/piedpage');
 	}
 
-	public function enregistrerCouleurs() {
-		$couleurs = $this->request->getPost('couleurs');
-		$idUtilisateur = session()->get('id_utilisateur');
-
-		// Enregistrer les couleurs des statuts
-		foreach ($couleurs['statuts'] as $id => $couleur) {
-			$this->intitulesModele->update($id, ['couleur' => $couleur]);
-		}
-
-		// Enregistrer les couleurs des priorités
-		foreach ($couleurs['priorites'] as $id => $couleur) {
-			$this->intitulesModele->update($id, ['couleur' => $couleur]);
-		}
-
-		return $this->response->setJSON(['success' => true]);
+	public function enregistrerModification() 
+	{
+		$this->enregistrerCouleurs();
 	
+	}
+
+	public function enregistrerCouleurs()
+	{
+		// Récupérer les couleurs envoyées depuis le formulaire
+		$couleurs = $this->request->getPost('couleurs');
+
+		$idUtilisateur = session()->get('id');
+
+		// Vérifier si les couleurs des statuts existent
+		if (isset($couleurs['statuts'])) 
+		{
+			foreach ($couleurs['statuts'] as $id => $couleur) 
+			{
+				$this->intitulesModele->update($id,['couleur' => $couleur]);
+			}
+		}
+
+		// Redirection ou réponse après traitement
+		return redirect()->back()->with('success', 'Couleurs enregistrées avec succès.');
 	}
 
 	public function supprimerCompte() 
@@ -77,6 +85,31 @@ class ProfilControleur extends Controller {
 
 		// Détruire la session
 		session()->destroy();
+	}
+
+	public function ajouterStatut()
+	{
+		$titre = $this->request->getPost("titre");
+		$couleur = $this->request->getPost("couleur");
+
+		$intituleModele = new ModeleIntitules();
+		
+		$intitule = 
+		[
+			'id_utilisateur' => session()->get("id"),
+			'type_intitule'  => 'statut',
+			'libelle'        => $titre,
+			'couleur'        => $couleur 
+		];
+		$intituleModele->insert($intitule);
+		
+		return redirect()->to('profil');
+	}
+
+	public function supprimerStatut($id)
+	{
+		$this->intitulesModele->delete($id);
+		return redirect()->back();
 	}
 	
 }

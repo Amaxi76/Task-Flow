@@ -56,7 +56,7 @@ p {
 	justify-content: space-between;
 	margin-top: 1rem;
 }
-/*
+
 .btn-modifier, .btn-supprimer {
 	background-color: #1C4973;
 	color: white;
@@ -86,7 +86,7 @@ p {
 	text-decoration: none;
 	text-align: center;
 }
-*/
+
 .btn-enregistrer {
 	font-size: inherit;
 	text-decoration: none;
@@ -95,20 +95,9 @@ p {
 	color: #163a5c;
 	padding: 0.5rem 1rem;
 	transition: background-color 0.3s;
-	
-	cursor: pointer;
-	width: fit-content;
-	padding: 0.5rem;
-	border-radius: 0.5rem;
-	height: fit-content;
-	border: 1px solid #163a5c; /* Ajoutez cette ligne */
-	gap: 0.5rem;
-	align-items: center;
-	flex-wrap: wrap;
-	display: flex;
+
 }
-*/
-/*
+
 .btn-modifier, .btn-supprimer {
 	flex-basis: 48%;
 }
@@ -116,25 +105,42 @@ p {
 .btn-supprimer:hover {
 	background-color: #c82333;
 }
-*/
+
 .status-priorities {
 	margin-bottom: 1rem;
 }
 
 .color-picker {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 0.6rem;
-	margin-left: 0.6rem;
+    display: flex;
+    justify-content: space-between; /* Espace entre libellé et actions */
+    align-items: center;
+    margin-bottom: 0.6rem;
+    margin-left: 0.6rem;
+}
+
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espace entre le color picker et le bouton */
 }
 
 .color-picker input[type="color"] {
-	border: none;
-	padding: 0;
-	width: 30px;
-	height: 30px;
-	border-radius: 4px;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.color-picker a svg {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.color-picker a svg:hover {
+    transform: scale(1.2); /* Agrandit légèrement au survol */
 }
 
 /* Nouveaux styles */
@@ -160,6 +166,13 @@ h2.text-center {
 	color: #1C4973;
 	margin-bottom: 2rem;
 }
+
+.form-actions {
+    display: flex;                /* Active le flexbox */
+    justify-content: flex-end;    /* Aligne les éléments à droite */
+    margin-top: 1rem;             /* Ajoute un espace au-dessus, optionnel */
+}
+
 
 .form-floating {
 	position: relative;
@@ -235,7 +248,7 @@ h2.text-center {
 }
 
 .popup-content .btn-enregistrer {
-	background-color: #28a745;
+	background-color: #379EE8;
 	color: white;
 }
 
