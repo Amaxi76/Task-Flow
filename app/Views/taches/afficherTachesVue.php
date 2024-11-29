@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/tachevue.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/tachefiltre.css') ?>">
+
 <script src="<?= base_url('assets/js/carte.js') ?>"></script>
 
 <header id="up-link">
 	<div class="conteneur-entete">
-		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
+		<img src="<?= base_url('assets/images/Task-Flow-Horizontal.svg') ?>" alt="Logo de TaskFlow">
 		
 		<div class="button main-button">
 			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,19 +88,85 @@
 	<?php endforeach; ?>
 </div>
 
-<!-- TODO: à adapter avec le CSS -->
+<div id="filter-popup" class="popup">
+	<div class="popup-content">
+		<span class="close-btn">&times;</span>
+		<h3>Filtrer</h3>
+		<form id="filter-sort-form"></form>
+			<div class="form-group">
+				<label for="status">Statut</label>
+				<select id="status" name="status">
+					<option value="">Tous</option>
+					<option value="1">En cours</option>
+					<option value="2">Terminé</option>
+					<!-- Ajoutez d'autres options de statut ici -->
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="priority">Priorité</label>
+				<select id="priority" name="priority">
+					<option value="">Toutes</option>
+					<option value="1">Haute</option>
+					<option value="2">Moyenne</option>
+					<option value="3">Basse</option>
+					<!-- Ajoutez d'autres options de priorité ici -->
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="sort">Trier par</label>
+				<select id="sort" name="sort">
+					<option value="date">Date</option>
+					<option value="priority">Priorité</option>
+					<option value="status">Statut</option>
+					<!-- Ajoutez d'autres options de tri ici -->
+				</select>
+			</div>
+			<button type="submit" class="button main-button">Appliquer</button>
+		</form>
+	</div>
+</div>
+
+<script>
+	document.querySelector('.secondary-button').addEventListener('click', function() {
+		document.getElementById('filter-popup').style.right = '0';
+	});
+
+	document.querySelector('.close-btn').addEventListener('click', function() {
+		document.getElementById('filter-popup').style.right = '-100%';
+	});
+</script>
+
 <style>
-    #pager a {
-        margin-right: 10px; /* Ajoute un espace entre les liens */
-    }
+	#pager {
+		display: flex;
+		justify-content: center;
+		padding: 1rem;
+	}
 
-    #pager .active a {
-        font-weight: bold; /* Exemple de personnalisation supplémentaire */
-    }
+	#pager a {
+		margin: 0 0.5rem;
+		padding: 0.5rem 1rem;
+		border-radius: 8px;
+		text-decoration: none;
+		color: #379EE8;
+		background-color: #EAEAEA;
+		transition: background-color 0.3s, color 0.3s;
+	}
 
-    #pager .prev, #pager .next {
-        margin-right: 20px;
-    }
+	#pager a:hover {
+		background-color: #379EE8;
+		color: white;
+	}
+
+	#pager .active a {
+		font-weight: bold;
+		background-color: #379EE8;
+		color: white;
+	}
+
+	#pager .prev, #pager .next {
+		margin: 0 1rem;
+	}
 </style>
 
 <div id="pager">

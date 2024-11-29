@@ -6,7 +6,7 @@
 <?php $tache = $taches[0]; ?>
 <header id="up-link">
 	<div class="conteneur-entete">
-		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
+		<img src="<?= base_url('assets/images/Task-Flow-Horizontal.svg') ?>" alt="Logo de TaskFlow">
 
 		<div class="button main-button">
 			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,6 @@
 	</div>
 	
 	<div class="conteneur-commentaire">
-
 		<div class="conteneur-commentaire-tableau">
 			<table class="tableau-commentaires">
 				<thead>
@@ -132,19 +131,17 @@
 		</div>
 		
 		<?= form_open('commentaire/ajout') ?>
-    <?= form_hidden('id_tache', esc($tache['id_tache'])) ?>
-    <div class="conteneur-commentaire-ajout">
-        <?php echo form_textarea('detail', set_value('detail'), 'id="description" placeholder="Votre commentaire" required class="textarea-commentaire" rows="1"'); ?>
-        <?= validation_show_error('detail') ?>
+		<?= form_hidden('id_tache', esc($tache['id_tache'])) ?>
+		<div class="conteneur-commentaire-ajout">
+			<?php echo form_textarea('detail', set_value('detail'), 'id="description" placeholder="Votre commentaire" required class="textarea-commentaire" rows="1"'); ?>
+			<?= validation_show_error('detail') ?>
 
-        <div class="button secondary-button" id="ajout-bouton" onclick="this.closest('form').submit();">
-            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M37.5 30H30M30 30H22.5M30 30V22.5M30 30V37.5M55 30C55 43.8071 43.8071 55 30 55C16.1929 55 5 43.8071 5 30C5 16.1929 16.1929 5 30 5C43.8071 5 55 16.1929 55 30Z" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-        </div>
-    </div>
-    <?= form_close() ?>
-
-	
+			<div class="button secondary-button commentaire-bouton" id="ajout-bouton" onclick="this.closest('form').submit();">
+				<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M37.5 30H30M30 30H22.5M30 30V22.5M30 30V37.5M55 30C55 43.8071 43.8071 55 30 55C16.1929 55 5 43.8071 5 30C5 16.1929 16.1929 5 30 5C43.8071 5 55 16.1929 55 30Z" stroke-width="3" stroke-linecap="round"/>
+				</svg>
+			</div>
+		</div>
+		<?= form_close() ?>
 	</div>
 </div>

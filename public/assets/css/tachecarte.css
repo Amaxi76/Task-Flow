@@ -9,6 +9,10 @@
 	margin-top: 1rem;
 }
 
+form {
+	height: fit-content;
+}
+
 .carte {
 	box-sizing: border-box;
 	border-radius: 16px;

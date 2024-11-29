@@ -5,7 +5,7 @@
 
 <header id="up-link">
 	<div class="conteneur-entete">
-		<img src="<?= base_url('assets/images/Logo.svg') ?>" alt="Logo de TaskFlow">
+		<img src="<?= base_url('assets/images/Task-Flow-Horizontal.svg') ?>" alt="Logo de TaskFlow">
 
 		<div class="button main-button">
 			<svg viewBox="0 0 43 36" fill="none" xmlns="http://www.w3.org/2000/svg">
