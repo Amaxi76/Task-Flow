@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Taches\ServiceTriageTaches;
+use App\Models\Taches\ServiceFiltrageTaches;
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
@@ -10,6 +11,7 @@ use Config\Pager;
 class TachesControleur extends BaseController 
 { 
 	private ServiceTriageTaches $trieur;
+	private ServiceFiltrageTaches $filtreur;
 
 	/*---------------------------------------*/
 	/*             CONSTRUCTEUR              */
@@ -19,14 +21,25 @@ class TachesControleur extends BaseController
 		$this->initialiserServicesSession();
 	}
 
+	//TODO: il y a de la duplication avec TriageFiltrageControleur.php mais je ne sais pas comment factoriser de manière cohérente ici
+	//C'est peut-être la meilleure solution de laisser comme ça
 	private function initialiserServicesSession() {
-		//dd('taches');
+		//dd('trieur');
 		if( ServiceTriageTaches::estPresentEnSession() ) {
 			$this->trieur = ServiceTriageTaches::getDepuisSession();
 		}
 		else {
 			$this->trieur = new ServiceTriageTaches();
 			$this->trieur->setDansSession();
+		}
+
+		//dd('filtreur');
+		if( ServiceFiltrageTaches::estPresentEnSession() ) {
+			$this->filtreur = ServiceFiltrageTaches::getDepuisSession();
+		}
+		else {
+			$this->filtreur = new ServiceFiltrageTaches();
+			$this->filtreur->setDansSession();
 		}
 	}
 
@@ -40,11 +53,12 @@ class TachesControleur extends BaseController
 		$dataEntete['titre'] = 'Liste des Tâches';
 
 		// Charger le modèle des tâches
-		$tacheModele = new ModeleVueCartesTaches();
+		$tacheModele    = new ModeleVueCartesTaches();
 		$intituleModele = new ModeleIntitules();
 
 		// Appliquer les tris
-		$this->trieur->trier($tacheModele);
+		$tacheModele = $this->trieur->trier($tacheModele);
+		$tacheModele = $this->filtreur->filtrer($tacheModele);
 
 		// Configurer le pager
 		$configPager = config(Pager::class); 
