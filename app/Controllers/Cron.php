@@ -79,4 +79,39 @@ class Cron extends Controller
 		}
 	}
 
+
+	public function test()
+	{
+		$data = [
+			'taches' => [
+				[
+					'titre' => 'Tâche 1',
+					'detail' => 'Ceci est le détail de la tâche 1.',
+					'echeance' => date('Y-m-d H:i:s', strtotime('+30 minutes')), // Échéance dans 30 minutes
+					'rappel' => 10, // Rappel 10 minutes avant
+				],
+				[
+					'titre' => 'Tâche 2',
+					'detail' => 'Ceci est le détail de la tâche 2.',
+					'echeance' => date('Y-m-d H:i:s', strtotime('+40 minutes')), // Échéance dans 40 minutes
+					'rappel' => 15, // Rappel 15 minutes avant
+				],
+				[
+					'titre' => 'Tâche 3',
+					'detail' => 'Ceci est le détail de la tâche 3.',
+					'echeance' => date('Y-m-d H:i:s', strtotime('+50 minutes')), // Échéance dans 50 minutes
+					'rappel' => 20, // Rappel 20 minutes avant
+				],
+			]
+		];
+	
+		// Charger la vue en passant les données
+		$contenu = view('email/rappel_email', $data);
+	
+		// Envoyer l'email avec les tâches
+		$this->envoyerEmails("antunes.celia2004@gmail.com", $contenu);
+	}
+	
+	
+
 }
