@@ -25,6 +25,8 @@ $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::en
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
 
+$routes->get ('/test','Cron::envoyerRappelsTaches');
+
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 

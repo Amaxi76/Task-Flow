@@ -7,8 +7,8 @@ VALUES
 -- Insérer des personnes
 INSERT INTO taskflow.Personnes (email, nom, mdp)
 VALUES
-    ('johndoe@example.com', 'John Doe', 'password123'),
-    ('janedoe@example.com', 'Jane Doe', 'securepass');
+    ('antunes.celia2004@gmail.com', 'John Doe', 'password123'),
+    ('antunes.celia2004@gmail.com', 'Jane Doe', 'securepass');
 
 -- Insérer des inscriptions
 INSERT INTO taskflow.Inscriptions (id_personne, id_jeton)
@@ -47,8 +47,8 @@ VALUES
 -- Insérer des tâches
 INSERT INTO taskflow.Taches (id_utilisateur, titre, detail, rappel, echeance, id_priorite, id_statut)
 VALUES
-    (1, 'Acheter des fournitures', 'Papeterie et stylos', 3, NOW() + INTERVAL '3 days', 4, 1), -- John Doe
-    (2, 'Préparer la réunion', 'Diapositives et agenda', NULL, NOW() + INTERVAL '2 days', 5, 2); -- Jane Doe
+    (1, 'Acheter des fournitures', 'Papeterie et stylos', 3, NOW() + INTERVAL '5 minutes', 4, 1), -- John Doe
+    (2, 'Préparer la réunion', 'Diapositives et agenda', NULL, NOW() + INTERVAL '5 minutes', 5, 2); -- Jane Doe
 
 -- Insérer des commentaires
 INSERT INTO taskflow.Commentaires (id_tache, commentaire)

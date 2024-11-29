@@ -8,27 +8,11 @@ INSERT INTO taskflow.Jetons (jeton, expiration) VALUES
 
 -- Insérer 5 utilisateurs (Personnes)
 INSERT INTO taskflow.Personnes (email, nom, mdp) VALUES
-('user1@example.com', 'NomUser1', md5('password1')),
-('user2@example.com', 'NomUser2', md5('password2')),
-('user3@example.com', 'NomUser3', md5('password3')),
-('user4@example.com', 'NomUser4', md5('password4')),
-('user5@example.com', 'NomUser5', md5('password5'));
+('antunes.celia2004@gmail.com', 'NomUser1', md5('password1')),
+('thomasboudeele1@gmail.com', 'NomUser2', md5('password2')),
+('thomasboudeele3@gmail.com', 'NomUser3', md5('password3')),
 
--- Associer chaque utilisateur à un jeton (Inscriptions)
-INSERT INTO taskflow.Inscriptions (id_personne, id_jeton) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
 
--- Insérer 5 utilisateurs dans la table Utilisateurs
-INSERT INTO taskflow.Utilisateurs (id_personne, id_jeton_resetMdp) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
 
 -- Insérer des status personnalisés pour chaque utilisateur
 INSERT INTO taskflow.Intitules (id_utilisateur, type_intitule, libelle, couleur) VALUES
