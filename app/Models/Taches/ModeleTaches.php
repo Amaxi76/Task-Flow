@@ -9,9 +9,9 @@ class ModeleTaches extends Model
 		'id_utilisateur',
 		'titre',
 		'detail',
-		'ajoute_le',
+		'date_ajout',
 		'rappel',
-		'echeance',
+		'date_echeance',
 		'id_priorite',
 		'id_statut'
 	];

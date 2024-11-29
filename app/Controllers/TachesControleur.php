@@ -1,18 +1,58 @@
 <?php 
 namespace App\Controllers;
 
+use App\Models\Taches\ServiceTriageTaches;
+use App\Models\Taches\ServiceFiltrageTaches;
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
 use Config\Pager;   
 
-class TachesControleur extends BaseController { 
+class TachesControleur extends BaseController 
+{ 
+	private int $idUtilisateur;
+	private ServiceTriageTaches $trieur;
+	private ServiceFiltrageTaches $filtreur;
 
-	private $ID_UTILISATEUR = -1; //TODO: à adapter automatiquement avec la session
-
-	public function __construct () {		
+	/*---------------------------------------*/
+	/*             CONSTRUCTEUR              */
+	/*---------------------------------------*/
+	
+	public function __construct() {
 		$session = session ();
-		$this->ID_UTILISATEUR = $session->get ('id');
+		$this->idUtilisateur = $session->get ('id');
+
+		$this->initialiserServicesSession();
+	}
+
+	//TODO: il y a de la duplication avec TriageFiltrageControleur.php mais je ne sais pas comment factoriser de manière cohérente ici
+	//C'est peut-être la meilleure solution de laisser comme ça
+	private function initialiserServicesSession() {
+		//dd('trieur');
+		if( ServiceTriageTaches::estPresentEnSession() ) {
+			$this->trieur = ServiceTriageTaches::getDepuisSession();
+		}
+		else {
+			$this->trieur = new ServiceTriageTaches();
+			$this->trieur->setDansSession();
+		}
+
+		//dd('filtreur');
+		if( ServiceFiltrageTaches::estPresentEnSession() ) {
+			$this->filtreur = ServiceFiltrageTaches::getDepuisSession();
+		}
+		else {
+			$this->filtreur = new ServiceFiltrageTaches();
+			$this->filtreur->setDansSession();
+		}
+	}
+
+	/*---------------------------------------*/
+	/*                  VUES                 */
+	/*---------------------------------------*/
+
+	public function index (): string {
+		return $this->chargerPagePrincipale ();
 	}
 
 	private function chargerPagePrincipale (): string {
@@ -27,25 +67,25 @@ class TachesControleur extends BaseController {
 		$tacheModele    = new ModeleVueCartesTaches ();
 		$intituleModele = new ModeleIntitules ();
 
+		// Appliquer les tris
+		$tacheModele = $this->trieur->trier($tacheModele);
+		$tacheModele = $this->filtreur->filtrer($tacheModele);
+
 		// Configurer le pager
 		$configPager = config (Pager::class);
 		$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
 
 		// Charger les données paginées
 		$dataCorps = [];
-		$dataCorps['idUtilisateur'] = $this->ID_UTILISATEUR;
-		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->ID_UTILISATEUR, $NOMBRE_TACHES_PAR_PAGE);
-		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->ID_UTILISATEUR);
-		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur ($this->ID_UTILISATEUR);
+		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
+		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->idUtilisateur, $NOMBRE_TACHES_PAR_PAGE);
+		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
 		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
 
 		// Charger la vue 
 		helper (['form']);
 		return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view ('commun/piedpage'); 
-	}
-
-	public function index (): string {
-		return $this->chargerPagePrincipale ();
 	}
 
 	public function ajouter (): string{
@@ -58,9 +98,9 @@ class TachesControleur extends BaseController {
 
 		// Charger les données
 		$dataCorps = [];
-		$dataCorps['idUtilisateur'] = $this->ID_UTILISATEUR;
-		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur( $this->ID_UTILISATEUR);
-		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->ID_UTILISATEUR);
+		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
+		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur( $this->idUtilisateur);
+		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
 
 		// Charger la vue
 		helper (['form']);
@@ -134,9 +174,9 @@ class TachesControleur extends BaseController {
 		// Charger les données
 		$dataCorps = [];
 		$dataCorps['tache']     = $tacheModele->find ($idTache);
-		$dataCorps['idUtilisateur'] = $this->ID_UTILISATEUR;
-		$dataCorps['priorites'] = $intituleModele->getPrioritesUtilisateur ($this->ID_UTILISATEUR);
-		$dataCorps['statuts']   = $intituleModele->getStatutsUtilisateur ($this->ID_UTILISATEUR);
+		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
+		$dataCorps['priorites'] = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
+		$dataCorps['statuts']   = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
 
 		// Charger la vue
 		helper (['form']);

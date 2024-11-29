@@ -21,7 +21,7 @@
 		<div class="box shadow-lg d-flex flex-row">
 			<div class="md-6 bg-custom text-white p-4">
 				<h2 class="text-center mb-4"><?php echo $titre ?></h2>
-				<?php echo form_open('/taches/appliquerAjout', ['class' => 'needs-validation', 'novalidate' => '']); ?>
+				<?php echo form_open('/taches/stocker', ['class' => 'needs-validation', 'novalidate' => '']); ?>
 				<?= form_hidden('id_utilisateur', set_value('id_utilisateur', $idUtilisateur)); ?>
 				
 				<div class="form-floating mb-3">
@@ -37,9 +37,9 @@
 				</div>
 
 				<div class="form-floating mb-3">
-					<?php echo form_input(['name' => 'echeance', 'type' => 'datetime-local', 'value' => set_value('echeance'), 'class' => 'form-control', 'id' => 'echeance', 'placeholder' => 'Date et Heure', 'required' => 'required']); ?>
+					<?php echo form_input(['name' => 'date_echeance', 'type' => 'datetime-local', 'value' => set_value('date_echeance'), 'class' => 'form-control', 'id' => 'date_echeance', 'placeholder' => 'Date et Heure', 'required' => 'required']); ?>
 					<?php echo form_label('Date et Heure', 'datetime'); ?>
-					<?= validation_show_error('echeance') ?>
+					<?= validation_show_error('date_echeance') ?>
 				</div>
 
 				<div class="row mb-3">

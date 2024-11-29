@@ -25,6 +25,10 @@ $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePa
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
+// Filtrage
+$routes->get ('/taches/filtres/editer', 'TriageFiltrageControleur::index' );
+$routes->post('/taches/filtres/appliquer' , 'TriageFiltrageControleur::appliquer'  );
+
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
     $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
