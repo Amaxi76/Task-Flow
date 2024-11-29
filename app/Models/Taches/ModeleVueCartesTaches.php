@@ -6,11 +6,7 @@ class ModeleVueCartesTaches extends Model
 	protected $table         = 'vuecartestaches';
 	protected $primaryKey    = ['id_tache','id_utilisateur'];
 
-	public function getCartesUtilisateurPaginees( int $idUtilisateur, int $perPage, string $sortOrder = 'asc', ?string $keyword = null ) : array {
-		if ($keyword !== null) {
-			$this->like ('titre', $keyword);
-			$this->orLike ('description', $keyword);
-		}
+	public function getCartesUtilisateurPaginees( int $idUtilisateur, int $perPage ) : array {
 		return $this->where('id_utilisateur', $idUtilisateur)
 			->paginate( $perPage, 'taches');
 	}
