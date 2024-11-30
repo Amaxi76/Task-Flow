@@ -34,7 +34,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
     $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
 
 	// Tâches
-	$routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
+	$routes->get ('/taches/toutes'        , 'TachesControleur::index/toutes'  ); // Page des tâches toutes
+	$routes->get ('/taches/kanban'        , 'TachesControleur::index/kanban'  ); // Page des tâches karban
+
 
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');

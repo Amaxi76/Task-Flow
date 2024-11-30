@@ -1,7 +1,7 @@
 .conteneur-cartes {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-around;
 	gap: 2rem;
 	padding:1rem 3rem 0rem 3rem;
 	flex-grow: 1;
@@ -17,7 +17,7 @@ form {
 	box-sizing: border-box;
 	border-radius: 0.5rem;
 	overflow: hidden;
-	width: 25rem;
+	width: 20rem;
 	height: fit-content;
 	display: flex;
 	flex-direction: column;
@@ -95,6 +95,13 @@ svg, svg * {
 .carte-commentaire {
 	padding: 0rem 1rem 1rem 1rem;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.carte-commentaire p {
+	margin: 0;
+	color: red;
 }
 
 .commentaire-count {

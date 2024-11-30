@@ -51,14 +51,7 @@ class TachesControleur extends BaseController
 	/*                  VUES                 */
 	/*---------------------------------------*/
 
-	public function index (): string {
-		return $this->chargerPagePrincipale ();
-	}
-
-	private function chargerPagePrincipale (): string {
-		// Constantes
-		$NOMBRE_TACHES_PAR_PAGE = 20;
-
+	public function index ( $typeVue ): string {
 		// Données de l'entête
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
@@ -71,25 +64,50 @@ class TachesControleur extends BaseController
 		$tacheModele = $this->trieur->trier($tacheModele);
 		$tacheModele = $this->filtreur->filtrer($tacheModele);
 
-		// Configurer le pager
-		$configPager = config (Pager::class);
-		$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
-
-		// Charger les données paginées
 		$dataCorps = [];
 		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
-		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->idUtilisateur, $NOMBRE_TACHES_PAR_PAGE);
 		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
 		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
-		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
+
 
 		$dataFiltre = [];
-		$dataFiltre['trieur'] = $this->trieur;
+		$dataFiltre['trieur']   = $this->trieur;
 		$dataFiltre['filtreur'] = $this->filtreur;
 
-		// Charger la vue 
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('/taches/karbanTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+
+		switch ( $typeVue ) {
+			case 'toutes':
+				// Constantes
+				$NOMBRE_TACHES_PAR_PAGE = 6;
+
+				// Configurer le pager
+				$configPager = config (Pager::class);
+				$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
+				
+				$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->idUtilisateur, $NOMBRE_TACHES_PAR_PAGE);
+				$dataCorps['pagerTaches']   = $tacheModele   ->pager;
+
+				return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+
+			case 'kanban':
+				$taches       = $tacheModele   ->getCartesUtilisateur ($this->idUtilisateur);
+
+				$dataCorps['taches'] = array_reduce($taches, function ($carry, $tache) {
+					$statut = $tache['libelle_statut'];
+					if (!isset($carry[$statut])) {
+						$carry[$statut] = [];
+					}
+					$carry[$statut][] = $tache;
+					return $carry;
+				}, []);
+				
+				ksort($dataCorps['taches']);
+
+				return view ('commun/entete', $dataEntete) . view ('/taches/kanbanTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+			default:
+				throw new \InvalidArgumentException('Type de vue non valide');
+		}
 	}
 
 	public function ajouter (): string{

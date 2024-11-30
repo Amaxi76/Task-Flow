@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecarte.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/tachecartepopup.css') ?>">
 <link rel="stylesheet" href="<?= base_url('assets/css/popupfiltre.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/karbanvue.css') ?>">
 
 <header id="up-link">
 	<div class="conteneur-entete">
@@ -19,6 +20,7 @@
 		<h2><?php echo $titre ?></h2>
 
 		<div class="conteneur-menu-boutons">
+
 			<div class="conteneur-menu-boutons-gauche">
 				<a href="<?= base_url('taches/ajouter') ?>">
 					<div class="button main-button" id="ajout-bouton">
@@ -36,10 +38,11 @@
 					<button>Filtre</button>
 				</div>
 			</div>
+	
 
 			<div class="conteneur-menu-affichage">
 				<a href="<?= base_url('taches/kanban') ?>">
-					<div class="button secondary-button" style="border:none;"  >
+					<div class="button main-button" >
 						<svg  viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M17.5 33.125V17.5M42.5 42.5V17.5M30 23.75V17.5M15 5H45C48.5003 5 50.2506 5 51.5875 5.68122C52.7634 6.28041 53.7197 7.23653 54.3187 8.41256C55 9.7495 55 11.4997 55 15V45C55 48.5003 55 50.2506 54.3187 51.5875C53.7197 52.7634 52.7634 53.7197 51.5875 54.3187C50.2506 55 48.5003 55 45 55H15C11.4997 55 9.7495 55 8.41256 54.3187C7.23653 53.7197 6.28041 52.7634 5.68122 51.5875C5 50.2506 5 48.5003 5 45V15C5 11.4997 5 9.7495 5.68122 8.41256C6.28041 7.23653 7.23653 6.28041 8.41256 5.68122C9.7495 5 11.4997 5 15 5Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
@@ -47,7 +50,7 @@
 				</a>
 
 				<a href="<?= base_url('taches/toutes') ?>">
-					<div class="button main-button" >
+					<div class="button secondary-button" style="border:none;" >
 						<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M7.77778 5H21.6667C23.2008 5 24.4444 6.24365 24.4444 7.77778V21.6667C24.4444 23.2008 23.2008 24.4444 21.6667 24.4444H7.77778C6.24365 24.4444 5 23.2008 5 21.6667V7.77778C5 6.24365 6.24365 5 7.77778 5Z" stroke="black" stroke-width="2" stroke-linejoin="round"/>
 							<path d="M7.77778 35.5556H21.6667C23.2008 35.5556 24.4444 36.7992 24.4444 38.3333V52.2222C24.4444 53.7564 23.2008 55 21.6667 55H7.77778C6.24365 55 5 53.7564 5 52.2222V38.3333C5 36.7992 6.24365 35.5556 7.77778 35.5556Z" stroke="black" stroke-width="2" stroke-linejoin="round"/>
@@ -62,90 +65,63 @@
 	</div>
 </header>
 
-<div class="conteneur-cartes">
-	<?php foreach ($taches as $tache) : ?>
-	<?php echo form_open('/taches/detail'); ?>
-	<?= form_hidden('id', esc($tache['id_tache'])) ?>
-
-	<div class="carte" onclick="this.closest('form').submit();">
-	<div class="carte-entete">
-				<div class="carte-titre" style= "background-color:<?=  esc($tache['couleur_statut']) ?>">
-					<h5><?= esc($tache['titre'])?></h5>
-					<p><?= esc($tache['libelle_statut'])?></p>
-				</div>
-				<div class="carte-options">
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
-							<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-						<?= esc($tache['date_echeance']) ?>
-					</span>
-					<span class="badge">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-							<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-						<?= esc($tache['libelle_priorite']) ?>
-					</span>
-				</div>
+<div class="conteneur-statuts">
+	<?php foreach ($taches as $statut => $tachesDuStatut) : ?>
+		<div class="statut">
+			<div class="conteneur-entete-statut">
+				<h3><?= $statut ?></h3>
+				<p><?= count($tachesDuStatut) ?></p>
 			</div>
-		<div class="carte-description">
-			<p><?= esc($tache['detail']) ?></p>
+			
+			<div class="conteneur-cartes-statut">
+				<?php foreach ($tachesDuStatut as $tache) : ?>
+					<?php echo form_open('/taches/detail'); ?>
+					<?= form_hidden('id', esc($tache['id_tache'])) ?>
+
+					<div class="carte" onclick="this.closest('form').submit();">
+						<div class="carte-entete">
+							<div class="carte-titre" style="background-color:<?= esc($tache['couleur_statut']) ?>">
+								<h5><?= esc($tache['titre'])?></h5>
+								<p><?= esc($tache['libelle_statut'])?></p>
+							</div>
+							<div class="carte-options">
+								<span class="badge">
+									<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+										<path d="M12 8V12L14.5 14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+									<?= esc($tache['date_echeance']) ?>
+								</span>
+								<span class="badge">
+									<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M12 9V14" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M12.0001 21.41H5.94005C2.47005 21.41 1.02005 18.93 2.70005 15.9L5.82006 10.28L8.76006 5.00003C10.5401 1.79003 13.4601 1.79003 15.2401 5.00003L18.1801 10.29L21.3001 15.91C22.9801 18.94 21.5201 21.42 18.0601 21.42H12.0001V21.41Z"  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M11.9945 17H12.0035" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+									<?= esc($tache['libelle_priorite']) ?>
+								</span>
+							</div>
+						</div>
+						<div class="carte-description">
+							<p><?= esc($tache['detail']) ?></p>
+						</div>
+						<div class="carte-commentaire">
+							<span class="commentaire-bulle carte-bg-color" style="background-color:<?=  esc($tache['couleur_statut']) ?>">
+								<svg width="" height="" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+								<span class="commentaire-count"><?= esc($tache['nb_commentaires']) ?></span>
+							</span>
+
+							<?php if ($tache['nb_jours_avant_echeance'] < 0) : ?>
+								<p><?= abs($tache['nb_jours_avant_echeance']) ?> jours en retard</p>
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<?= form_close() ?>
+				<?php endforeach; ?>
+			</div>
 		</div>
-		<div class="carte-commentaire">
-			<span class="commentaire-bulle carte-bg-color" style="background-color:<?=  esc($tache['couleur_statut']) ?>">
-				<svg width="" height="" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.4876 3.36093 14.891 4 16.1272L3 21L7.8728 20C9.10904 20.6391 10.5124 21 12 21Z" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-				</svg>
-				<span class="commentaire-count"><?= esc($tache['nb_commentaires']) ?></span>
-			</span>
-
-			<?php if ($tache['nb_jours_avant_echeance'] < 0) : ?>
-				<p><?= abs($tache['nb_jours_avant_echeance']) ?> jours en retard</p>
-			<?php endif; ?>
-		</div>
-	</div>
-
-	<?= form_close() ?>
-
-	<?php endforeach; ?>
+    <?php endforeach; ?>
 </div>
-
-<div id="pager">
-	<?= $pagerTaches->links('taches', 'default_full') ?> 
-</div>
-
-<style>
-	#pager {
-		display: flex;
-		justify-content: center;
-		padding: 1rem;
-	}
-
-	#pager a {
-		margin: 0 0.5rem;
-		padding: 0.5rem 1rem;
-		border-radius: 8px;
-		text-decoration: none;
-		color: #379EE8;
-		background-color: #EAEAEA;
-		transition: background-color 0.3s, color 0.3s;
-	}
-
-	#pager a:hover {
-		background-color: #379EE8;
-		color: white;
-	}
-
-	#pager .active a {
-		font-weight: bold;
-		background-color: #379EE8;
-		color: white;
-	}
-
-	#pager .prev, #pager .next {
-		margin: 0 1rem;
-	}
-</style>
