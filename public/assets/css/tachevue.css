@@ -83,6 +83,7 @@ button {
 	flex-wrap: wrap;
 	gap: 0.5rem;
 	flex-direction: column;
+	padding:1rem 3rem 0rem 3rem;
 }
 
 .conteneur-menu-filtre {
