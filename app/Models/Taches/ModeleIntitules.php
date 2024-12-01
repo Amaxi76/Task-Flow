@@ -4,7 +4,7 @@ use CodeIgniter\Model;
 class ModeleIntitules extends Model
 {
 	protected $table         = 'intitules';
-	protected $primaryKey    = 'id_statut';
+	protected $primaryKey    = 'id';
 	protected $allowedFields = [
 		'id_utilisateur',
 		'type_intitule',
