@@ -4,16 +4,16 @@ use CodeIgniter\Model;
 class CommentaireModele extends Model
 {
 	protected $table         = 'commentaires';
-	protected $primaryKey    = 'id_commentaire';
+	protected $primaryKey    = 'id';
 	protected $allowedFields = [
 		'id_tache',
 		'commentaire',
-		'ajoutee_le' //TODO: changer le nom en "date_ajout"
+		'date_ajout'
 	];
 
 	public function getCommentairesTache( int $idTache, ?string $order ) : array {
 		return $this->where('id_tache', $idTache)
-			->orderBy('ajoutee_le', $order)
+			->orderBy('date_ajout', $order)
 			->findAll();
 	}
 }

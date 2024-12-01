@@ -38,7 +38,7 @@ class TachesControleur extends BaseController
 		$this->session->setIdTache( null );
 
 		// Constantes
-		$NOMBRE_TACHES_PAR_PAGE = 4;
+		$NOMBRE_TACHES_PAR_PAGE = 8;
 
 		// Données de l'entête
 		$dataEntete = [];

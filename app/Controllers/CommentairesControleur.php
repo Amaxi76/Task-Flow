@@ -58,6 +58,7 @@ class CommentairesControleur extends BaseController
 
 		// Récupérer les données du formulaire
 		$data = request()->getPost();
+		
 
 		// Charger le modèle
 		$commentaireModele = new CommentaireModele();
