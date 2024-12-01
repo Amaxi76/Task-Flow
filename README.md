@@ -1,6 +1,6 @@
 # Task-Flow
 
-## Prérequis
+## 🛠️ Prérequis
 
 ### PHP
 
@@ -24,7 +24,7 @@ Alternativement, vous pouvez télécharger le projet au format .zip depuis :
 `https://github.com/Amaxi76/Task-Flow`
 
 
-## Configurations
+## ⚙️ Configurations
 
 1. Localisez le fichier php.ini : `php --ini`
 2. Ouvrir le fichier et décommentez les lignes suivantes :
