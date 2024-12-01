@@ -1,6 +1,7 @@
-# Task-Flow
+<div align="center">
+	<img src="./public/assets/images/Task-Flow-Horizontal.svg" alt="Task-Flow Logo" width="300">
+</div>
 
-<img src="./public/assets/images/Task-Flow-Horizontal.svg" alt="Task-Flow Logo" width="300">
 
 ## 🛠️ Prérequis
 
