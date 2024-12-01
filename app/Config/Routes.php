@@ -6,16 +6,12 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-//Route par défaut
-
-
 //Inscription et activation du compte
 $routes->get ('/inscription'                         ,'InscriptionControleur::index'                );
 $routes->post('/inscription'                         ,'InscriptionControleur::inscription'          );
 $routes->get ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1'        );
 $routes->get ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye'   );
 $routes->post ('/inscription/renvoieMail'            ,'InscriptionControleur::resetProcedure'    );
-
 
 // Connexion et mot de passe oublié
 $routes->get ('/connexion'                             ,'ConnexionControleur::index'                                );

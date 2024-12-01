@@ -58,6 +58,7 @@ class ConnexionFiltre implements FilterInterface
 	// Méthode à ajouter dans votre contrôleur ou dans un service dédié
 	private function verifierJetonSeSouvenir($jeton)
 	{
+		//TODO: c'est quoi tous ces commnentaires ci-dessous ?
 		// Implémentez ici la logique pour vérifier le jeton dans la base de données
 		// et retourner les informations de l'utilisateur si le jeton est valide
 		// Retournez false si le jeton est invalide ou expiré

@@ -18,6 +18,7 @@ class UtilisateurModele extends Model
 		$this->where("id_jeton_resetmdp",$idJeton);
 	}
 
+	//FIXME: pas la bonne syntaxe
 	public function verifierJetonSeSouvenir($jeton)
 	{
 		$db = \Config\Database::connect();
