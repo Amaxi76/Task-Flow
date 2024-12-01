@@ -5,7 +5,7 @@ use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
 class InscriptionControleur extends BaseController { 
-	private const TEMPS_EXPIRATION = '+1 minutes'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+10 minutes'; //TODO:A voir si on peut pas mettre un int plutôt
 
 	public function index() { 
 		helper(['form']);
