@@ -7,10 +7,13 @@ use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
 use App\Models\Utilisateurs\SessionUtilisateur;
+use CodeIgniter\HTTP\RedirectResponse;
+use CodeIgniter\Validation\ValidationInterface;
 use Config\Pager;
+use App\Models\Taches\OutilsConversion;
 
 //TODO: le mieux serait de passer direcement les données dans la session plutot qu'avec les formulaires POST ?
-class TachesControleur extends BaseController 
+class TachesControleur extends BaseController
 { 
 	private SessionUtilisateur $session;
 	private ServiceTriageTaches $trieur;
@@ -22,6 +25,22 @@ class TachesControleur extends BaseController
 	
 	public function __construct() {
 		$this->session = new SessionUtilisateur();
+	}
+
+	/*---------------------------------------*/
+	/*           METHODES INTERNES           */
+	/*---------------------------------------*/
+
+	public function getValideurDonnees(): ValidationInterface{
+		$validation = \Config\Services::validation();
+		$validation->setRules([
+			'titre'         => 'required',
+			'date_echeance' => 'required|valid_date[Y-m-d\TH:i]',
+			'id_priorite'   => 'required|integer',
+			'id_statut'     => 'required|integer'
+		]);
+
+		return $validation;
 	}
 
 	/*---------------------------------------*/
@@ -109,13 +128,15 @@ class TachesControleur extends BaseController
 		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur  ($this->session->getIdUtilisateur());
 
 		$dataCorps['tache'] = [
-			'id' => '',
+			'id'             => '',
 			'id_utilisateur' => $this->session->getIdUtilisateur(),
-			'titre' => old('titre', ''),
-			'detail' => old('detail', ''),
-			'date_echeance' => old('date_echeance', ''),
-			'id_priorite' => old('id_priorite', ''),
-			'id_statut' => old('id_statut', '')
+			'titre'          => old('titre', ''),
+			'detail'         => old('detail', ''),
+			'date_echeance'  => old('date_echeance', ''),
+			'id_priorite'    => old('id_priorite', ''),
+			'id_statut'      => old('id_statut', ''),
+			'rappel'         => old('rappel', ''),
+			'unite'          => old('unite', '')
 		];
 
 		// Charger la vue
@@ -134,39 +155,14 @@ class TachesControleur extends BaseController
 		$tacheModele = new ModeleTaches ();
 
 		// Validation des données
-		$validation = \Config\Services::validation();
-		$validation->setRules([
-			'titre'         => 'required',
-			'date_echeance' => 'required|valid_date[Y-m-d\TH:i]',
-			'id_priorite'   => 'required|integer',
-			'id_statut'     => 'required|integer'
-		]);
-
-		if (!$validation->withRequest($this->request)->run()) {
-			// Si la validation échoue, recharger le formulaire avec les erreurs
-			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+		$valideur = $this->getValideurDonnees();
+		$donneesValides = $valideur->withRequest($this->request )->run();
+		if( !$donneesValides ){
+			return redirect()->back()->withInput()->with('errors', $valideur->getErrors());
 		}
 
-		if ( !empty ( $data['rappel'] ) ) {
-			switch ( $data['unite'] ) {
-				case 'heure':
-					$data['rappel'] = $data['rappel'] * 60;
-					break;
-				case 'jour':
-					$data['rappel'] = $data['rappel'] * 60 * 24;
-					break;
-				case 'mois':
-					$data['rappel'] = $data['rappel'] * 60 * 24 * 30;
-					break;
-				case 'annee':
-					$data['rappel'] = $data['rappel'] * 60 * 24 * 365;
-					break;
-				default:
-					throw new \InvalidArgumentException('Unité de temps non valide');
-			}
-		} else {
-			$data['rappel'] = 0;
-		}
+		// Convertir les données
+		$data['rappel'] = OutilsConversion::convertirEnMinutes( $data['rappel'], $data['unite'] );
 
 		// Insérer les données
 		$tacheModele->insert($data);
@@ -190,10 +186,13 @@ class TachesControleur extends BaseController
 		return redirect ()->to ('/taches');
 	}
 
-	public function modifier (): string {
+	public function modifier () {
 		// Mettre à jour les données de la session
-		$this->session->setIdTache( null );
-		$idTache = request()->getPost ('id');
+		$this->session->majIdTacheAvecPost( 'id' );
+		$idTache = $this->session->getIdTache();
+
+		// Vérifier qu'il n'y a pas de problème
+		if( !$this->session->idTacheExiste() ) return redirect()->to(site_url('taches'));
 
 		// Données de l'entête
 		$dataEntete = [];
@@ -206,7 +205,11 @@ class TachesControleur extends BaseController
 		// Charger les données
 		$dataCorps = [];
 		$dataCorps['routeFormulaire'] = '/taches/appliquerModification';
-		$dataCorps['tache']           = $tacheModele   ->find ($idTache);
+
+		$tache = $tacheModele->find ($idTache);
+		$tache['rappel']      = OutilsConversion::convertirMinutesEnUnite( $tache['rappel'], 'heure' );
+		$dataCorps['tache']   = $tache;
+
 		$dataCorps['idUtilisateur']   = $this->session ->getIdUtilisateur();
 		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->session->getIdUtilisateur ());
 		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur   ($this->session->getIdUtilisateur ());
@@ -223,6 +226,16 @@ class TachesControleur extends BaseController
 		// Récupérer les données du formulaire
 		$data = request()->getPost ();
 
+		// Validation des données
+		$valideur = $this->getValideurDonnees();
+		$donneesValides = $valideur->withRequest($this->request )->run();
+		if( !$donneesValides ){
+			return redirect()->back()->withInput()->with('errors', $valideur->getErrors());
+		}
+
+		// Convertir les données
+		$data['rappel'] = OutilsConversion::convertirEnMinutes( $data['rappel'], $data['unite'] );
+
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
 
@@ -231,5 +244,7 @@ class TachesControleur extends BaseController
 
 		// Charger la vue
 		return redirect ()->to ('/taches/detail');
+		//TODO: tester : 
+		// return redirect()->back();
 	}
 }

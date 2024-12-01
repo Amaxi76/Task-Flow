@@ -63,9 +63,9 @@
 				<div class="row mb-3">
 					<div class="col-md-6">
 						<div class="form-floating">
-							<?php echo form_input(['name' => 'rappel', 'type' => 'number', 'class' => 'form-control', 'id' => 'duree_valeur', 'placeholder' => 'Durée', 'required' => 'required']); ?>
-							<?php echo form_label('Durée', 'duree_valeur'); ?>
-							<?= validation_show_error('duree_valeur') ?>
+							<?php echo form_input(['name' => 'rappel', 'type' => 'number', 'value' => $tache['rappel'], 'class' => 'form-control', 'id' => 'rappel', 'placeholder' => 'Durée', 'required' => 'required']); ?>
+							<?php echo form_label('Durée', 'rappel'); ?>
+							<?= validation_show_error('rappel') ?>
 						</div>
 					</div>
 					<div class="col-md-6">
