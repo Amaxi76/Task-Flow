@@ -1,0 +1,97 @@
+.popup {
+	position: fixed;
+	right: -50rem;
+	top: 0;
+	width: fit-content;
+	height: 100%;
+	transition: right 0.3s ease, display 0s 0.3s;
+	z-index: 1000;
+	display: flex;
+}
+
+.popup.show {
+	right: 0;
+
+}
+
+.popup-content {
+	padding: 2rem;
+	margin: 2rem;
+	background-color: white;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+	border-radius: 0.5rem;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+}
+
+.conteneur-elements-filtre {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.boutons-filtre {
+	display: flex;
+	justify-content: right;
+	gap: 1rem;
+}
+
+select {
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+	background-color: white;
+	font-size: 1rem;
+	color: #333;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+select:focus {
+	border-color: #007bff;
+	outline: none;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+input[type="datetime-local"] {
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+	background-color: white;
+	font-size: 1rem;
+	color: #333;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+input[type="datetime-local"]:focus {
+	border-color: #007bff;
+	outline: none;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+input[type="text"] {
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 0.25rem;
+	background-color: white;
+	font-size: 1rem;
+	color: #333;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+	border-color: #007bff;
+	outline: none;
+	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.close-btn {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    font-size: 24px;
+    cursor: pointer;
+}

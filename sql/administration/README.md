@@ -1,0 +1,1 @@
+Ces fichiers sont destinés à être utilisés dans des cadres de tests afin de voir facilement les inscriptions et de les reinitialiser afin de se connecter plusieurs fois avec une même adresse email.

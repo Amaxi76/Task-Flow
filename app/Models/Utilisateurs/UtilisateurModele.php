@@ -14,9 +14,7 @@ class UtilisateurModele extends Model
 		
 	];
 
-
-	public function selectJetonUtilisateur($idJeton)
-	{
+	public function selectJetonUtilisateur($idJeton) {
 		$this->where("id_jeton_resetmdp",$idJeton);
 	}
 

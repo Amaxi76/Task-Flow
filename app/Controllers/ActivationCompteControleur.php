@@ -24,7 +24,7 @@ class ActivationCompteControleur extends Controller {
 		}
 		else 
 		{
-			dd("je suis la");
+			//TODO: afficher une page d'erreur
 		}
 	}
 	

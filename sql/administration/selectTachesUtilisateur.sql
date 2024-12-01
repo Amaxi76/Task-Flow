@@ -1,7 +1,7 @@
 SELECT 
     t.titre AS titre,
     t.detail AS detail,
-    t.echeance AS echeance,
+    t.date_echeance AS echeance,
     i_statut.libelle AS statut,
     i_priorite.libelle AS priorite
 FROM 

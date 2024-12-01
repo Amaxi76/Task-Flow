@@ -7,11 +7,9 @@ use App\Models\Utilisateurs\PersonneModele;
 class InscriptionControleur extends BaseController { 
 	private const TEMPS_EXPIRATION = '+2 hour'; //TODO:A voir si on peut pas mettre un int plutôt
 
-	public function index() { 
+	public function index(): string {
 		helper(['form']);
-		echo view('commun/entete');
-		echo view('inscription/inscriptionVue'); //TODO: changer en fonction du nom de la vue
-		echo view('commun/piedpage');
+		return view('commun/entete') . view('inscription/inscriptionVue') . view('commun/piedpage');
 	}
 
 	/**

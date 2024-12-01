@@ -1,6 +1,5 @@
 <?php
 namespace App\Controllers;
-use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele;
 use App\Models\Utilisateurs\UtilisateurModele;

@@ -6,8 +6,13 @@ class ModeleVueCartesTaches extends Model
 	protected $table         = 'vuecartestaches';
 	protected $primaryKey    = ['id_tache','id_utilisateur'];
 
-	public function getCartesUtilisateurPaginees( $idUtilisateur, $perPage ) : array {
+	public function getCartesUtilisateurPaginees( int $idUtilisateur, int $perPage ) : array {
 		return $this->where('id_utilisateur', $idUtilisateur)
 			->paginate( $perPage, 'taches');
+	}
+
+	public function getTache( int $idTache ) : array {
+		return $this->where('id_tache', $idTache)
+			->first();
 	}
 }

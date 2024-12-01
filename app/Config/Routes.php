@@ -28,11 +28,30 @@ $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePa
 // Déconnexion
 $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
+
+
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
-    $routes->get('/', 'TachesControleur::index');
-    $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
-    $routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
-    $routes->get ('/taches/ajouter', 'TachesControleur::ajouter'); // Ajouter une tâche
-    $routes->post('/taches/stocker', 'TachesControleur::stocker'); // Insérer une tâche
+	// Tâches
+	$routes->get('/', 'TachesControleur::index');
+	$routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
+
+	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
+	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
+
+	$routes->post('/taches/modifier', 'TachesControleur::modifier');
+	$routes->post('/taches/appliquerModification', 'TachesControleur::appliquerModification');
+
+	$routes->post('/taches/supprimer', 'TachesControleur::appliquerSuppression');
+
+	// Filtrage
+	$routes->get ('/taches/filtres/editer', 'TriageFiltrageControleur::index' );
+	$routes->post('/taches/filtres/appliquer' , 'TriageFiltrageControleur::appliquer'  );
+
+	// Commentaires
+	$routes->post ('/taches/detail','CommentairesControleur::index');
+	$routes->get ('/taches/detail','CommentairesControleur::index');
+	$routes->post ('/commentaires/appliquerAjout','CommentairesControleur::appliquerAjout');
+	$routes->post ('/commentaires/appliquerSuppression','CommentairesControleur::appliquerSuppression');
 });
+
