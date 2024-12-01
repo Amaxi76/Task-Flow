@@ -15,29 +15,28 @@ use CodeIgniter\Filters\SecureHeaders;
 
 class Filters extends BaseFilters
 {
-    public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-        'cors'          => Cors::class,
-        'forcehttps'    => ForceHTTPS::class,
-        'pagecache'     => PageCache::class,
-        'performance'   => PerformanceMetrics::class,
-        'auth'          => \App\Filters\ConnexionFiltre::class,
-    ];
+	public array $aliases = [
+		'csrf'          => CSRF::class,
+		'toolbar'       => DebugToolbar::class,
+		'honeypot'      => Honeypot::class,
+		'invalidchars'  => InvalidChars::class,
+		'secureheaders' => SecureHeaders::class,
+		'cors'          => Cors::class,
+		'forcehttps'    => ForceHTTPS::class,
+		'pagecache'     => PageCache::class,
+		'performance'   => PerformanceMetrics::class,
+		'auth'          => \App\Filters\ConnexionFiltre::class,
+	];
 
-    // Retirer le filtre 'auth' des filtres globaux
-    public array $globals = [
-        'before' => [],
-        'after' => [
-            'toolbar',
-        ],
-    ];
+	// Retirer le filtre 'auth' des filtres globaux
+	public array $globals = [
+		'before' => [],
+		'after' => [
+			'toolbar',
+		],
+	];
 
-    public array $methods = [];
-    public array $filters = [
-        
-    ];
+	public array $methods = [];
+	public array $filters = [
+	];
 }

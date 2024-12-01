@@ -29,8 +29,6 @@ $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
-    $routes->get ('/personnes'     , 'PersonneControleur::index'); // Page des personnes
-
 	// Tâches
 	$routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
 
@@ -40,7 +38,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 	$routes->post('/taches/modifier', 'TachesControleur::modifier');
 	$routes->post('/taches/appliquerModification', 'TachesControleur::appliquerModification');
 
-	$routes->post('/taches/appliquerSuppression', 'TachesControleur::appliquerSuppression');
+	$routes->post('/taches/supprimer', 'TachesControleur::appliquerSuppression');
 
 	// Filtrage
 	$routes->get ('/taches/filtres/editer', 'TriageFiltrageControleur::index' );
@@ -48,6 +46,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 
 	// Commentaires
 	$routes->post ('/taches/detail','CommentairesControleur::index');
+	$routes->get ('/taches/detail','CommentairesControleur::index');
 	$routes->post ('/commentaires/appliquerAjout','CommentairesControleur::appliquerAjout');
 	$routes->post ('/commentaires/appliquerSuppression','CommentairesControleur::appliquerSuppression');
 });
