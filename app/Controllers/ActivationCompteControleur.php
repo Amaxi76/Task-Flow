@@ -14,7 +14,7 @@ class ActivationCompteControleur extends Controller {
 	public function index($jeton){
 		helper(['form', 'url']); // Ajout du helper 'url' pour s'assurer que les fonctions de redirection sont disponibles
 		$jetonModele = new JetonsModele();
-		$jeton = $jetonModele->where('jeton', $jeton)µµ
+		$jeton = $jetonModele->where('jeton', $jeton)
 							 ->where('expiration >', date('Y-m-d H:i:s'))
 							 ->first();
 		if ($jeton)
