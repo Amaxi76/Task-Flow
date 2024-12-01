@@ -15,7 +15,7 @@ SELECT
     statut.couleur                                                      AS couleur_statut,
     priorite.libelle                                                    AS libelle_priorite,
     priorite.couleur                                                    AS couleur_priorite,
-    COUNT(taskflow.Commentaires.id_commentaire)                         AS nb_commentaires
+    COUNT(taskflow.Commentaires.id)                                     AS nb_commentaires
 FROM
     taskflow.Taches
     JOIN taskflow.Intitules statut   ON taskflow.Taches.id_statut = statut.id

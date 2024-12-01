@@ -7,8 +7,8 @@ SELECT
 FROM 
     taskflow.Taches t
 INNER JOIN 
-    taskflow.Intitule i_statut ON t.id_statut = i_statut.id_intitule
+    taskflow.Intitules i_statut ON t.id_statut = i_statut.id
 INNER JOIN 
-    taskflow.Intitule i_priorite ON t.id_priorite = i_priorite.id_intitule
+    taskflow.Intitules i_priorite ON t.id_priorite = i_priorite.id
 GROUP BY 
     t.id, i_statut.libelle, i_priorite.libelle;
