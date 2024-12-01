@@ -62,7 +62,7 @@ CREATE TABLE taskflow.Taches (
     echeance       TIMESTAMP NOT NULL,
     id_priorite    INT       NOT NULL,
     id_statut      INT       NOT NULL,
-    nbRappel        INT DEFAULT 0,
+    nbRappel       INT DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (id_utilisateur) REFERENCES taskflow.Utilisateurs(id_personne),
     FOREIGN KEY (id_statut)      REFERENCES taskflow.Intitules    (id),

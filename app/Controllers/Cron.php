@@ -3,18 +3,28 @@
 namespace App\Controllers;
 
 use App\Models\Taches\ModeleTaches;
+use App\Models\Utilisateurs\InscriptionsModele;
+use App\Models\Utilisateurs\JetonsModele;
+use App\Models\Utilisateurs\PersonneModele;
+use App\Models\Utilisateurs\UtilisateurModele;
 use CodeIgniter\Controller;
 
 class Cron extends Controller
 {
-
+	public function lancerTaches()
+    {
+		log_message("info","Début boucle de verification usuelle");
+		$this->envoyerRappelsTaches();
+		$this->verifierJetons      ();
+		log_message("info","Fin boucle de verification usuelle");
+    }
+	
 	/**
 	 * Envoie des rappels pour les tâches arrivant à échéance.
 	 */
 	public function envoyerRappelsTaches() 
 	{
-
-		log_message('info', 'Genre je suis la ?');
+		log_message('info', 'Debut de la vérification des rappels de taches');
 		// Chargement du modèle
 		$tacheModele = new ModeleTaches();
 
@@ -37,6 +47,8 @@ class Cron extends Controller
 
 			$tacheModele->updateTaches($taches);
 		}
+
+		log_message('info', 'Fin de la vérification des rappels de taches');
 	}
 
 	public function regrouperParEmail(array $taches, array $emails) {
@@ -79,39 +91,58 @@ class Cron extends Controller
 		}
 	}
 
-
-	public function test()
+	public function verifierJetons()
 	{
-		$data = [
-			'taches' => [
-				[
-					'titre' => 'Tâche 1',
-					'detail' => 'Ceci est le détail de la tâche 1.',
-					'echeance' => date('Y-m-d H:i:s', strtotime('+30 minutes')), // Échéance dans 30 minutes
-					'rappel' => 10, // Rappel 10 minutes avant
-				],
-				[
-					'titre' => 'Tâche 2',
-					'detail' => 'Ceci est le détail de la tâche 2.',
-					'echeance' => date('Y-m-d H:i:s', strtotime('+40 minutes')), // Échéance dans 40 minutes
-					'rappel' => 15, // Rappel 15 minutes avant
-				],
-				[
-					'titre' => 'Tâche 3',
-					'detail' => 'Ceci est le détail de la tâche 3.',
-					'echeance' => date('Y-m-d H:i:s', strtotime('+50 minutes')), // Échéance dans 50 minutes
-					'rappel' => 20, // Rappel 20 minutes avant
-				],
-			]
-		];
-	
-		// Charger la vue en passant les données
-		$contenu = view('email/rappel_email', $data);
-	
-		// Envoyer l'email avec les tâches
-		$this->envoyerEmails("antunes.celia2004@gmail.com", $contenu);
+		log_message('info', 'Début de la vérification des jetons');
+
+		$utilisateurModele = new UtilisateurModele ();
+		$inscriptionModele = new InscriptionsModele();
+
+		$jetonsUtilisateurs = $utilisateurModele->getIdJetons();
+		$this->verifierJetonsUtilisateurs($jetonsUtilisateurs);
+
+		$jetonsInscription = $inscriptionModele->getIdJetons();
+		$this->verifierJetonsInscription($jetonsInscription);	
+		
+		log_message('info', 'Fin de la vérification des jetons');
 	}
+
+	public function verifierJetonsUtilisateurs($id_jetons)
+	{
+		//Récuperer tous les jetons expirés
+		$jetonsModele = new JetonsModele();
+		$jetonsExpirer = $jetonsModele->selectJetonsExpire($id_jetons);
+
 	
+		if($jetonsExpirer)
+		{
+			//Supprimer les jetons expirés dans la table utilisateurs
+			$utilisateurModele = new UtilisateurModele();
+			$utilisateurModele->supprimerJetonsExpire($jetonsExpirer);
+		
+			//Supprimer les jetons dans la table jetons
+			$jetonsModele->whereIn($id_jetons)->delete();
+		}
+	}
+
+	public function verifierJetonsInscription($id_jetons)
+	{
+		$inscriptionModele = new InscriptionsModele();
+		$jetonsModele      = new JetonsModele      ();
+		$personneModele    = new PersonneModele    ();
+
+		$jetonsExpirer       = $jetonsModele->selectJetonsExpire ($id_jetons  );
+
+		if($jetonsExpirer)
+		{
+			$IdPersonneInscrite  = $inscriptionModele->recupererIdPersonne($jetonsExpirer);
+			$IdPersonneInscrite  = is_array($IdPersonneInscrite) ? $IdPersonneInscrite : [$IdPersonneInscrite];
+			//Supprimer les jetons dans la table jetons
+			$inscriptionModele->whereIn('id_personne',$IdPersonneInscrite)->delete();
+			$jetonsModele     ->whereIn('id'         ,$jetonsExpirer     )->delete();
+			$personneModele   ->whereIn('id'         ,$IdPersonneInscrite)->delete();
+		}
+	}
 	
 
 }

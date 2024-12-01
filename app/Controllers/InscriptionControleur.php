@@ -5,7 +5,7 @@ use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
 class InscriptionControleur extends BaseController { 
-	private const TEMPS_EXPIRATION = '+2 hour'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+1 minutes'; //TODO:A voir si on peut pas mettre un int plutôt
 
 	public function index() { 
 		helper(['form']);
@@ -144,8 +144,10 @@ class InscriptionControleur extends BaseController {
 		$email       = $this->request->getVar('email'      );
 
 		$jetonModele = new JetonsModele();
-			
-		$estEnvoye = $this->envoyerMailActivation($email,$jetonModele->recupererJeton($id_jeton));
+		
+		$jetons = $jetonModele->recupererJeton($id_jeton);
+
+		$estEnvoye = $this->envoyerMailActivation($email,$jetons);
 
 		$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
 
@@ -154,9 +156,6 @@ class InscriptionControleur extends BaseController {
 		echo view('/commun/envoieMailVue',$data);
 		echo view('commun/piedpage');
 	}
-
-
-
 
 	public function annulerInscription($id_personne,$id_jeton)
 	{

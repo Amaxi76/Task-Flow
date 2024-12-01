@@ -26,6 +26,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'auth'          => \App\Filters\ConnexionFiltre::class,
+        'cron'          => \App\Filters\CronFilter::class
     ];
 
     // Retirer le filtre 'auth' des filtres globaux

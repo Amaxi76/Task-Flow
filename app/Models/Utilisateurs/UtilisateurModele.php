@@ -47,4 +47,23 @@ class UtilisateurModele extends Model
 		return false;
 	}
 
+	public function getIdJetons()
+	{
+		$db = \Config\Database::connect();
+
+		$requete = $db->table('taskflow.utilisateurs u')->select('id_jeton_resetmdp, id_jeton_sesouvenir')->get();
+		
+		return $requete->getRowArray();
+	}
+
+	public function supprimerJetonsExpire($jetonsExpires)
+	{
+		return $this->db->table('Utilisateurs')
+			->set('id_jeton_resetmdp', "CASE WHEN id_jeton_resetmdp IN (" . implode(',', array_map('intval', $jetonsExpires)) . ") THEN NULL ELSE id_jeton_resetmdp END", false)
+			->set('id_jeton_sesouvenir', "CASE WHEN id_jeton_sesouvenir IN (" . implode(',', array_map('intval', $jetonsExpires)) . ") THEN NULL ELSE id_jeton_sesouvenir END", false)
+			->whereIn('id_jeton_resetmdp', $jetonsExpires)
+			->orWhereIn('id_jeton_sesouvenir', $jetonsExpires)
+			->update();
+	}
+
 }
