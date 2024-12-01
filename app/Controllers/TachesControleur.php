@@ -22,30 +22,7 @@ class TachesControleur extends BaseController
 	
 	public function __construct() {
 		$this->session = new SessionUtilisateur();
-		//$this->initialiserServicesSession();
 	}
-
-	//TODO: il y a de la duplication avec TriageFiltrageControleur.php mais je ne sais pas comment factoriser de manière cohérente ici
-	//C'est peut-être la meilleure solution de laisser comme ça
-	/*private function initialiserServicesSession() {
-		//dd('trieur');
-		if( ServiceTriageTaches::estPresentEnSession() ) {
-			$this->trieur = ServiceTriageTaches::getDepuisSession();
-		}
-		else {
-			$this->trieur = new ServiceTriageTaches();
-			$this->trieur->setDansSession();
-		}
-
-		//dd('filtreur');
-		if( ServiceFiltrageTaches::estPresentEnSession() ) {
-			$this->filtreur = ServiceFiltrageTaches::getDepuisSession();
-		}
-		else {
-			$this->filtreur = new ServiceFiltrageTaches();
-			$this->filtreur->setDansSession();
-		}
-	}*/
 
 	/*---------------------------------------*/
 	/*                  VUES                 */
@@ -88,8 +65,8 @@ class TachesControleur extends BaseController
 		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
 
 		$dataFiltre = [];
-		$dataFiltre['trieur'] = $this->trieur;
-		$dataFiltre['filtreur'] = $this->filtreur;
+		$dataFiltre['trieur'] = $this->session->getTriageTaches();
+		$dataFiltre['filtreur'] = $this->session->getFiltrageTaches();
 
 		// Charger la vue 
 		helper (['form']);
