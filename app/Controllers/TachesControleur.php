@@ -51,6 +51,7 @@ class TachesControleur extends BaseController
 		// Mettre à jour les données de la session
 		$this->session->setIdTache( null );
 		
+
 		// Données de l'entête
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';

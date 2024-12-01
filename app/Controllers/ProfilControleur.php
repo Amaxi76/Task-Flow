@@ -86,7 +86,7 @@ class ProfilControleur extends Controller {
 		$this->personneModele->delete($idUtilisateur);
 
 		// Détruire la session
-		session()->destroy();
+		$this->session->deconnecter();
 
 		return redirect()->to('/connexion')->with('success', 'Compte supprimé avec succès.');
 	}

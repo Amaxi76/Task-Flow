@@ -10,6 +10,11 @@ use App\Models\Utilisateurs\PersonneModele;
 class ConnexionControleur extends BaseController 
 { 
 	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
+	private SessionUtilisateur $session;
+
+	public function __construct(){
+		$this->session = new SessionUtilisateur();
+	}
 
 	public function index(): string
 	{
@@ -25,7 +30,7 @@ class ConnexionControleur extends BaseController
 		$seSouvenir    = $this->request->getVar("seSouvenir");
 		
 		$utilisateur = $this->verifieExistance($email);
-
+		
 		if($utilisateur)
 		{
 			$mdpPersonne = $utilisateur['mdp'];
@@ -33,6 +38,8 @@ class ConnexionControleur extends BaseController
 
 			if($mdpCorrect)
 			{
+				$this->session->connecter($utilisateur['id']);
+
 				$jetons_seSouvenir = null;
 				if($seSouvenir){
 					$jetons_seSouvenir = $this->seSouvenirDeMoi($utilisateur['id']);
@@ -40,12 +47,12 @@ class ConnexionControleur extends BaseController
 					setcookie("seSouvenir", $jetons_seSouvenir, $expiration, "/", "", true, true);
 				}
 
-				$this->initialiserSessionUtilisateur($utilisateur['id']);
-
 				return redirect()->to('/taches');
 			}
 			else
 			{
+				$this->session->deconnecter();
+
 				$erreurs['mdp'] = "Le mot de passe est incorrect";
 				return redirect()->to('connexion')
 								->withInput() // Ne renvoie que l'email
@@ -61,26 +68,14 @@ class ConnexionControleur extends BaseController
 		}
 	}
 
-	private function initialiserSessionUtilisateur( int $idUtilisateur ): void{
-		$session = new SessionUtilisateur();
-		$session->setIdUtilisateur( $idUtilisateur );
-		$session->setEstConnecte( TRUE );
-		$session->setIdTache( null );
-		$session->setFiltrageTaches( new ServiceFiltrageTaches() );
-		$session->setTriageTaches( new ServiceTriageTaches() );
-	}
-
 	public function deconnexion()
 	{
-		// Démarrer la session
-		$session = new SessionUtilisateur();
-
 		// Modèles
 		$utilisateurModele = new UtilisateurModele();
 		$jetonModele       = new JetonsModele();
 
 		// Récupérer l'utilisateur actuel
-		$utilisateur = $utilisateurModele->where("id_personne", $session->getIdUtilisateur())->first();
+		$utilisateur = $utilisateurModele->where("id_personne", $this->session->getIdUtilisateur())->first();
 
 		helper(['cookie']);
 		// Vérifier si l'utilisateur a un jeton de souvenir
@@ -97,7 +92,7 @@ class ConnexionControleur extends BaseController
 		}
 
 		// Supprimer toutes les données de session
-		session()->destroy();
+		$this->session->deconnecter();
 
 		// Supprimer le cookie "seSouvenir" si nécessaire
 		delete_cookie('seSouvenir');
