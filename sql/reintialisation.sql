@@ -6,4 +6,4 @@
 \i creation/creation_tables.sql
 \i creation/creation_vues.sql
 \i creation/creation_triggers.sql
-\i insertion/insertion-complet.sql
+\i insertion/insertion_root-toto_demo.sql
