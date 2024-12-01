@@ -2,7 +2,6 @@
 namespace App\Models\Taches;
 class ServiceTriageTaches
 {
-	private const CLE_SESSION = 'serviceTriageTaches';
 	private array $valeursAutoriseesTris;
 	private array $tris;
 
@@ -61,31 +60,14 @@ class ServiceTriageTaches
 	}
 
 	/*---------------------------------------*/
-	/*                SESSIONS               */
-	/*---------------------------------------*/
-
-	public static function estPresentEnSession() : bool {
-		return session()->has(ServiceTriageTaches::CLE_SESSION);
-	}
-
-	public static function getDepuisSession() : ServiceTriageTaches {
-		$data = session()->get(ServiceTriageTaches::CLE_SESSION);
-		return self::fromArray($data);
-	}
-
-	public function setDansSession() : void {
-		session()->set(ServiceTriageTaches::CLE_SESSION, $this->toArray());
-	}
-
-	/*---------------------------------------*/
 	/*             SERIALISATION             */
 	/*---------------------------------------*/
 
-	private function toArray() : array {
+	public function toArray() : array {
 		return $this->tris;
 	}
 
-	private static function fromArray(array $data): ServiceTriageTaches {
+	public static function fromArray(array $data): ServiceTriageTaches {
 		$instance = new self();
 
 		if (isset($data)) {
