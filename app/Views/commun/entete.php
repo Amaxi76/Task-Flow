@@ -22,7 +22,7 @@
 				<div class="button secondary-button">
 					<button>Profil</button>
 				</div>
-			</a>	
+			</a>
 		
 			<a href="<?= base_url('/deconnexion')?>">
 				<div class="button main-button">
@@ -31,7 +31,7 @@
 					</svg>
 					<button>Déconnexion</button>
 				</div>
-			</a>			
+			</a>
 		</div>
 
 		
