@@ -1,5 +1,7 @@
 # Task-Flow
 
+<img src="./public/assets/images/Task-Flow-Horizontal.svg" alt="Task-Flow Logo" width="300">
+
 ## 🛠️ Prérequis
 
 ### PHP
