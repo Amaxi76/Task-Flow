@@ -70,7 +70,7 @@ class CronJob extends \Daycry\CronJob\Config\CronJob
 	public function init(Scheduler $schedule)
 	{
 		$schedule->call(function() {
-			$cron = new \App\Controllers\Cron();
+			$cron = new \App\Controllers\General\Cron();
 			$cron->envoyerRappelsTaches();
 		})->everyMinute(2);
 	}

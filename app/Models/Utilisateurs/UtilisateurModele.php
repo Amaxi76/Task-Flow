@@ -18,7 +18,7 @@ class UtilisateurModele extends Model
 		$this->where("id_jeton_resetmdp",$idJeton);
 	}
 
-	//FIXME: pas la bonne syntaxe // utiliser une vue
+	//TODO: utiliser une vue à la place de la jointure
 	public function verifierJetonSeSouvenir($jeton)
 	{
 		$db = \Config\Database::connect();

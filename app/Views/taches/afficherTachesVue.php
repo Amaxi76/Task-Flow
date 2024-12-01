@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="conteneur-menu-affichage">
-			<a href="<?= base_url('taches/kanban') ?>">
+			<a href="<?= base_url('/taches/vue/kanban') ?>">
 				<div class="button secondary-button" style="border:none;"  >
 					<svg  viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M17.5 33.125V17.5M42.5 42.5V17.5M30 23.75V17.5M15 5H45C48.5003 5 50.2506 5 51.5875 5.68122C52.7634 6.28041 53.7197 7.23653 54.3187 8.41256C55 9.7495 55 11.4997 55 15V45C55 48.5003 55 50.2506 54.3187 51.5875C53.7197 52.7634 52.7634 53.7197 51.5875 54.3187C50.2506 55 48.5003 55 45 55H15C11.4997 55 9.7495 55 8.41256 54.3187C7.23653 53.7197 6.28041 52.7634 5.68122 51.5875C5 50.2506 5 48.5003 5 45V15C5 11.4997 5 9.7495 5.68122 8.41256C6.28041 7.23653 7.23653 6.28041 8.41256 5.68122C9.7495 5 11.4997 5 15 5Z" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -47,7 +47,7 @@
 				</div>
 			</a>
 
-			<a href="<?= base_url('taches/toutes') ?>">
+			<a href="<?= base_url('/taches/vue/generale') ?>">
 				<div class="button main-button" >
 					<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M7.77778 5H21.6667C23.2008 5 24.4444 6.24365 24.4444 7.77778V21.6667C24.4444 23.2008 23.2008 24.4444 21.6667 24.4444H7.77778C6.24365 24.4444 5 23.2008 5 21.6667V7.77778C5 6.24365 6.24365 5 7.77778 5Z" stroke="black" stroke-width="2" stroke-linejoin="round"/>

@@ -7,14 +7,14 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 //Inscription et activation du compte
-$routes->get ('/inscription'                         ,'InscriptionControleur::index'                );
-$routes->post('/inscription'                         ,'InscriptionControleur::inscription'          );
-$routes->get ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1'        );
-$routes->get ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye'   );
-$routes->post ('/inscription/renvoieMail'            ,'InscriptionControleur::resetProcedure'    );
+$routes->get  ('/inscription'                         ,'InscriptionControleur::index'             );
+$routes->post ('/inscription'                         ,'InscriptionControleur::inscription'       );
+$routes->get  ('/inscription/activationCompte/(:any)' ,'ActivationCompteControleur::index/$1'     );
+$routes->get  ('/inscription/mailenvoye'              ,'InscriptionControleur::afficherMailEnvoye');
+$routes->post ('/inscription/renvoieMail'             ,'InscriptionControleur::resetProcedure'    );
 
 // Connexion et mot de passe oublié
-$routes->get ('/connexion'                             ,'ConnexionControleur::index'                                );
+$routes->get ('/connexion'                             ,to: 'ConnexionControleur::index'                                );
 $routes->post('/connexion'                             ,'ConnexionControleur::connexion'                            );
 $routes->get ('/connexion/mdp_oublie'                  ,'ConnexionControleur::afficherFormulaireEnvoieMail'         );
 $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::envoiMailMdpOublie'                   );
@@ -37,16 +37,15 @@ $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
-	// Routes temporaires avant de changer le type de vue dans la session
-	$routes->get ('/','TachesControleur::index/toutes'  ); // Page d'accueil
-	$routes->get ('/taches','TachesControleur::index/toutes');
-
 	// Tâches
-	$routes->get ('/taches/toutes'        , 'TachesControleur::index/toutes'  ); // Page des tâches toutes
-	$routes->get ('/taches/kanban'        , 'TachesControleur::index/kanban'  ); // Page des tâches karban
-	$routes->post ( '/taches/setNbTacheParPage', 'TachesControlleur::changerNbTachesParPage');
+	$routes->get ('/','TachesControleur::index/'); // Page d'accueil
+	$routes->get ('/taches','TachesControleur::index/');
 
+	// Configurations affichage taches
+	$routes->post ( '/taches/setNbTacheParPage', 'TachesControleur::changerNbTachesParPage');
+	$routes->get  ( '/taches/vue/(:any)','TachesControleur::changerTypeVue/$1');
 
+	// CRUD taches
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
 

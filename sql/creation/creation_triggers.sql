@@ -1,6 +1,3 @@
--- TODO: à ne pas utiliser par la suite je pense pour que ça soit plus clair
--- (on mettrait plutot les insertions )
-
 CREATE FUNCTION taskflow.insererIntitulesNouveauUtilisateur() RETURNS TRIGGER AS
     $$
     BEGIN

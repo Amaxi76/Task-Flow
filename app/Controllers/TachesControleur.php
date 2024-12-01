@@ -7,12 +7,10 @@ use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
 use App\Models\Utilisateurs\SessionUtilisateur;
-use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\Validation\ValidationInterface;
 use Config\Pager;
 use App\Models\Taches\OutilsConversion;
 
-//TODO: le mieux serait de passer direcement les données dans la session plutot qu'avec les formulaires POST ?
 class TachesControleur extends BaseController
 { 
 	private SessionUtilisateur $session;
@@ -47,14 +45,9 @@ class TachesControleur extends BaseController
 	/*                  VUES                 */
 	/*---------------------------------------*/
 
-	public function index ( $typeVue ): string {
+	public function index ( ): string {
 		// Mettre à jour les données de la session
 		$this->session->setIdTache( null );
-		
-
-		// Données de l'entête
-		$dataEntete = [];
-		$dataEntete['titre'] = 'Liste des Tâches';
 
 		// Charger les modèles
 		$tacheModele    = new ModeleVueCartesTaches ();
@@ -64,72 +57,102 @@ class TachesControleur extends BaseController
 		$tacheModele = $this->session->getTriageTaches()  ->trier($tacheModele);
 		$tacheModele = $this->session->getFiltrageTaches()->filtrer($tacheModele);
 
-		$dataCorps = [];
-		$dataCorps['idUtilisateur'] = $this->session ->getIdUtilisateur();
-		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur        ($this->session->getIdUtilisateur() );
-		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur      ($this->session->getIdUtilisateur() );
-		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
+		$data = [];
+		$data['titre']         = 'Liste des Tâches';
+		$data['idUtilisateur'] = $this->session ->getIdUtilisateur();
+		$data['statuts']       = $intituleModele->getStatutsUtilisateur        ($this->session->getIdUtilisateur() );
+		$data['priorites']     = $intituleModele->getPrioritesUtilisateur      ($this->session->getIdUtilisateur() );
+		$data['pagerTaches']   = $tacheModele   ->pager;
 
 		$dataFiltre = [];
 		$dataFiltre['trieur'] = $this->session->getTriageTaches();
 		$dataFiltre['filtreur'] = $this->session->getFiltrageTaches();
 
+		// Générer la vue adaptée
 		helper (['form']);
-
-		switch ( $typeVue ) {
-			case 'toutes':
-				// Constantes
-				$nbTachesParPage = $this->session->getNbTachesParPage();
-
-				// Configurer le pager
-				$configPager = config (Pager::class);
-				$configPager->perPage = $nbTachesParPage;
-				
-				$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $nbTachesParPage);
-				$dataCorps['pagerTaches']   = $tacheModele   ->pager;
-				$dataCorps['parPage']       = $nbTachesParPage;
-
-				return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
-
-			case 'kanban':
-				$taches       = $tacheModele   ->getCartesUtilisateur ($this->session->getIdUtilisateur());
-
-				$dataCorps['taches'] = array_reduce($taches, function ($carry, $tache) {
-					$statut = $tache['libelle_statut'];
-					if (!isset($carry[$statut])) {
-						$carry[$statut] = [];
-					}
-					$carry[$statut][] = $tache;
-					return $carry;
-				}, []);
-				
-				ksort($dataCorps['taches']);
-
-				return view ('commun/entete', $dataEntete) . view ('/taches/kanbanTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+		$corpsPage = "";
+		switch ( $this->session->getTypeVue() ){ 
+			case SessionUtilisateur::VUE_GENERALE:
+				$corpsPage = $this->getVueGenerale( $data, $tacheModele );
+				break;
+			case SessionUtilisateur::VUE_KANBAN:
+				$corpsPage = $this->getVueKanban( $data, $tacheModele );
+				break;
 			default:
 				throw new \InvalidArgumentException('Type de vue non valide');
 		}
+
+		// Charger la vue
+		return view ('commun/entete') . $corpsPage . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage');
+	}
+
+	private function getVueGenerale( array $data, ModeleVueCartesTaches $tacheModele ): string {
+		$nbTachesParPage = $this->session->getNbTachesParPage();
+
+		// Configurer le pager
+		$configPager = config (Pager::class);
+		$configPager->perPage = $nbTachesParPage;
+		
+		// Récupération et préparation des données
+		$data['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $nbTachesParPage);
+		$data['pagerTaches']   = $tacheModele   ->pager;
+		$data['parPage']       = $nbTachesParPage;
+
+		return view ('/taches/afficherTachesVue', $data); 
+	}
+
+	private function getVueKanban( array $data, ModeleVueCartesTaches $tacheModele ): string {
+		// Récupération des données
+		$taches = $tacheModele->getCartesUtilisateur ($this->session->getIdUtilisateur());
+
+		// Préparation des données
+		$data['taches'] = array_reduce($taches, function ($carry, $tache) {
+			$statut = $tache['libelle_statut'];
+			if (!isset($carry[$statut])) {
+				$carry[$statut] = [];
+			}
+			$carry[$statut][] = $tache;
+			return $carry;
+		}, []);
+		
+		ksort($data['taches']);
+
+		return view ('/taches/kanbanTachesVue', $data); 
+	}
+
+	public function changerNbTachesParPage ( ) {
+		// Récupérer les données du formulaire
+		$data = request()->getPost ();
+	
+		// Mettre à jour les données de la session
+		$this->session->setNbTachesParPage ( $data['parPage'] );
+
+		//rediriger vers la page de la vue en cours
+		return redirect()->to ('/taches');
+	}
+
+	public function changerTypeVue( $typeVue ){
+		$this->session->setTypeVue( $typeVue );
+
+		return redirect()->to ('/taches');
 	}
 
 	public function ajouter (): string{
 		// Mettre à jour les données de la session
 		$this->session->setIdTache( null );
 
-		// Données de l'entête
-		$dataEntete = [];
-		$dataEntete['titre'] = 'Ajouter une tâche';
-
 		// Charger le modèle
 		$intituleModele = new ModeleIntitules();
 
 		// Charger les données
-		$dataCorps = [];
-		$dataCorps['routeFormulaire'] = '/taches/appliquerAjout';
-		$dataCorps['idUtilisateur']   = $this->session->getIdUtilisateur();
-		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur($this->session->getIdUtilisateur());
-		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur  ($this->session->getIdUtilisateur());
+		$data = [];
+		$data['titre']           = 'Liste des Tâches';
+		$data['routeFormulaire'] = '/taches/appliquerAjout';
+		$data['idUtilisateur']   = $this->session->getIdUtilisateur();
+		$data['priorites']       = $intituleModele->getPrioritesUtilisateur($this->session->getIdUtilisateur());
+		$data['statuts']         = $intituleModele->getStatutsUtilisateur  ($this->session->getIdUtilisateur());
 
-		$dataCorps['tache'] = [
+		$data['tache'] = [
 			'id'             => '',
 			'id_utilisateur' => $this->session->getIdUtilisateur(),
 			'titre'          => old('titre', ''),
@@ -143,7 +166,7 @@ class TachesControleur extends BaseController
 
 		// Charger la vue
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/actionsTacheVue', $dataCorps) . view ('commun/piedpage'); 
+		return view ('commun/entete') . view ('taches/actionsTacheVue', $data) . view ('commun/piedpage'); 
 	}
 
 	public function appliquerAjout () {
@@ -170,7 +193,7 @@ class TachesControleur extends BaseController
 		$tacheModele->insert($data);
 
 		// Charger la vue
-		return redirect()->to('/taches/toutes');
+		return redirect()->to('/taches');
 	}
 
 	public function appliquerSuppression () {
@@ -196,29 +219,25 @@ class TachesControleur extends BaseController
 		// Vérifier qu'il n'y a pas de problème
 		if( !$this->session->idTacheExiste() ) return redirect()->to(site_url('taches'));
 
-		// Données de l'entête
-		$dataEntete = [];
-		$dataEntete['titre'] = 'Modifier une tâche';
-
 		// Charger les modèles
 		$tacheModele    = new ModeleTaches ();
 		$intituleModele = new ModeleIntitules ();
 
 		// Charger les données
-		$dataCorps = [];
-		$dataCorps['routeFormulaire'] = '/taches/appliquerModification';
-
 		$tache = $tacheModele->find ($idTache);
 		$tache['rappel']      = OutilsConversion::convertirMinutesEnUnite( $tache['rappel'], 'heure' );
-		$dataCorps['tache']   = $tache;
 
-		$dataCorps['idUtilisateur']   = $this->session ->getIdUtilisateur();
-		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->session->getIdUtilisateur ());
-		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur   ($this->session->getIdUtilisateur ());
+		$data = [];
+		$data['titre'] = 'Liste des Tâches';
+		$data['routeFormulaire'] = '/taches/appliquerModification';		
+		$data['tache']   = $tache;
+		$data['idUtilisateur']   = $this->session ->getIdUtilisateur();
+		$data['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->session->getIdUtilisateur ());
+		$data['statuts']         = $intituleModele->getStatutsUtilisateur   ($this->session->getIdUtilisateur ());
 
 		// Charger la vue
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('taches/actionsTacheVue', $dataCorps) . view ('commun/piedpage');
+		return view ('commun/entete') . view ('taches/actionsTacheVue', $data) . view ('commun/piedpage');
 	}
 
 	public function appliquerModification () {
@@ -246,16 +265,5 @@ class TachesControleur extends BaseController
 
 		// Charger la vue
 		return redirect ()->to ('/taches/detail');
-		//TODO: tester : 
-		// return redirect()->back();
-	}
-
-	private function changerNbTachesParPage ( ) {
-		// Récupérer les données du formulaire
-		$data = request()->getPost ();
-
-		$this->session->setNbTachesParPage ( $data['parPage'] );
-
-		//TODO: rediriger vers la page de la vue en cours
 	}
 }

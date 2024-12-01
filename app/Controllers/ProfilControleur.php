@@ -1,6 +1,5 @@
 <?php
 namespace App\Controllers;
-
 use App\Models\Utilisateurs\PersonneModele;
 use App\Models\Utilisateurs\SessionUtilisateur;
 use App\Models\Utilisateurs\UtilisateurModele;
