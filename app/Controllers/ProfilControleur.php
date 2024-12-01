@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Utilisateurs\PersonneModele;
+use App\Models\Utilisateurs\SessionUtilisateur;
 use App\Models\Utilisateurs\UtilisateurModele;
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleTaches;
@@ -11,15 +12,17 @@ class ProfilControleur extends Controller {
 
 	protected $personneModele;
 	protected $intitulesModele;
+	private SessionUtilisateur $session;
 
 	public function __construct() {
-		$this->personneModele = new PersonneModele();
+		$this->personneModele  = new PersonneModele();
 		$this->intitulesModele = new ModeleIntitules();
+		$this->session         = new SessionUtilisateur();
 	}
 
 	public function index() {
 
-		$idUtilisateur = session()->get('id');
+		$idUtilisateur = $this->session->getIdUtilisateur();
 
 		// Récupérer les données de l'utilisateur
 		$data['utilisateur'] = $this->personneModele->find($idUtilisateur);
@@ -46,7 +49,7 @@ class ProfilControleur extends Controller {
 		// Récupérer les couleurs envoyées depuis le formulaire
 		$couleurs = $this->request->getPost('couleurs');
 
-		$idUtilisateur = session()->get('id');
+		$idUtilisateur = $this->session->getIdUtilisateur();
 
 		// Vérifier si les couleurs des statuts existent
 		if (isset($couleurs['statuts'])) 
@@ -63,7 +66,7 @@ class ProfilControleur extends Controller {
 
 	public function supprimerCompte() 
 	{
-		$idUtilisateur = session()->get('id');
+		$idUtilisateur = $this->session->getIdUtilisateur();
 
 		// Charger les modèles nécessaires
 		$intitulesModele   = new ModeleIntitules();
