@@ -4,6 +4,7 @@ use App\Models\Utilisateurs\InscriptionsModele;
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
+//FIXME: ne plus utiliser "session()" mais plutot passer par SessionUtilisateur
 class InscriptionControleur extends BaseController { 
 	private const TEMPS_EXPIRATION = '+10 minutes'; //TODO:A voir si on peut pas mettre un int plutôt
 

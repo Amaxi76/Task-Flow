@@ -87,7 +87,7 @@ class ProfilControleur extends Controller {
 		$this->personneModele->delete($idUtilisateur);
 
 		// Détruire la session
-		session()->destroy();
+		$this->session->deconnecter();
 	}
 
 	public function ajouterStatut()
@@ -99,7 +99,7 @@ class ProfilControleur extends Controller {
 		
 		$intitule = 
 		[
-			'id_utilisateur' => session()->get("id"),
+			'id_utilisateur' => $this->session->getIdUtilisateur(),
 			'type_intitule'  => 'statut',
 			'libelle'        => $titre,
 			'couleur'        => $couleur 
