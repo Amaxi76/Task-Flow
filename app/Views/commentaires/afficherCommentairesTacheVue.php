@@ -96,11 +96,11 @@
 				<tbody>
 					<?php foreach ($commentaires as $commentaire): ?>
 						<tr>
-							<td><?= esc($commentaire['date']) ?></td>
-							<td><?= esc($commentaire['description']) ?></td>
+							<td><?= esc($commentaire['ajoutee_le']) ?></td>
+							<td><?= esc($commentaire['commentaire']) ?></td>
 							<td>
 								<div class="conteneur-boutons-taches">
-									<?= form_open('commentaire/modifier') ?>
+									<?= form_open('commentaires/appliquerModification') ?>
 									<?= form_hidden('id_commentaire', esc($commentaire['id_commentaire'])) ?>
 									<div class="button secondary-button"  onclick="this.closest('form').submit();">
 										<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +108,8 @@
 										</svg>
 									</div>
 									<?= form_close() ?>
-									<?= form_open('commentaire/supprimer') ?>
+									<?= form_open('commentaires/appliquerSuppression') ?>
+									<?= form_hidden('id_tache', value: esc($tache['id_tache'])) ?>
 									<?= form_hidden('id_commentaire', esc($commentaire['id_commentaire'])) ?>
 									<div class="button danger-button" onclick="this.closest('form').submit();">
 										<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,11 +127,12 @@
 			</table>
 		</div>
 		
-		<?= form_open('commentaire/ajout') ?>
+		<?= form_open('commentaires/appliquerAjout') ?>
 		<?= form_hidden('id_tache', esc($tache['id_tache'])) ?>
+		<?= form_hidden('ajoutee_le', date('Y-m-d H:i:s')) ?>
 		<div class="conteneur-commentaire-ajout">
-			<?php echo form_textarea('detail', set_value('detail'), 'id="description" placeholder="Votre commentaire" required class="textarea-commentaire" rows="1"'); ?>
-			<?= validation_show_error('detail') ?>
+			<?php echo form_textarea('commentaire', set_value('commentaire'), 'id="description" placeholder="Votre commentaire" required class="textarea-commentaire" rows="1"'); ?>
+			<?= validation_show_error('commentaire') ?>
 
 			<div class="button secondary-button commentaire-bouton" id="ajout-bouton" onclick="this.closest('form').submit();">
 				<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -6,11 +6,13 @@ use App\Models\Taches\ServiceFiltrageTaches;
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Taches\ModeleVueCartesTaches;
 use App\Models\Taches\ModeleTaches;
-use Config\Pager;   
+use App\Models\Utilisateurs\SessionUtilisateur;
+use Config\Pager;
 
+//TODO: le mieux serait de passer direcement les données dans la session plutot qu'avec les formulaires POST ?
 class TachesControleur extends BaseController 
 { 
-	private int $idUtilisateur;
+	private SessionUtilisateur $session;
 	private ServiceTriageTaches $trieur;
 	private ServiceFiltrageTaches $filtreur;
 
@@ -19,15 +21,13 @@ class TachesControleur extends BaseController
 	/*---------------------------------------*/
 	
 	public function __construct() {
-		$session = session ();
-		$this->idUtilisateur = $session->get ('id');
-
-		$this->initialiserServicesSession();
+		$this->session = new SessionUtilisateur();
+		//$this->initialiserServicesSession();
 	}
 
 	//TODO: il y a de la duplication avec TriageFiltrageControleur.php mais je ne sais pas comment factoriser de manière cohérente ici
 	//C'est peut-être la meilleure solution de laisser comme ça
-	private function initialiserServicesSession() {
+	/*private function initialiserServicesSession() {
 		//dd('trieur');
 		if( ServiceTriageTaches::estPresentEnSession() ) {
 			$this->trieur = ServiceTriageTaches::getDepuisSession();
@@ -45,7 +45,7 @@ class TachesControleur extends BaseController
 			$this->filtreur = new ServiceFiltrageTaches();
 			$this->filtreur->setDansSession();
 		}
-	}
+	}*/
 
 	/*---------------------------------------*/
 	/*                  VUES                 */
@@ -55,7 +55,11 @@ class TachesControleur extends BaseController
 		return $this->chargerPagePrincipale ();
 	}
 
+	//TODO: remettre directement dans index car la méthode n'est pas réutilisée
 	private function chargerPagePrincipale (): string {
+		// Mettre à jour les données de la session
+		$this->session->setIdTache( null );
+
 		// Constantes
 		$NOMBRE_TACHES_PAR_PAGE = 4;
 
@@ -68,8 +72,8 @@ class TachesControleur extends BaseController
 		$intituleModele = new ModeleIntitules ();
 
 		// Appliquer les tris
-		$tacheModele = $this->trieur->trier($tacheModele);
-		$tacheModele = $this->filtreur->filtrer($tacheModele);
+		$tacheModele = $this->session->getTriageTaches()  ->trier($tacheModele);
+		$tacheModele = $this->session->getFiltrageTaches()->filtrer($tacheModele);
 
 		// Configurer le pager
 		$configPager = config (Pager::class);
@@ -77,10 +81,10 @@ class TachesControleur extends BaseController
 
 		// Charger les données paginées
 		$dataCorps = [];
-		$dataCorps['idUtilisateur'] = $this->idUtilisateur;
-		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->idUtilisateur, $NOMBRE_TACHES_PAR_PAGE);
-		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
-		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
+		$dataCorps['idUtilisateur'] = $this->session ->getIdUtilisateur();
+		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $NOMBRE_TACHES_PAR_PAGE);
+		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur        ($this->session->getIdUtilisateur() );
+		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur      ($this->session->getIdUtilisateur() );
 		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
 
 		$dataFiltre = [];
@@ -93,6 +97,9 @@ class TachesControleur extends BaseController
 	}
 
 	public function ajouter (): string{
+		// Mettre à jour les données de la session
+		$this->session->setIdTache( null );
+
 		// Données de l'entête
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Ajouter une tâche';
@@ -103,13 +110,13 @@ class TachesControleur extends BaseController
 		// Charger les données
 		$dataCorps = [];
 		$dataCorps['routeFormulaire'] = '/taches/appliquerAjout';
-		$dataCorps['idUtilisateur']   = $this->idUtilisateur;
-		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur( $this->idUtilisateur);
-		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+		$dataCorps['idUtilisateur']   = $this->session->getIdUtilisateur();
+		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur($this->session->getIdUtilisateur());
+		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur  ($this->session->getIdUtilisateur());
 
 		$dataCorps['tache'] = [
 			'id' => '',
-			'id_utilisateur' => $this->idUtilisateur,
+			'id_utilisateur' => $this->session->getIdUtilisateur(),
 			'titre' => old('titre', ''),
 			'detail' => old('detail', ''),
 			'date_echeance' => old('date_echeance', ''),
@@ -123,9 +130,11 @@ class TachesControleur extends BaseController
 	}
 
 	public function appliquerAjout () {
+		// Mettre à jour les données de la session
+		$this->session->setIdTache( null );
+
 		// Récupérer les données du formulaire
-		$request = \Config\Services::request ();
-		$data = $request->getPost ();
+		$data = request()->getPost ();
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
@@ -133,13 +142,12 @@ class TachesControleur extends BaseController
 		// Validation des données
 		$validation = \Config\Services::validation();
 		$validation->setRules([
-			'titre' => 'required',
+			'titre'         => 'required',
 			'date_echeance' => 'required|valid_date[Y-m-d\TH:i]',
-			'id_priorite' => 'required|integer',
-			'id_statut' => 'required|integer'
+			'id_priorite'   => 'required|integer',
+			'id_statut'     => 'required|integer'
 		]);
 
-		
 		if (!$validation->withRequest($this->request)->run()) {
 			// Si la validation échoue, recharger le formulaire avec les erreurs
 			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
@@ -153,24 +161,24 @@ class TachesControleur extends BaseController
 	}
 
 	public function appliquerSuppression () {
-		// Récupérer les données du formulaire
-		$request = \Config\Services::request ();
-		$idTache = $request->getPost ('id');
+		// Mettre à jour les données de la session
+		$this->session->setIdTache( null );
+		$idTache = request()->getPost ('id');
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
 
 		// Supprimer les données
-		$tacheModele->where('id', $idTache)->delete ();
+		$tacheModele->where('id', $idTache )->delete ();
 
 		// Charger la vue
 		return redirect ()->to ('/taches');
 	}
 
 	public function modifier (): string {
-		// Récupérer les données du formulaire
-		$request = \Config\Services::request ();
-		$idTache = $request->getPost ('id');
+		// Mettre à jour les données de la session
+		$this->session->setIdTache( null );
+		$idTache = request()->getPost ('id');
 
 		// Données de l'entête
 		$dataEntete = [];
@@ -183,10 +191,10 @@ class TachesControleur extends BaseController
 		// Charger les données
 		$dataCorps = [];
 		$dataCorps['routeFormulaire'] = '/taches/appliquerModification';
-		$dataCorps['tache']           = $tacheModele->find ($idTache);
-		$dataCorps['idUtilisateur']   = $this->idUtilisateur;
-		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->idUtilisateur);
-		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur ($this->idUtilisateur);
+		$dataCorps['tache']           = $tacheModele   ->find ($idTache);
+		$dataCorps['idUtilisateur']   = $this->session ->getIdUtilisateur();
+		$dataCorps['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->session->getIdUtilisateur ());
+		$dataCorps['statuts']         = $intituleModele->getStatutsUtilisateur   ($this->session->getIdUtilisateur ());
 
 		// Charger la vue
 		helper (['form']);
@@ -194,19 +202,19 @@ class TachesControleur extends BaseController
 	}
 
 	public function appliquerModification () {
+		// Mettre à jour les données de la session
+		$this->session->majIdTacheAvecPost( 'id' );
+
 		// Récupérer les données du formulaire
-		$request = \Config\Services::request ();
-		$data = $request->getPost ();
+		$data = request()->getPost ();
 
 		// Charger le modèle
 		$tacheModele = new ModeleTaches ();
 
 		// Mettre à jour les données
-		$tacheModele->update ($data['id'], $data);
+		$tacheModele->update ($this->session->getIdTache(), $data);
 
 		// Charger la vue
-		//TODO: rediriger vers la page de détail de la tâche avec post
-		return redirect ()->to ('/taches');
-		//return redirect()->to('/taches/detail/' . $data['id'])->with('post', $data);
+		return redirect ()->to ('/taches/detail');
 	}
 }

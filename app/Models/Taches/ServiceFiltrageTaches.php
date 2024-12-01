@@ -2,7 +2,6 @@
 namespace App\Models\Taches;
 class ServiceFiltrageTaches
 {
-	private const CLE_SESSION = 'serviceFiltrageTaches';
 	private array $filtres;
 
 	/*---------------------------------------*/
@@ -12,8 +11,9 @@ class ServiceFiltrageTaches
 		$this->reinitialiser();
 	}
 
+	//TODO: ajouter un nouveau tableau avec equivalents bd pour les noms de colonnes
+
 	public function reinitialiser(){
-		//TODO: ajouter equivalent bd pour les noms de colonnes
 		$this->filtres = [
 			'deb_date_echeance' => '',
 			'fin_date_echeance' => '',
@@ -75,33 +75,14 @@ class ServiceFiltrageTaches
 	}
 
 	/*---------------------------------------*/
-	/*                SESSIONS               */
-	/*---------------------------------------*/
-
-	//TODO: héritage et interface pour ces méthodes de Session ?
-
-	public static function estPresentEnSession() : bool {
-		return session()->has(ServiceFiltrageTaches::CLE_SESSION);
-	}
-
-	public static function getDepuisSession() : ServiceFiltrageTaches {
-		$data = session()->get(ServiceFiltrageTaches::CLE_SESSION);
-		return self::fromArray($data);
-	}
-
-	public function setDansSession() : void {
-		session()->set(ServiceFiltrageTaches::CLE_SESSION, $this->toArray());
-	}
-
-	/*---------------------------------------*/
 	/*             SERIALISATION             */
 	/*---------------------------------------*/
 
-	private function toArray() : array {
+	public function toArray() : array {
 		return $this->filtres;
 	}
 
-	private static function fromArray(array $data): ServiceFiltrageTaches{
+	public static function fromArray(array $data): ServiceFiltrageTaches{
 		$instance = new self();
 
 		if (isset($data)) {

@@ -23,6 +23,11 @@ class ConnexionFiltre implements FilterInterface
 		}
 
 		log_message('debug', "Utilisateur connecté, accès autorisé à : $uri");
+
+		/*// Méthode suposée pour limiter les problèmes de cachet de formulaire POST
+		if ($request->getMethod() === 'post') {
+			return redirect()->to($request->getServer('HTTP_REFERER'));
+		}*/
 	}
 
 

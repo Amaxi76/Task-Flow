@@ -1,9 +1,11 @@
 <?php 
 namespace App\Controllers; 
+use App\Models\Taches\ServiceFiltrageTaches;
+use App\Models\Taches\ServiceTriageTaches;
 use App\Models\Utilisateurs\JetonsModele;
+use App\Models\Utilisateurs\SessionUtilisateur;
 use App\Models\Utilisateurs\UtilisateurModele;
-use App\Models\Utilisateurs\UtilisateurModeleModele; 
-use App\Models\Utilisateurs\PersonneModele; 
+use App\Models\Utilisateurs\PersonneModele;
 
 class ConnexionControleur extends BaseController 
 { 
@@ -39,12 +41,8 @@ class ConnexionControleur extends BaseController
 					set_cookie("seSouvenir",$jetons_seSouvenir);
 				}
 
-				$donnee_session = [
-					'id' => $utilisateur['id'],
-					'estConnecte' => TRUE,
-				];
-				$session = session();
-				$session->set($donnee_session);
+				$this->initialiserSessionUtilisateur($utilisateur['id']);
+
 				return redirect()->to('/taches');
 			}
 			else
@@ -60,17 +58,26 @@ class ConnexionControleur extends BaseController
 		}
 	}
 
+	private function initialiserSessionUtilisateur( int $idUtilisateur ): void{
+		$session = new SessionUtilisateur();
+		$session->setIdUtilisateur( $idUtilisateur );
+		$session->setEstConnecte( TRUE );
+		$session->setIdTache( null );
+		$session->setFiltrageTaches( new ServiceFiltrageTaches() );
+		$session->setTriageTaches( new ServiceTriageTaches() );
+	}
+
 	public function deconnexion()
 	{
 		// Démarrer la session
-		$session = session();
+		$session = new SessionUtilisateur();
 
 		// Modèles
 		$utilisateurModele = new UtilisateurModele();
 		$jetonModele       = new JetonsModele();
 
 		// Récupérer l'utilisateur actuel
-		$utilisateur = $utilisateurModele->where("id_personne", $session->get('id'))->first();
+		$utilisateur = $utilisateurModele->where("id_personne", $session->getIdUtilisateur())->first();
 
 		// Vérifier si l'utilisateur a un jeton de souvenir
 		if ($utilisateur && !empty($utilisateur['id_jeton_sesouvenir'])) {
@@ -85,7 +92,7 @@ class ConnexionControleur extends BaseController
 		}
 
 		// Supprimer toutes les données de session
-		$session->destroy();
+		session()->destroy();
 
 		// Supprimer le cookie "seSouvenir" si nécessaire
 		delete_cookie('seSouvenir');
