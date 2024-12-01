@@ -19,7 +19,7 @@ class ConnexionControleur extends BaseController
 	public function index(): string
 	{
 		helper(['form']);
-		return view('commun/entete') . view('connexion/connexionVue') . view('commun/piedpage');
+		return view('connexion/connexionVue');
 	}
 
 	public function connexion(){
@@ -211,9 +211,7 @@ class ConnexionControleur extends BaseController
 	public function afficherFormulaireEnvoieMail()
 	{
 		helper(['form']);
-		echo view('commun/entete');
 		echo view('connexion/motDePasseOublieVue');
-		echo view('commun/piedpage');
 	}
 
 	private function getRegleEtMessageInscription(){

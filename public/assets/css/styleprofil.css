@@ -143,25 +143,6 @@ p {
     transform: scale(1.2); /* Agrandit légèrement au survol */
 }
 
-/* Nouveaux styles */
-header {
-	background-color: #fff;
-	padding: 1rem;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.conteneur-entete {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	max-width: 1200px;
-	margin: 0 auto;
-}
-
-.conteneur-entete img {
-	height: 40px;
-}
-
 h2.text-center {
 	color: #1C4973;
 	margin-bottom: 2rem;

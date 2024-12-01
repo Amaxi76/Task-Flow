@@ -1,6 +1,8 @@
 <body>
 	<link href="<?= base_url('assets/css/styleprofil.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/tachevue.css') ?>" rel="stylesheet">
+	<link href="<?= base_url('assets/css/tachevue.css') ?>" rel="stylesheet">
+
 	<div class="container">
 		<div class="profile-card">
 			<div class="info-card">

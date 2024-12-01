@@ -18,7 +18,7 @@
 			</div>
 
 			<div class="form-floating mb-3">
-				<?php echo form_textarea('detail', $tache['detail'], 'class="form-control" id="description" placeholder="Description" required style="height: 150px;"'); ?>
+				<?php echo form_textarea('detail', $tache['detail'], 'class="form-control" id="description" placeholder="Description" required style="height: 150px; resize: none;"'); ?>
 				<?php echo form_label('Description', 'detail'); ?>
 				<?= validation_show_error('detail') ?>
 			</div>
