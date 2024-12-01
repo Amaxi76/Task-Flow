@@ -1,6 +1,6 @@
 <?php
 // Intervalle en secondes (par exemple : toutes les 5 minutes)
-$interval = 120;
+$interval = 10;
 
 // URL de la nouvelle route
 $url = 'http://localhost/Task-Flow/public/cron/run';

@@ -24,7 +24,7 @@ class ActivationCompteControleur extends Controller {
 		}
 		else 
 		{
-			//TODO: afficher une page d'erreur
+			return redirect()->to('inscription/jeton_expire');
 		}
 	}
 	
