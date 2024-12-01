@@ -11,7 +11,7 @@ $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::en
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
 
-$routes->get('/cron/run', 'Cron::lancerTaches');
+$routes->post('/cron/run', 'Cron::lancerTaches');
 
 $routes->group('', ['filter' => 'unAuth'], function($routes) 
 {
@@ -55,12 +55,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 
 	// Commentaires
 	$routes->post ('/taches/detail','CommentairesControleur::index');
-	$routes->get ('/taches/detail','CommentairesControleur::index');
+	$routes->get  ('/taches/detail','CommentairesControleur::index');
 	$routes->post ('/commentaires/appliquerAjout','CommentairesControleur::appliquerAjout');
 	$routes->post ('/commentaires/appliquerSuppression','CommentairesControleur::appliquerSuppression');
 
 	//TODO: mettre les pages du profil dans le groupe qui vérifie l'authentification
-	$routes->get ('/profil'                    ,'ProfilControleur::index'   );
+	$routes->get ('/profil'                 , 'ProfilControleur::index'   );
 	$routes->post('profil/enregistrer-modif', 'ProfilControleur::enregistrerCouleurs');
 	$routes->post('profil/supprimer-compte'    , 'ProfilControleur::supprimerCompte');
 	$routes->post('profil/ajouter-statut'    , 'ProfilControleur::ajouterStatut');
