@@ -265,5 +265,19 @@ class TachesControleur extends BaseController
 
 		// Charger la vue
 		return redirect ()->to ('/taches/detail');
+<<<<<<< HEAD
+=======
+		//TODO: tester : 
+		// return redirect()->back();
+	}
+
+	public function changerNbTachesParPage ( ) {
+		// Récupérer les données du formulaire
+		$data = request()->getPost ();
+
+		$this->session->setNbTachesParPage ( $data['parPage'] );
+
+		//TODO: rediriger vers la page de la vue en cours
+>>>>>>> 032ef16a21c76bd2eebd64d3aa4f101c32876ec7
 	}
 }

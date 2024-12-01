@@ -113,8 +113,6 @@ class InscriptionControleur extends BaseController {
 		// Générer le contenu HTML en utilisant view()
 		$message = view('email/activationMail', $data);
 
-		
-
 		$emailService = \Config\Services::email();
 		$emailService->setTo      ($email);
 		$emailService->setFrom    ($emailService->SMTPUser);
@@ -143,12 +141,25 @@ class InscriptionControleur extends BaseController {
 		
 		$jetons = $jetonModele->recupererJeton($id_jeton);
 
-		$estEnvoye = $this->envoyerMailActivation($email,$jetons);
+		if($jetons)
+		{
+			$estEnvoye = $this->envoyerMailActivation($email,$jetons);
 
-		$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
+			$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
 
-		helper   (['form']);
-		echo view('/commun/envoieMailVue',$data);
+			helper   (['form']);
+			echo view('/commun/envoieMailVue',$data);
+		}
+		else
+		{
+			return redirect()->to('inscription/jeton_expire');
+		}
+	}
+
+	public function jetonExpire()
+	{
+		helper(['form']);
+		return view('commun/jetonExpireVue');
 	}
 
 	public function annulerInscription($id_personne,$id_jeton)

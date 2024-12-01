@@ -121,6 +121,8 @@ class Cron extends Controller
 		
 			//Supprimer les jetons dans la table jetons
 			$jetonsModele->whereIn($id_jetons)->delete();
+
+			log_message("debug","jetons utilisateurs supprimés");
 		}
 	}
 
@@ -140,6 +142,9 @@ class Cron extends Controller
 			$inscriptionModele->whereIn('id_personne',$IdPersonneInscrite)->delete();
 			$jetonsModele     ->whereIn('id'         ,$jetonsExpirer     )->delete();
 			$personneModele   ->whereIn('id'         ,$IdPersonneInscrite)->delete();
+
+			
+			log_message("debug","jetons inscriptions supprimés");
 		}
 	}
 	

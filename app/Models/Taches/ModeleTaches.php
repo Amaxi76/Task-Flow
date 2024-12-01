@@ -24,8 +24,8 @@ class ModeleTaches extends Model
 		// Construction de la requête
 		$query = $db->table("taches")
 					->select()
-					->where('taches.echeance - NOW() <= (taches.rappel || \' minutes\')::INTERVAL')
-					->where('taches.echeance > NOW()')
+					->where('taches.date_echeance - NOW() <= (taches.rappel || \' minutes\')::INTERVAL')
+					->where('taches.date_echeance > NOW()')
 					->where('taches.nbrappel < 1')
 					->get();
 		// Retourne les résultats sous forme de tableau associatif

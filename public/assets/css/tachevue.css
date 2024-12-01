@@ -125,3 +125,18 @@ button {
 	border-radius: 0.6rem;
 	height: fit-content;
 }
+
+.conteneur-menu-boutons-droite {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+.conteneur-menu-boutons-droite select{
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: 0.1rem solid #379EE8;
+	background-color: white;
+	color: #379EE8;
+	cursor: pointer;
+}
