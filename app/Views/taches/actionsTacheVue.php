@@ -60,6 +60,28 @@
 					</div>
 				</div>
 
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<div class="form-floating">
+							<?php echo form_input(['name' => 'rappel', 'type' => 'number', 'class' => 'form-control', 'id' => 'duree_valeur', 'placeholder' => 'Durée', 'required' => 'required']); ?>
+							<?php echo form_label('Durée', 'duree_valeur'); ?>
+							<?= validation_show_error('duree_valeur') ?>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-floating">
+							<?php echo form_dropdown('unite', [
+								'heure' => 'Heure',
+								'jour' => 'Jours',
+								'mois' => 'Mois',
+								'annee' => 'Années'
+							], '', 'class="form-select" id="unite" required'); ?>
+							<?php echo form_label('Unité', 'unite'); ?>
+							<?= validation_show_error('unite') ?>
+						</div>
+					</div>
+				</div>
+
 				<?php echo form_submit('submit', 'Valider', 'class="btn btn-light w-100"'); ?>
 				<?php echo form_close(); ?>
 			</div>

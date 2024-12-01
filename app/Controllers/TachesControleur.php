@@ -163,11 +163,32 @@ class TachesControleur extends BaseController
 			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
 		}
 
+		if ( !empty ( $data['rappel'] ) ) {
+			switch ( $data['unite'] ) {
+				case 'heure':
+					$data['rappel'] = $data['rappel'] * 60;
+					break;
+				case 'jour':
+					$data['rappel'] = $data['rappel'] * 60 * 24;
+					break;
+				case 'mois':
+					$data['rappel'] = $data['rappel'] * 60 * 24 * 30;
+					break;
+				case 'annee':
+					$data['rappel'] = $data['rappel'] * 60 * 24 * 365;
+					break;
+				default:
+					throw new \InvalidArgumentException('Unité de temps non valide');
+			}
+		} else {
+			$data['rappel'] = 0;
+		}
+
 		// Insérer les données
 		$tacheModele->insert($data);
 
 		// Charger la vue
-		return redirect()->to('/taches');
+		return redirect()->to('/taches/toutes');
 	}
 
 	public function appliquerSuppression () {
