@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->post('/connexion/mdp_oublie'                 ,'ConnexionControleur::afficherFormulaireEnvoieMail'          );
+$routes->get('/connexion/mdp_oublie'                 ,'ConnexionControleur::afficherFormulaireEnvoieMail'          );
 $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::envoiMailMdpOublie'                   );
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
