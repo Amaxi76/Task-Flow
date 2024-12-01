@@ -43,6 +43,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 	// Tâches
 	$routes->get ('/taches/toutes'        , 'TachesControleur::index/toutes'  ); // Page des tâches toutes
 	$routes->get ('/taches/kanban'        , 'TachesControleur::index/kanban'  ); // Page des tâches karban
+	$routes->post ( '/taches/setNbTacheParPage', 'TachesControlleur::changerNbTachesParPage');
 
 
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');

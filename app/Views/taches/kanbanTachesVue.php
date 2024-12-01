@@ -100,7 +100,7 @@
 								<span class="commentaire-count"><?= esc($tache['nb_commentaires']) ?></span>
 							</span>
 
-							<?php if ($tache['nb_jours_avant_echeance'] < 0) : ?>
+							<?php if ($tache['nb_jours_avant_echeance'] <= 0) : ?>
 								<p><?= abs($tache['nb_jours_avant_echeance']) ?> jours en retard</p>
 							<?php endif; ?>
 						</div>

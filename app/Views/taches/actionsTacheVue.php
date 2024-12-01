@@ -32,14 +32,20 @@
 			<div class="row mb-3">
 				<div class="col-md-6">
 					<div class="form-floating">
-						<?php echo form_dropdown('id_priorite', array_column($priorites, 'libelle', 'id'), $tache['id_priorite'], 'class="form-select" id="priorite" required');  ?>
+						<?php 
+							$priorite_options = ['' => ''] + array_column($priorites, 'libelle', 'id');
+							echo form_dropdown('id_priorite', $priorite_options, $tache['id_priorite'], 'class="form-select" id="priorite" required');  
+						?>
 						<?php echo form_label('Priorité', 'id_priorite'); ?>
 						<?= validation_show_error('id_priorite') ?>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-floating">
-						<?php echo form_dropdown('id_statut',  array_column($statuts, 'libelle', 'id'), $tache['id_statut'], 'class="form-select" id="statut" required');  ?>
+						<?php 
+							$statut_options = ['' => ''] + array_column($statuts, 'libelle', 'id');
+							echo form_dropdown('id_statut', $statut_options, $tache['id_statut'], 'class="form-select" id="statut" required');  
+						?>
 						<?php echo form_label('Statut', 'id_statut'); ?>
 						<?= validation_show_error('id_statut') ?>
 					</div>
@@ -49,8 +55,8 @@
 			<div class="row mb-3">
 				<div class="col-md-6">
 					<div class="form-floating">
-						<?php echo form_input(['name' => 'rappel', 'type' => 'number', 'value' => $tache['rappel'], 'class' => 'form-control', 'id' => 'rappel', 'placeholder' => 'Durée', 'required' => 'required']); ?>
-						<?php echo form_label('Durée', 'rappel'); ?>
+						<?php echo form_input(['name' => 'rappel', 'type' => 'number', 'value' => $tache['rappel'], 'class' => 'form-control', 'id' => 'rappel', 'placeholder' => 'Durée', 'required' => 'required', 'min' => '1']); ?>
+						<?php echo form_label('Durée avant rappel', 'rappel'); ?>
 						<?= validation_show_error('rappel') ?>
 					</div>
 				</div>

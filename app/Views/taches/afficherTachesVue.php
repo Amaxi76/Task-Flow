@@ -25,6 +25,19 @@
 			</div>
 		</div>
 
+		<div class="conteneur-menu-boutons-droite">
+			<?= form_open('/taches/setNbTacheParPage', ['method' => 'post']) ?>
+			<label for="parPage">Afficher par :</label>
+			<select name="parPage" id="parPage" onchange="this.form.submit()">
+				<option value="4" <?= set_select('parPage', '4', $parPage == 4) ?>>4</option>
+				<option value="6" <?= set_select('parPage', '6', $parPage == 6) ?>>6</option>
+				<option value="8" <?= set_select('parPage', '8', $parPage == 8) ?>>8</option>
+				<option value="10" <?= set_select('parPage', '10', $parPage == 10) ?>>10</option>
+				<option value="12" <?= set_select('parPage', '12', $parPage == 12) ?>>12</option>
+			</select>
+			<?= form_close() ?>
+		</div>
+
 		<div class="conteneur-menu-affichage">
 			<a href="<?= base_url('taches/kanban') ?>">
 				<div class="button secondary-button" style="border:none;"  >
@@ -89,7 +102,7 @@
 				<span class="commentaire-count"><?= esc($tache['nb_commentaires']) ?></span>
 			</span>
 
-			<?php if ($tache['nb_jours_avant_echeance'] < 0) : ?>
+			<?php if ($tache['nb_jours_avant_echeance'] <= 0) : ?>
 				<p><?= abs($tache['nb_jours_avant_echeance']) ?> jours en retard</p>
 			<?php endif; ?>
 		</div>

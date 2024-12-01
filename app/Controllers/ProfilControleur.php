@@ -100,10 +100,10 @@ class ProfilControleur extends Controller {
 		
 		$intitule = 
 		[
-			'id_utilisateur' => session()->get("id"),
+			'id_utilisateur' => $this->session->getIdUtilisateur(),
 			'type_intitule'  => 'statut',
 			'libelle'        => $titre,
-			'couleur'        => $couleur 
+			'couleur'        => $couleur
 		];
 		$intituleModele->insert($intitule);
 		
@@ -112,8 +112,12 @@ class ProfilControleur extends Controller {
 
 	public function supprimerStatut($id)
 	{
-		$this->intitulesModele->delete($id);
-		return redirect()->back();
+		$tachesModele    = new ModeleTaches();
+		if ($tachesModele->estUtiliseParTache($id)) {
+			return redirect()->back()->with('error', 'Impossible de supprimer le statut car il est utilisé par une ou plusieurs tâches.');
+		} else {
+			$this->intitulesModele->delete($id);
+			return redirect()->back();
+		}
 	}
-	
 }

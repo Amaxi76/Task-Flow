@@ -22,7 +22,7 @@ class ConnexionControleur extends BaseController
 
 		$email         = $this->request->getVar("email");
 		$mdpFormulaire = $this->request->getVar("mdp"  );
-		$seSouvenir    = $this->request->getVar("seSouvenir"  );
+		$seSouvenir    = $this->request->getVar("seSouvenir");
 		
 		$utilisateur = $this->verifieExistance($email);
 
