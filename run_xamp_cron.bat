@@ -8,8 +8,7 @@ timeout /t 5 > nul
 
 REM Démarrer le script PHP cron_runner.php
 echo Starting cron_runner.php...
-start "" "C:\xampp\php\php.exe" "C:\xampp\htdocs\Task-Flow\script\cron_runner.php"
+start "" php "script\cron_runner.php"
 
 REM Garder la fenêtre ouverte pour le suivi
 echo All services started. Press any key to close this window.
-pause
