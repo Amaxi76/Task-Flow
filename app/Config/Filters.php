@@ -25,7 +25,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'auth'          => \App\Filters\ConnexionFiltre::class,
+        'auth'          => \App\Filters\AccesPageFiltre::class,
+		'unAuth'          => \App\Filters\ConnexionPageFiltre::class,
         'cron'          => \App\Filters\CronFilter::class
     ];
 

@@ -49,6 +49,12 @@
 						</div>
 					</div>
 					<?php endforeach; ?>
+
+					<?php if (session()->has('error')): ?>
+						<div class="alert alert-danger">
+							<?= session('error') ?>
+						</div>
+					<?php endif; ?>
 				</div>
 
 				<!-- Formulaire Enregistrer -->
@@ -93,6 +99,7 @@
 			<?= form_close() ?>
 		</div>
 	</div>
+
 
 	<script src="<?= base_url('assets/js/profil.js') ?>"></script>
 </body>

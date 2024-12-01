@@ -79,14 +79,15 @@ class TachesControleur extends BaseController
 		switch ( $typeVue ) {
 			case 'toutes':
 				// Constantes
-				$NOMBRE_TACHES_PAR_PAGE = 8;
+				$nbTachesParPage = $this->session->getNbTachesParPage();
 
 				// Configurer le pager
 				$configPager = config (Pager::class);
-				$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
+				$configPager->perPage = $nbTachesParPage;
 				
-				$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $NOMBRE_TACHES_PAR_PAGE);
+				$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $nbTachesParPage);
 				$dataCorps['pagerTaches']   = $tacheModele   ->pager;
+				$dataCorps['parPage']       = $nbTachesParPage;
 
 				return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
 
@@ -247,5 +248,14 @@ class TachesControleur extends BaseController
 		return redirect ()->to ('/taches/detail');
 		//TODO: tester : 
 		// return redirect()->back();
+	}
+
+	public function changerNbTachesParPage ( ) {
+		// Récupérer les données du formulaire
+		$data = request()->getPost ();
+
+		$this->session->setNbTachesParPage ( $data['parPage'] );
+
+		//TODO: rediriger vers la page de la vue en cours
 	}
 }

@@ -44,7 +44,6 @@ p {
 .name-section {
 	display: flex;
 	align-items: stretch;
-	margin-bottom: 1rem;
 }
 
 .name-section .info-card {

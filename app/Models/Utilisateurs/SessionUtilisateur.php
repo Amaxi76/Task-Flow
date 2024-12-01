@@ -6,11 +6,19 @@ use App\Models\Taches\ServiceTriageTaches;
 
 class SessionUtilisateur
 {
-	public const CLE_ID_UTILISATEUR = 'idUtilisateur';
-	public const CLE_EST_CONNECTE = 'estConnecte';
-	public const CLE_ID_TACHE = 'idTache';
-	private const CLE_FILTRAGE_TACHES = 'serviceFiltrageTaches';
-	private const CLE_TRIAGE_TACHES = 'serviceTriageTaches';
+	/* CLES SESSION */
+	public const CLE_ID_UTILISATEUR      = 'idUtilisateur';
+	public const CLE_EST_CONNECTE        = 'estConnecte';
+	private const CLE_NB_TACHES_PAR_PAGE = 'nbTachesParPage';
+	private const CLE_TYPE_VUE           = 'typeVue';
+	private const CLE_FILTRAGE_TACHES    = 'serviceFiltrageTaches';
+	private const CLE_TRIAGE_TACHES      = 'serviceTriageTaches';
+	public const CLE_ID_TACHE            = 'idTache';
+
+	/* VALEURS POSSIBLES */
+	private const VUE_GENERALE = 'generale';
+	private const VUE_KANBAN   = 'kanban';
+	private const NB_PAR_PAGE  = 8;
 
 	private $session;
 
@@ -20,16 +28,17 @@ class SessionUtilisateur
 
 	public function __construct(){
 		$this->session = session();
-
 		//dd($this->getEstConnecte(), $this->getIdUtilisateur(), $this->getIdUtilisateur(), $this->getFiltrageTaches(), $this->getTriageTaches() );
 	}
 
-	public function connecter( int $idUtilisateur ){
-		$this->setIdUtilisateur($idUtilisateur);
-		$this->setEstConnecte(TRUE );
-		$this->setIdTache( null );
-		$this->setFiltrageTaches( new ServiceFiltrageTaches() );
-		$this->setTriageTaches( new ServiceTriageTaches() );
+	public function connecter ( int $idUtilisateur ){
+		$this->setIdUtilisateur   ($idUtilisateur);
+		$this->setEstConnecte     (TRUE );
+		$this->setNbTachesParPage ( self::NB_PAR_PAGE );
+		$this->setTypeVue         ( self::VUE_GENERALE );
+		$this->setFiltrageTaches  ( new ServiceFiltrageTaches() );
+		$this->setTriageTaches    ( new ServiceTriageTaches() );
+		$this->setIdTache         ( null );
 	}
 
 	public function deconnecter(){
@@ -64,6 +73,50 @@ class SessionUtilisateur
 	}
 
 	/*---------------------------------------*/
+	/*                 VUES                  */
+	/*---------------------------------------*/
+
+	public function getNbTachesParPage(): int {
+		return $this->session->get(SessionUtilisateur::CLE_NB_TACHES_PAR_PAGE);
+	}
+
+	public function setNbTachesParPage( int $nbTachesParPage ): void {
+		$this->session->set(SessionUtilisateur::CLE_NB_TACHES_PAR_PAGE, $nbTachesParPage);
+	}
+
+	public function getTypeVue(): string {
+		return $this->session->get(SessionUtilisateur::CLE_TYPE_VUE);
+	}
+
+	public function setTypeVue( string $typeVue ): void {
+		$this->session->set(SessionUtilisateur::CLE_TYPE_VUE, $typeVue);
+	}
+
+	/*---------------------------------------*/
+	/*             FILTRAGE_TACHE            */
+	/*---------------------------------------*/
+
+	public function setFiltrageTaches( ?ServiceFiltrageTaches $filtrage ) : void {
+		$this->session->set(SessionUtilisateur::CLE_FILTRAGE_TACHES, $filtrage->toArray() );
+	}
+
+	public function getFiltrageTaches(): ?ServiceFiltrageTaches {
+		return ServiceFiltrageTaches::fromArray( $this->session->get(SessionUtilisateur::CLE_FILTRAGE_TACHES) );
+	}
+
+	/*---------------------------------------*/
+	/*              TRIAGE_TACHE             */
+	/*---------------------------------------*/
+
+	public function setTriageTaches( ?ServiceTriageTaches $triage ) : void {
+		$this->session->set(SessionUtilisateur::CLE_TRIAGE_TACHES, $triage->toArray() );
+	}
+
+	public function getTriageTaches(): ?ServiceTriageTaches {
+		return ServiceTriageTaches::fromArray( $this->session->get(SessionUtilisateur::CLE_TRIAGE_TACHES) );
+	}
+
+	/*---------------------------------------*/
 	/*                 ID_TACHE              */
 	/*---------------------------------------*/
 
@@ -88,37 +141,5 @@ class SessionUtilisateur
 			$idTache = request()->getPost( $clePost );
 			$this->setIdTache($idTache);
 		}
-	}
-
-	/*---------------------------------------*/
-	/*             FILTRAGE_TACHE            */
-	/*---------------------------------------*/
-
-	public function setFiltrageTaches( ?ServiceFiltrageTaches $filtrage ) : void {
-		$this->session->set(SessionUtilisateur::CLE_FILTRAGE_TACHES, $filtrage->toArray() );
-	}
-
-	public function getFiltrageTaches(): ?ServiceFiltrageTaches {
-		return ServiceFiltrageTaches::fromArray( $this->session->get(SessionUtilisateur::CLE_FILTRAGE_TACHES) );
-	}
-
-	public function filtrageTachesExiste(): bool {
-		return $this->session->get(SessionUtilisateur::CLE_FILTRAGE_TACHES) !== null;
-	}
-
-	/*---------------------------------------*/
-	/*              TRIAGE_TACHE             */
-	/*---------------------------------------*/
-
-	public function setTriageTaches( ?ServiceTriageTaches $triage ) : void {
-		$this->session->set(SessionUtilisateur::CLE_TRIAGE_TACHES, $triage->toArray() );
-	}
-
-	public function getTriageTaches(): ?ServiceTriageTaches {
-		return ServiceTriageTaches::fromArray( $this->session->get(SessionUtilisateur::CLE_TRIAGE_TACHES) );
-	}
-
-	public function triageTachesExiste(): bool {
-		return $this->session->get(SessionUtilisateur::CLE_TRIAGE_TACHES) !== null;
 	}
 }

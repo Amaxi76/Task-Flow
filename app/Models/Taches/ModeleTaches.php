@@ -68,5 +68,17 @@ class ModeleTaches extends Model
 		}
 	}
 
+	public function estUtiliseParTache ( $idStatut )
+	{
+		$db = \Config\Database::connect();
+
+		$query = $db->table('taches')
+					->select('id')
+					->where('id_statut', $idStatut)
+					->limit(1)
+					->get();
+
+		return $query->getNumRows() > 0;
+	}
 
 }
