@@ -123,4 +123,5 @@ button {
 	display: flex;
 	border: 1px solid #379EE8;
 	border-radius: 0.6rem;
+	height: fit-content;
 }
