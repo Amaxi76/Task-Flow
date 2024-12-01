@@ -58,3 +58,10 @@ const calculateContrast = (color1, color2 = "#ffffff") => {
 	return (brightest + 0.05) / (darkest + 0.05);
 };
 
+function afficherCookiePopUp() {
+	document.getElementById('cookie-popup').style.display = 'block';
+}
+
+function fermerCookiePopUp() {
+	document.getElementById('cookie-popup').style.display = 'none';
+}
