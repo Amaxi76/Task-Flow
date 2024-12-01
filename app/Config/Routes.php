@@ -29,16 +29,15 @@ $routes->group('', ['filter' => 'unAuth'], function($routes)
 
 $routes->group('', ['filter' => 'auth'], function ($routes)
 {
-	// Routes temporaires avant de changer le type de vue dans la session
-	$routes->get ('/','TachesControleur::index/toutes'  ); // Page d'accueil
-	$routes->get ('/taches','TachesControleur::index/toutes');
-
 	// Tâches
-	$routes->get ('/taches/toutes'        , 'TachesControleur::index/toutes'  ); // Page des tâches toutes
-	$routes->get ('/taches/kanban'        , 'TachesControleur::index/kanban'  ); // Page des tâches karban
+	$routes->get ('/','TachesControleur::index/'); // Page d'accueil
+	$routes->get ('/taches','TachesControleur::index/');
+
+	// Configurations affichage taches
 	$routes->post ( '/taches/setNbTacheParPage', 'TachesControleur::changerNbTachesParPage');
+	$routes->get  ( '/taches/vue/(:any)','TachesControleur::changerTypeVue/$1');
 
-
+	// CRUD taches
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');
 

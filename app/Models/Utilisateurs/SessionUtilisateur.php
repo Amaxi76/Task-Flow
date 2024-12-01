@@ -7,18 +7,18 @@ use App\Models\Taches\ServiceTriageTaches;
 class SessionUtilisateur
 {
 	/* CLES SESSION */
-	public const CLE_ID_UTILISATEUR      = 'idUtilisateur';
-	public const CLE_EST_CONNECTE        = 'estConnecte';
+	private const CLE_ID_UTILISATEUR     = 'idUtilisateur';
+	private const CLE_EST_CONNECTE       = 'estConnecte';
 	private const CLE_NB_TACHES_PAR_PAGE = 'nbTachesParPage';
 	private const CLE_TYPE_VUE           = 'typeVue';
 	private const CLE_FILTRAGE_TACHES    = 'serviceFiltrageTaches';
 	private const CLE_TRIAGE_TACHES      = 'serviceTriageTaches';
-	public const CLE_ID_TACHE            = 'idTache';
+	private const CLE_ID_TACHE           = 'idTache';
 
 	/* VALEURS POSSIBLES */
-	private const VUE_GENERALE = 'generale';
-	private const VUE_KANBAN   = 'kanban';
-	private const NB_PAR_PAGE  = 8;
+	public const VUE_GENERALE = 'generale';
+	public const VUE_KANBAN   = 'kanban';
+	private const NB_PAR_PAGE = 8;
 
 	private $session;
 
@@ -28,9 +28,11 @@ class SessionUtilisateur
 
 	public function __construct(){
 		$this->session = session();
-		//dd($this->getEstConnecte(), $this->getIdUtilisateur(), $this->getIdUtilisateur(), $this->getFiltrageTaches(), $this->getTriageTaches() );
 	}
 
+	/**
+	 * Initialiser toutes les valeurs nécessaires de la session
+	 */
 	public function connecter ( int $idUtilisateur ){
 		$this->setIdUtilisateur   ($idUtilisateur);
 		$this->setEstConnecte     (TRUE );
@@ -89,7 +91,9 @@ class SessionUtilisateur
 	}
 
 	public function setTypeVue( string $typeVue ): void {
-		$this->session->set(SessionUtilisateur::CLE_TYPE_VUE, $typeVue);
+		if( $typeVue === self::VUE_GENERALE || $typeVue === self::VUE_KANBAN ){
+			$this->session->set(SessionUtilisateur::CLE_TYPE_VUE, $typeVue);
+		}
 	}
 
 	/*---------------------------------------*/
@@ -134,7 +138,6 @@ class SessionUtilisateur
 
 	//TODO: vérifier si on ne peut pas mettre cette méthode dans une classe dédiée dans App/Filters/ pour qu'elle soit appelée automatiquement à chaque ouverture de vue
 	//TODO: il serait intéressant de vérifier si l'id d'une tache existe toujours (dans le cas où elle aurait été supprimée sur un autre navigateur ou via la bdd)
-	//TODO: ne plus utiliser la méthode poste pour les données de la session !
 	public function majIdTacheAvecPost( string $clePost = SessionUtilisateur::CLE_ID_TACHE ): void {
 		$idTachePostExiste = request()->getPost( $clePost ) !== null;
 		if( $idTachePostExiste ){

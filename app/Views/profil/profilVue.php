@@ -72,6 +72,7 @@
 				<?= form_open('profil/supprimer-compte', ['id' => 'form_supprimer']) ?>
 					<button style="background-color:#dc3545; color: white;" type="submit" id="supprimer" class="button secondary-button">Supprimer le compte</button>
 				<?= form_close() ?>
+
 			</div>
 		</div>
 	</div>
@@ -100,6 +101,17 @@
 		</div>
 	</div>
 
+	<div id="cookie-popup">
+        <h3>🍪 Nous utilisons des cookies</h3>
+        <p>Ce site utilise des cookies pour améliorer votre expérience. Ils nous aident à :</p>
+        <ul>
+            <li>Mémoriser vos préférences</li>
+            <li>Comprendre comment vous utilisez notre site</li>
+            <li>Améliorer la sécurité de votre connexion</li>
+        </ul>
+        <p>En continuant à utiliser ce site, vous acceptez notre utilisation des cookies.</p>
+        <button class="button main-button"onclick="fermerCookiePopUp()">Fermer</button>
+    </div>
 
 	<script src="<?= base_url('assets/js/profil.js') ?>"></script>
 </body>

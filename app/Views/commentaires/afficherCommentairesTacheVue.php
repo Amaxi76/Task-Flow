@@ -82,7 +82,7 @@
 					<tr>
 						<th>Date</th>
 						<th>Commentaire</th>
-						<th>Actions</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>

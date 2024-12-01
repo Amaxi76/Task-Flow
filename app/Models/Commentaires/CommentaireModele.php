@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Commentaire;
+namespace App\Models\Commentaires;
 use CodeIgniter\Model;
 class CommentaireModele extends Model
 {

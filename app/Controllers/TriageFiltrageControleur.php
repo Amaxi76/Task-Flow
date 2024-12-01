@@ -1,7 +1,6 @@
 <?php 
 namespace App\Controllers;
-use App\Models\Taches\ServiceTriageTaches;
-use App\Models\Taches\ServiceFiltrageTaches;
+
 use App\Models\Taches\ModeleIntitules;
 use App\Models\Utilisateurs\SessionUtilisateur;
 
@@ -15,28 +14,7 @@ class TriageFiltrageControleur extends BaseController
 
 	public function __construct() {
 		$this->session = new SessionUtilisateur();
-		//$this->initialiserServicesSession();
 	}
-
-	/*private function initialiserServicesSession() {
-		//dd('trieur');
-		if( ServiceTriageTaches::estPresentEnSession() ) {
-			$this->trieur = ServiceTriageTaches::getDepuisSession();
-		}
-		else {
-			$this->trieur = new ServiceTriageTaches();
-			$this->trieur->setDansSession();
-		}
-
-		//dd('filtreur');
-		if( ServiceFiltrageTaches::estPresentEnSession() ) {
-			$this->filtreur = ServiceFiltrageTaches::getDepuisSession();
-		}
-		else {
-			$this->filtreur = new ServiceFiltrageTaches();
-			$this->filtreur->setDansSession();
-		}
-	}*/
 
 	/*---------------------------------------*/
 	/*                  VUES                 */

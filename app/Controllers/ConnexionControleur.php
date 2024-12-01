@@ -1,7 +1,6 @@
 <?php 
-namespace App\Controllers; 
-use App\Models\Taches\ServiceFiltrageTaches;
-use App\Models\Taches\ServiceTriageTaches;
+namespace App\Controllers;
+
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\SessionUtilisateur;
 use App\Models\Utilisateurs\UtilisateurModele;
@@ -9,7 +8,7 @@ use App\Models\Utilisateurs\PersonneModele;
 
 class ConnexionControleur extends BaseController 
 { 
-	private const TEMPS_EXPIRATION = '+1 hour'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+1 hour';
 	private SessionUtilisateur $session;
 
 	public function __construct(){

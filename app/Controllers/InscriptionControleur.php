@@ -1,12 +1,13 @@
 <?php 
-namespace App\Controllers; 
+namespace App\Controllers;
+
 use App\Models\Utilisateurs\InscriptionsModele; 
 use App\Models\Utilisateurs\JetonsModele;
 use App\Models\Utilisateurs\PersonneModele; 
 
 //FIXME: ne plus utiliser "session()" mais plutot passer par SessionUtilisateur
 class InscriptionControleur extends BaseController { 
-	private const TEMPS_EXPIRATION = '+2 minutes'; //TODO:A voir si on peut pas mettre un int plutôt
+	private const TEMPS_EXPIRATION = '+10 minutes';
 
 	public function index(): string {
 		helper(['form']);
@@ -97,7 +98,7 @@ class InscriptionControleur extends BaseController {
 		$jetonModele = new JetonsModele();
 		$jeton = [
 			'jeton'      => bin2hex(random_bytes(8)),
-			'expiration' => date   ('Y-m-d H:i:s',strtotime(self::TEMPS_EXPIRATION)) //TODO:voir pour le temps
+			'expiration' => date   ('Y-m-d H:i:s',strtotime(self::TEMPS_EXPIRATION))
 		];
 
 		return $jetonModele->insert($jeton);
