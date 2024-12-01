@@ -9,7 +9,7 @@ class InscriptionControleur extends BaseController {
 
 	public function index(): string {
 		helper(['form']);
-		return view('commun/entete') . view('inscription/inscriptionVue') . view('commun/piedpage');
+		return view('inscription/inscriptionVue');
 	}
 
 	/**
@@ -63,9 +63,7 @@ class InscriptionControleur extends BaseController {
 			'erreur' => $erreurs
 		];
 		helper(['form']);
-		echo view('commun/entete');
 		echo view('inscription/inscriptionVue',$data); //renvoie vers inscription avec message d'erreur
-		echo view('commun/piedpage');
 	}
 
 	/**
@@ -131,9 +129,7 @@ class InscriptionControleur extends BaseController {
 		$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
 
 		helper   (['form']);
-		echo view('commun/entete');
 		echo view('/commun/envoieMailVue',$data);
-		echo view('commun/piedpage');
 	}
 	
 	public function resetProcedure()
@@ -150,9 +146,7 @@ class InscriptionControleur extends BaseController {
 		$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
 
 		helper   (['form']);
-		echo view('commun/entete');
 		echo view('/commun/envoieMailVue',$data);
-		echo view('commun/piedpage');
 	}
 
 	public function annulerInscription($id_personne,$id_jeton)
