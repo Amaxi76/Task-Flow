@@ -3,11 +3,17 @@ namespace App\Controllers;
 
 use App\Models\Utilisateurs\InscriptionsModele; 
 use App\Models\Utilisateurs\JetonsModele;
-use App\Models\Utilisateurs\PersonneModele; 
+use App\Models\Utilisateurs\PersonneModele;
+use App\Models\Utilisateurs\SessionUtilisateur; 
 
 //FIXME: ne plus utiliser "session()" mais plutot passer par SessionUtilisateur
 class InscriptionControleur extends BaseController { 
 	private const TEMPS_EXPIRATION = '+10 minutes';
+	private SessionUtilisateur $session;
+
+	public function __construct() {
+		$this->session = new SessionUtilisateur();
+	}
 
 	public function index(): string {
 		helper(['form']);
@@ -45,7 +51,7 @@ class InscriptionControleur extends BaseController {
 				{
 					session()->set('email', $email);
 					session()->set('id_personne', strval($idPersonne));
-					session()->set('id_jeton'   , strval($idJeton));					
+					session()->set('id_jeton'   , strval($idJeton));
 					return redirect()->to('inscription/mailenvoye');
 				}
 				
