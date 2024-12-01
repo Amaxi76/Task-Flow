@@ -12,9 +12,8 @@ class ReinitialisationMotDePasseControleur extends Controller
 		
 		if ($this->verifierJeton($jeton)) 
 		{
-			echo view('commun/entete');
+			helper(['form']);
 			echo view("/connexion/reinitialisationMdpVue",['jeton' => $jeton]);
-			echo view('commun/piedpage');
 		}
 	}
 
