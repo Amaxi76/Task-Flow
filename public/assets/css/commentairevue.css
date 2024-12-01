@@ -7,7 +7,12 @@
 	flex-grow: 1;
 	overflow-y: auto;
 	margin-top: 1rem;
-	flex-wrap: wrap;
+}
+
+@media (max-width: 70rem) {
+	.conteneur-principal {
+		flex-wrap: wrap;
+	}
 }
 
 .conteneur-carte-gauche {

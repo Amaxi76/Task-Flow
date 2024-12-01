@@ -29,8 +29,9 @@ $routes->get('/deconnexion','ConnexionControleur::deconnexion');
 $routes->group('', ['filter' => 'auth'], function ($routes) 
 {
 	// Tâches
-	$routes->get('/', 'TachesControleur::index');
-	$routes->get ('/taches'        , 'TachesControleur::index'  ); // Page des tâches
+	$routes->get ('/taches/toutes'        , 'TachesControleur::index/toutes'  ); // Page des tâches toutes
+	$routes->get ('/taches/kanban'        , 'TachesControleur::index/kanban'  ); // Page des tâches karban
+
 
 	$routes->get ('/taches/ajouter', 'TachesControleur::ajouter');
 	$routes->post('/taches/appliquerAjout', 'TachesControleur::appliquerAjout');

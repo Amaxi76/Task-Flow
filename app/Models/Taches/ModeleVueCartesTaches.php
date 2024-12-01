@@ -11,6 +11,10 @@ class ModeleVueCartesTaches extends Model
 			->paginate( $perPage, 'taches');
 	}
 
+	public function getCartesUtilisateur( int $idUtilisateur ) : array {
+		return $this->where('id_utilisateur', $idUtilisateur)->findAll();
+	}
+
 	public function getTache( int $idTache ) : array {
 		return $this->where('id_tache', $idTache)
 			->first();

@@ -1,0 +1,41 @@
+.conteneur-statuts {
+	flex: 1;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	overflow-y: hidden;
+	height: 100%;
+	padding:1rem 3rem 3rem 3rem;
+}
+
+.statut {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.conteneur-cartes-statut {
+	flex: 1;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	padding:2rem;
+	gap: 2rem;
+}
+
+.conteneur-entete-statut {
+	display: flex;
+	flex-direction: row;
+	align-items:end;
+	gap: 1rem;
+}
+
+.conteneur-entete-statut p, h3 {
+	margin: 0;
+}
+
+.conteneur-menu-affichage {
+	display: flex;
+	border: 1px solid #379EE8;
+	border-radius: 0.6rem;
+}

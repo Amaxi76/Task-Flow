@@ -28,18 +28,10 @@ class TachesControleur extends BaseController
 	/*                  VUES                 */
 	/*---------------------------------------*/
 
-	public function index (): string {
-		return $this->chargerPagePrincipale ();
-	}
-
-	//TODO: remettre directement dans index car la méthode n'est pas réutilisée
-	private function chargerPagePrincipale (): string {
+	public function index ( $typeVue ): string {
 		// Mettre à jour les données de la session
 		$this->session->setIdTache( null );
-
-		// Constantes
-		$NOMBRE_TACHES_PAR_PAGE = 8;
-
+		
 		// Données de l'entête
 		$dataEntete = [];
 		$dataEntete['titre'] = 'Liste des Tâches';
@@ -52,14 +44,8 @@ class TachesControleur extends BaseController
 		$tacheModele = $this->session->getTriageTaches()  ->trier($tacheModele);
 		$tacheModele = $this->session->getFiltrageTaches()->filtrer($tacheModele);
 
-		// Configurer le pager
-		$configPager = config (Pager::class);
-		$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
-
-		// Charger les données paginées
 		$dataCorps = [];
 		$dataCorps['idUtilisateur'] = $this->session ->getIdUtilisateur();
-		$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $NOMBRE_TACHES_PAR_PAGE);
 		$dataCorps['statuts']       = $intituleModele->getStatutsUtilisateur        ($this->session->getIdUtilisateur() );
 		$dataCorps['priorites']     = $intituleModele->getPrioritesUtilisateur      ($this->session->getIdUtilisateur() );
 		$dataCorps['pagerTaches']   = $tacheModele   ->pager;
@@ -68,9 +54,40 @@ class TachesControleur extends BaseController
 		$dataFiltre['trieur'] = $this->session->getTriageTaches();
 		$dataFiltre['filtreur'] = $this->session->getFiltrageTaches();
 
-		// Charger la vue 
 		helper (['form']);
-		return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+
+		switch ( $typeVue ) {
+			case 'toutes':
+				// Constantes
+				$NOMBRE_TACHES_PAR_PAGE = 8;
+
+				// Configurer le pager
+				$configPager = config (Pager::class);
+				$configPager->perPage = $NOMBRE_TACHES_PAR_PAGE;
+				
+				$dataCorps['taches']        = $tacheModele   ->getCartesUtilisateurPaginees ($this->session->getIdUtilisateur(), $NOMBRE_TACHES_PAR_PAGE);
+				$dataCorps['pagerTaches']   = $tacheModele   ->pager;
+
+				return view ('commun/entete', $dataEntete) . view ('/taches/afficherTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+
+			case 'kanban':
+				$taches       = $tacheModele   ->getCartesUtilisateur ($this->session->getIdUtilisateur());
+
+				$dataCorps['taches'] = array_reduce($taches, function ($carry, $tache) {
+					$statut = $tache['libelle_statut'];
+					if (!isset($carry[$statut])) {
+						$carry[$statut] = [];
+					}
+					$carry[$statut][] = $tache;
+					return $carry;
+				}, []);
+				
+				ksort($dataCorps['taches']);
+
+				return view ('commun/entete', $dataEntete) . view ('/taches/kanbanTachesVue', $dataCorps) . view('/taches/popupFiltreVue', $dataFiltre) .view ('commun/piedpage'); 
+			default:
+				throw new \InvalidArgumentException('Type de vue non valide');
+		}
 	}
 
 	public function ajouter (): string{
@@ -130,11 +147,32 @@ class TachesControleur extends BaseController
 			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
 		}
 
+		if ( !empty ( $data['rappel'] ) ) {
+			switch ( $data['unite'] ) {
+				case 'heure':
+					$data['rappel'] = $data['rappel'] * 60;
+					break;
+				case 'jour':
+					$data['rappel'] = $data['rappel'] * 60 * 24;
+					break;
+				case 'mois':
+					$data['rappel'] = $data['rappel'] * 60 * 24 * 30;
+					break;
+				case 'annee':
+					$data['rappel'] = $data['rappel'] * 60 * 24 * 365;
+					break;
+				default:
+					throw new \InvalidArgumentException('Unité de temps non valide');
+			}
+		} else {
+			$data['rappel'] = 0;
+		}
+
 		// Insérer les données
 		$tacheModele->insert($data);
 
 		// Charger la vue
-		return redirect()->to('/taches');
+		return redirect()->to('/taches/toutes');
 	}
 
 	public function appliquerSuppression () {
