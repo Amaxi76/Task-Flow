@@ -250,7 +250,7 @@ class TachesControleur extends BaseController
 		// return redirect()->back();
 	}
 
-	private function changerNbTachesParPage ( ) {
+	public function changerNbTachesParPage ( ) {
 		// Récupérer les données du formulaire
 		$data = request()->getPost ();
 

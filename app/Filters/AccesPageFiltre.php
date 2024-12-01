@@ -9,7 +9,7 @@ use CodeIgniter\Filters\FilterInterface;
 use \App\Models\Utilisateurs\JetonsModele;
 use \App\Models\Utilisateurs\UtilisateurModele;
 
-class ConnexionFiltre implements FilterInterface
+class AccesPageFiltre implements FilterInterface
 {
 	public function before(RequestInterface $request, $arguments = null)
 	{
