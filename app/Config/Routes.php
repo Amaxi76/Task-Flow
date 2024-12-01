@@ -21,11 +21,12 @@ $routes->post('/connexion/mdp_oublie/envoie_mail'      ,'ConnexionControleur::en
 $routes->get ('/connexion/mdp_oublie/reinit_mdp/(:any)','ReinitialisationMotDePasseControleur::index/$1'            );
 $routes->post('/connexion/mdp_oublie/reinit_mdp'       ,'ReinitialisationMotDePasseControleur::changementMotDePasse');
 
+//TODO: mettre les pages du profil dans le groupe qui vérifie l'authentification
 $routes->get ('/profil'                    ,'ProfilControleur::index'   );
 $routes->post('profil/enregistrer-modif', 'ProfilControleur::enregistrerCouleurs');
-$routes->get ('profil/supprimer-compte'    , 'ProfilControleur::supprimerCompte');
+$routes->get ('profil/supprimer-compte'    , 'ProfilControleur::supprimerCompte'); //TODO: ça serait mieux avec POST
 $routes->post('profil/ajouter-statut'    , 'ProfilControleur::ajouterStatut');
-$routes->get('profil/supprimer-statut/(:any)'    , 'ProfilControleur::supprimerStatut/$1');
+$routes->get ('profil/supprimer-statut/(:any)'    , 'ProfilControleur::supprimerStatut/$1'); //TODO: ça serait mieux avec POST
 
 
 $routes->get('/cron/run', 'Cron::lancerTaches');

@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\Utilisateurs\SessionUtilisateur;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
@@ -15,12 +16,11 @@ class ConnexionFiltre implements FilterInterface
 		$uri = $request->getUri()->getPath();
 		log_message('debug', "Filtre activé pour la route : $uri");
 
-		$session = session();
-		if (!$session->get('estConnecte')) 
+		$session = new SessionUtilisateur();
+		if ( !$session->getEstConnecte() ) 
 		{
 			helper(['cookie']);
 
-			//dd(get_cookie('seSouvenir'));
 			// Vérifier le cookie seSouvenir
 			$cookieSeSouvenir = get_cookie('seSouvenir');
 			if ($cookieSeSouvenir) {
@@ -30,14 +30,11 @@ class ConnexionFiltre implements FilterInterface
 				$utilisateur = $this->verifierJetonSeSouvenir($cookieSeSouvenir);
 
 				if ($utilisateur) {
-					$donnee_session = [
-						'id' => $utilisateur['id'],
-						'estConnecte' => TRUE,
-					];
-					$session->set($donnee_session);
+					$session->connecter( $utilisateur['id'] );
 					log_message('debug', "Connexion automatique réussie pour l'utilisateur ID: " . $utilisateur['id']);
 					return; // Continuer la requête normalement
 				} else {
+					$session->deconnecter();
 					log_message('debug', "Jeton seSouvenir invalide. Suppression du cookie.");
 					delete_cookie('seSouvenir');
 				}

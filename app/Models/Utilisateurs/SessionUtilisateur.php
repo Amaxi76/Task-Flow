@@ -6,7 +6,7 @@ use App\Models\Taches\ServiceTriageTaches;
 
 class SessionUtilisateur
 {
-	public const CLE_ID_UTILISATEUR = 'idUtilisateur'; //TODO: renommer en 'idUtilisateur';
+	public const CLE_ID_UTILISATEUR = 'idUtilisateur';
 	public const CLE_EST_CONNECTE = 'estConnecte';
 	public const CLE_ID_TACHE = 'idTache';
 	private const CLE_FILTRAGE_TACHES = 'serviceFiltrageTaches';
@@ -20,6 +20,20 @@ class SessionUtilisateur
 
 	public function __construct(){
 		$this->session = session();
+
+		//dd($this->getEstConnecte(), $this->getIdUtilisateur(), $this->getIdUtilisateur(), $this->getFiltrageTaches(), $this->getTriageTaches() );
+	}
+
+	public function connecter( int $idUtilisateur ){
+		$this->setIdUtilisateur($idUtilisateur);
+		$this->setEstConnecte(TRUE );
+		$this->setIdTache( null );
+		$this->setFiltrageTaches( new ServiceFiltrageTaches() );
+		$this->setTriageTaches( new ServiceTriageTaches() );
+	}
+
+	public function deconnecter(){
+		$this->session->destroy();
 	}
 
 	/*---------------------------------------*/
@@ -43,7 +57,10 @@ class SessionUtilisateur
 	}
 
 	public function getEstConnecte(): bool {
-		return $this->session->get(SessionUtilisateur::CLE_EST_CONNECTE);
+		$cleAbsente = $this->session->get(SessionUtilisateur::CLE_EST_CONNECTE) === null;
+		$estConnecte = $this->session->get(SessionUtilisateur::CLE_EST_CONNECTE);
+
+		return !$cleAbsente && $estConnecte;
 	}
 
 	/*---------------------------------------*/

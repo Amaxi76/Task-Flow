@@ -58,7 +58,15 @@ class CommentairesControleur extends BaseController
 
 		// Récupérer les données du formulaire
 		$data = request()->getPost();
-		
+
+		$validation = \Config\Services::validation();
+		$validation->setRules([
+			'commentaire'         => 'required'
+		]);
+
+		if( !$validation->withRequest ( $this->request ) ->run() ){
+			return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+		}
 
 		// Charger le modèle
 		$commentaireModele = new CommentaireModele();

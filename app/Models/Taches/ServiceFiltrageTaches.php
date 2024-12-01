@@ -82,7 +82,7 @@ class ServiceFiltrageTaches
 		return $this->filtres;
 	}
 
-	public static function fromArray(array $data): ServiceFiltrageTaches{
+	public static function fromArray(?array $data): ServiceFiltrageTaches{
 		$instance = new self();
 
 		if (isset($data)) {

@@ -67,7 +67,7 @@ class ServiceTriageTaches
 		return $this->tris;
 	}
 
-	public static function fromArray(array $data): ServiceTriageTaches {
+	public static function fromArray(?array $data): ServiceTriageTaches {
 		$instance = new self();
 
 		if (isset($data)) {

@@ -79,7 +79,6 @@ class ProfilControleur extends Controller {
 		// Supprimer les intitulés liés à l'utilisateur
 		$intitulesModele->where('id_utilisateur', $idUtilisateur)->delete();
 
-		
 		// Supprimer l'utilisateur
 		$utilisateurModele->delete($idUtilisateur);
 
@@ -87,7 +86,9 @@ class ProfilControleur extends Controller {
 		$this->personneModele->delete($idUtilisateur);
 
 		// Détruire la session
-		session()->destroy();
+		$this->session->deconnecter();
+
+		return redirect()->to('/connexion')->with('success', 'Compte supprimé avec succès.');
 	}
 
 	public function ajouterStatut()
@@ -99,7 +100,7 @@ class ProfilControleur extends Controller {
 		
 		$intitule = 
 		[
-			'id_utilisateur' => session()->get("id"),
+			'id_utilisateur' => $this->session->getIdUtilisateur(),
 			'type_intitule'  => 'statut',
 			'libelle'        => $titre,
 			'couleur'        => $couleur 
