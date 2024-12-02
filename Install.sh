@@ -29,7 +29,7 @@ remplacer_champ () {
 }
 
 # Demande des valeurs à l'utilisateur
-read -p "Chemin du serveur (par ex. 'http://localhost/Task-Flow/public/'): " chemin_serveur
+read -p "Chemin du serveur (par ex. 'http://localhost:8080 ou http://localhost/Task-Flow/public/'): " chemin_serveur
 read -p "Adresse de la base de données (par ex. '127.0.0.1'): " adresse_db
 read -p "Nom de la base de données : " nom_db
 read -p "Nom d'utilisateur de la base de données : " utilisateur_db
@@ -37,6 +37,9 @@ read -s -p "Mot de passe de l'utilisateur de la base de données : " mdp_db
 echo
 read -p "Driver de la base de données (par ex. 'Postgre'): " driver_db
 read -p "Port de la base de données (par ex. '3306'): " port_db
+echo
+read -p "Email de l'application : " utilisateur_mail
+read -p "Mot de passe : " mdp_mail
 
 # Remplacement des champs dans le fichier .env
 remplacer_champ "CHEMIN_SERVEUR" "$chemin_serveur"
@@ -46,5 +49,7 @@ remplacer_champ "NOM_UTILISATEUR" "$utilisateur_db"
 remplacer_champ "MDP_UTILISATEUR" "$mdp_db"
 remplacer_champ "NOM_DRIVER" "$driver_db"
 remplacer_champ "NUMERO_PORT" "$port_db"
+remplacer_champ "ADRESSE_MAIL" "$utilisateur_mail"
+remplacer_champ "TOKEN_MAIL" "$mdp_mail"
 
 echo "La configuration du fichier '.env' est terminée avec succès."
