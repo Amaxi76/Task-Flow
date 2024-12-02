@@ -65,7 +65,7 @@
 			</div>
 			<!-- Formulaires Modifier mot de passe et Supprimer compte -->
 			<div class="button-group">
-				<?= form_open('connexion/mdp_oublie') ?>
+				<?= form_open('/profil/changementMdp') ?>
 					<button type="submit" class="button secondary-button">Modifier le mot de passe</button>
 				<?= form_close() ?>
 

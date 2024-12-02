@@ -54,7 +54,6 @@ class InscriptionControleur extends BaseController {
 					session()->set('id_jeton'   , strval($idJeton));
 					return redirect()->to('inscription/mailenvoye');
 				}
-				
 				$erreurs = ["Mail pas envoyé"];
 			}
 			else
@@ -131,7 +130,6 @@ class InscriptionControleur extends BaseController {
 
 	public function afficherMailEnvoye()
 	{
-
 		$data = ['email' => session()->get('email'),'id_personne' => session()->get('id_personne'), 'id_jeton' => session()->get('id_jeton')];
 
 		helper   (['form']);
