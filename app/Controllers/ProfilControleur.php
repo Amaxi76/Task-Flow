@@ -128,15 +128,42 @@ class ProfilControleur extends Controller {
 
 	public function changementMotDePasse()
 	{
-		$idPersonne = $this->session->getIdUtilisateur();
-		$nouveauMdp = $this->request->getVar('mdp');
-		$personneModele = new PersonneModele();
-		$majMotDePasse  = ['mdp' => password_hash($nouveauMdp,PASSWORD_DEFAULT)];
+		$regle =[
+				'mdp'          => 'required|min_length[4]',
+				'confirmerMdp' => 'required|matches[mdp]'
+		];
+		$message =
+		[
+			'mdp' => [
+				'required'   => 'Le mot de passe est obligatoire.',
+				'min_length' => 'Le mot de passe doit contenir au moins 4 caractères.'
+			],
+			'confirmerMdp' => [
+				'required' => 'La confirmation du mot de passe est obligatoire.',
+				'matches'  => 'La confirmation du mot de passe ne correspond pas au mot de passe saisi.'
+			]
+		];
 
-		$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
-
+		$estValide  = $this->validate($regle,$message);
+		
 		helper(['form']);
-		return redirect()->to('/profil');
+		if($estValide)
+		{
+			$idPersonne = $this->session->getIdUtilisateur();
+			$nouveauMdp = $this->request->getVar('mdp');
+			
+			$personneModele = new PersonneModele();
+			$majMotDePasse  = ['mdp' => password_hash($nouveauMdp,PASSWORD_DEFAULT)];
+
+			$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
+
+			return redirect()->to('/profil');
+		}
+		else
+		{
+			$erreurs = $this->validator->getErrors();
+			echo view('profil/changementMdpProfilVue',$erreurs);
+		}
 	}
 
 }
