@@ -146,7 +146,7 @@ class TachesControleur extends BaseController
 
 		// Charger les données
 		$data = [];
-		$data['titre']           = 'Liste des Tâches';
+		$data['titre']           = 'Ajout d\'une tache';
 		$data['routeFormulaire'] = '/taches/appliquerAjout';
 		$data['idUtilisateur']   = $this->session->getIdUtilisateur();
 		$data['priorites']       = $intituleModele->getPrioritesUtilisateur($this->session->getIdUtilisateur());
@@ -228,8 +228,8 @@ class TachesControleur extends BaseController
 		$tache['rappel']      = OutilsConversion::convertirMinutesEnUnite( $tache['rappel'], 'heure' );
 
 		$data = [];
-		$data['titre'] = 'Liste des Tâches';
-		$data['routeFormulaire'] = '/taches/appliquerModification';		
+		$data['titre'] = 'Modifier la tâche';
+		$data['routeFormulaire'] = '/taches/appliquerModification';
 		$data['tache']   = $tache;
 		$data['idUtilisateur']   = $this->session ->getIdUtilisateur();
 		$data['priorites']       = $intituleModele->getPrioritesUtilisateur ($this->session->getIdUtilisateur ());
