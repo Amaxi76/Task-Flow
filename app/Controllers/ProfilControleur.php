@@ -119,4 +119,24 @@ class ProfilControleur extends Controller {
 			return redirect()->back();
 		}
 	}
+
+	public function formulaireChangementMdp()
+	{
+		helper(['form']);
+		echo view("profil/changementMdpProfilVue");
+	}
+
+	public function changementMotDePasse()
+	{
+		$idPersonne = $this->session->getIdUtilisateur();
+		$nouveauMdp = $this->request->getVar('mdp');
+		$personneModele = new PersonneModele();
+		$majMotDePasse  = ['mdp' => password_hash($nouveauMdp,PASSWORD_DEFAULT)];
+
+		$estMiseAJour = $personneModele->update($idPersonne,$majMotDePasse); //update du mot de passe
+
+		helper(['form']);
+		return redirect()->to('/profil');
+	}
+
 }

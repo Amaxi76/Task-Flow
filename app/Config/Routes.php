@@ -61,6 +61,8 @@ $routes->group('', ['filter' => 'auth'], function ($routes)
 
 	//TODO: mettre les pages du profil dans le groupe qui vérifie l'authentification
 	$routes->get ('/profil'                 , 'ProfilControleur::index'   );
+	$routes->post ('/profil/changementMdp'   , 'ProfilControleur::formulaireChangementMdp' );
+	$routes->post('/profil/appliquerChangementMdp', 'ProfilControleur::changementMotDePasse');
 	$routes->post('profil/enregistrer-modif', 'ProfilControleur::enregistrerCouleurs');
 	$routes->post('profil/supprimer-compte'    , 'ProfilControleur::supprimerCompte');
 	$routes->post('profil/ajouter-statut'    , 'ProfilControleur::ajouterStatut');

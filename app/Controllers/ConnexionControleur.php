@@ -134,11 +134,7 @@ class ConnexionControleur extends BaseController
 			$idPersonne  = $personne['id' ];
 			$mdpPersonne = $personne['mdp'];
 
-			$infoPersonne = 
-			[
-				"id"  => $idPersonne,
-				"mdp" => $mdpPersonne
-			];
+			$infoPersonne = ["id"  => $idPersonne,"mdp" => $mdpPersonne];
 		}
 		return $infoPersonne;
 	}
@@ -171,10 +167,13 @@ class ConnexionControleur extends BaseController
 			$emailService->setMessage($message);
 			$emailService->setMailType('html');
 
-			if($emailService->send(false))
-			{
-				return redirect()->to('inscription/mailenvoye');
-			}
+			$emailService->send(false);
+
+			session()->set('email', $email);
+			session()->set('id_personne', strval($personne['id']));
+			session()->set('id_jeton'   , strval($jeton['id']));
+			return redirect()->to('inscription/mailenvoye');
+		
 		}
 	}
 
