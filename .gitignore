@@ -20,3 +20,5 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+.nfs000000000c1f459a00000011
+script/.nfs000000000c2232e900000010
