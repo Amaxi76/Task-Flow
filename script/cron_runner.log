@@ -18,3 +18,25 @@
 <address>Apache/2.4.62 (Debian) Server at localhost Port 80</address>
 </body></html>
 
+[ERROR] 2024-12-03 07:41:50 - cURL error: Failed to connect to localhost port 8080 after 0 ms: Couldn't connect to server
+[SUCCESS] 2024-12-03 07:41:55 - Response: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.62 (Debian) Server at localhost Port 80</address>
+</body></html>
+
+[SUCCESS] 2024-12-03 07:41:56 - Response: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<hr>
+<address>Apache/2.4.62 (Debian) Server at localhost Port 80</address>
+</body></html>
+
+[ERROR] 2024-12-03 07:42:00 - cURL error: Failed to connect to localhost port 8080 after 0 ms: Couldn't connect to server
