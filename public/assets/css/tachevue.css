@@ -1,0 +1,142 @@
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	flex-grow: 1;
+}
+
+header {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	flex-shrink: 0;
+	padding:1rem 3rem 0rem 3rem;
+	gap: 2rem;
+}
+
+header img {
+	width: 7rem;
+	height: fit-content;
+	object-fit: contain;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	cursor: pointer;
+	width: fit-content;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	height: fit-content;
+	border: none;
+}
+
+.main-button {
+	background-color: #379EE8;
+	color: white;
+}
+
+.secondary-button {
+	background-color: white;
+	color: #379EE8;
+	border: 0.1rem solid #379EE8;
+}
+
+.danger-button {
+	background-color: #cf0202;
+	color: white;
+}
+
+button {
+	all: unset;
+}
+
+.button > svg, 
+.button svg * {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.main-button > svg, 
+.main-button svg * {
+	stroke: white;
+}
+.danger-button > svg, 
+.danger-button svg * {
+	stroke: white;
+}
+
+.secondary-button > svg, 
+.secondary-button svg * {
+	stroke: #379EE8;
+}
+
+.conteneur-entete {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.conteneur-menu-titre {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	flex-direction: column;
+	padding:1rem 3rem 0rem 3rem;
+}
+
+.conteneur-menu-filtre {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.conteneur-menu-boutons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	justify-content: space-between;
+}
+
+.conteneur-menu-boutons a{
+	text-decoration: none;
+}
+
+.conteneur-menu-boutons-gauche {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.menu-filtre {
+	display: flex;
+	list-style-type: none;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 0;
+	padding: 0;
+}
+
+.conteneur-menu-affichage {
+	display: flex;
+	border: 1px solid #379EE8;
+	border-radius: 0.6rem;
+	height: fit-content;
+}
+
+.conteneur-menu-boutons-droite {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+
+.conteneur-menu-boutons-droite select{
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+	border: 0.1rem solid #379EE8;
+	background-color: white;
+	color: #379EE8;
+	cursor: pointer;
+}
